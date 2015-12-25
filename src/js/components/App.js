@@ -5,8 +5,14 @@ class App extends React.Component {
     render() {
         return (
             <div>
+                <input type="checkbox" id="mobile-menu-switch" className="no-display" />
+
                 <div className="menu">
                     <div className="max-width">
+                        <label id="mobile-menu-button" htmlFor="mobile-menu-switch">
+                            <i className="fa fa-bars" />
+                        </label>
+
                         <h1><Link to="/">CrowdControl</Link></h1>
                         {/* change the <a>s to <Link>s */}
                         <ul>

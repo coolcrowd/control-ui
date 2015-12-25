@@ -40,3 +40,53 @@
   background: rgba(0,0,0,.05);
   border-bottom-color: rgba(0,0,0,.1);
 }
+
+#mobile-menu-button {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .menu .max-width {
+    padding: 0 5px;
+  }
+
+  .menu ul {
+    display: none;
+  }
+
+  #mobile-menu-switch:checked + .menu ul {
+    display: block;
+  }
+
+  .menu ul {
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    max-width: 280px;
+    min-width: 150px;
+    background: #333;
+    overflow-y: auto;
+    box-shadow: 20px 0 20px -20px rgba(0,0,0,.25);
+    z-index: 3; /* font awesome */
+  }
+
+  .menu li {
+    display: block;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+
+  .menu a {
+    display: block;
+  }
+}
+
+@media (min-width: 601px) {
+  #mobile-menu-button {
+    display: none;
+  }
+}

@@ -1,0 +1,30 @@
+.list {
+  padding: 0;
+  margin: 0;
+}
+
+.list > li {
+  line-height: 50px;
+  padding: 0 20px;
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.list > li:nth-of-type(2n+1) {
+  background-color: rgba(0,0,0,.05);
+}
+
+.list > li > * {
+  display: table-cell;
+}
+
+.list a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #0f7595;
+}
+
+.list-actions {
+  text-align: right;
+}

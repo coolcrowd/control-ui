@@ -1,6 +1,7 @@
 import React from "react";
 import history from "../history";
-
+import Backend from "../core/Backend";
+import Loader from "../core/Loader";
 import TemplateListItem from "./TemplateListItem";
 
 function getTemplateListItem(template) {
@@ -14,13 +15,8 @@ class TemplateList extends React.Component {
         super();
 
         this.state = {
-            templates: [
-                {
-                    id: 1,
-                    name: "Mean Tweet",
-                    content: "Mean Tweet..."
-                }
-            ]
+            templates: [],
+            loaded: false
         }
     }
 
@@ -41,15 +37,53 @@ class TemplateList extends React.Component {
                     </button>
                 </div>
 
-                <ul className="list">
-                    {children}
-                </ul>
+                <Loader loaded={this.state.loaded} className="loader">
+                    <ul className="list">
+                        {children}
+                    </ul>
+                </Loader>
             </div>
-        )
+        );
     }
 
     _onClick() {
         history.replaceState(null, "/templates/new");
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prev) {
+        return;
+
+        let oldId = prev.params.page;
+        let newId = this.props.page;
+
+        if (oldId !== newId) {
+            this.fetchData();
+        }
+    }
+
+    componentWillUnmount() {
+        this.ignoreLastFetch = true;
+    }
+
+    fetchData() {
+        Backend.fetchTemplates().then((response) => {
+            if (!this.ignoreLastFetch) {
+                this.setState({
+                    templates: response,
+                    loaded: true
+                });
+            }
+        }).catch(() => {
+            // TODO: Nice error message
+            alert("loading failed!");
+            this.setState({
+                loaded: true
+            })
+        });
     }
 }
 

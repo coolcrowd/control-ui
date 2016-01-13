@@ -1,5 +1,7 @@
 # Control UI
 
+[![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
+
 ## Installation
 
 ```

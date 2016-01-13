@@ -29,13 +29,17 @@ class Template {
     }
 
     static apply(text, data) {
-        let placeholders = this.parse();
+        let placeholders = this.parse(text);
         let missing = [];
         let ops = [];
 
-        placeholders.forEach((placeholder, name) => {
+        for (var name in placeholders) {
+            if (!placeholders.hasOwnProperty(name)) {
+                continue;
+            }
+
             if (name in data) {
-                placeholder.positions.forEach((position) => {
+                placeholders[name].positions.forEach((position) => {
                     ops.push({
                         start: position.start,
                         end: position.end,
@@ -45,10 +49,18 @@ class Template {
             } else {
                 missing.push(name);
             }
-        });
+        }
 
         if (missing.length > 0) {
             throw new TemplateException("The following parameters have been missing in parameter data: " + missing.join(", "));
+        }
+
+        if (Object.keys(placeholders).length === 0 && Object.keys(data).length !== 0) {
+            throw new TemplateException("No placeholders found, but data has been passed and wasn't empty!");
+        }
+
+        if (JSON.stringify(Object.keys(placeholders)) !== JSON.stringify(Object.keys(data))) {
+            throw new TemplateException("Placeholders do not match the ones defined in the template!");
         }
 
         ops.sort((a, b) => {
@@ -91,7 +103,7 @@ class Template {
 
             let type;
 
-            placeholders[name].forEach((position) => {
+            placeholders[name].positions.forEach((position) => {
                 type = type || position.type;
 
                 if (type !== position.type) {

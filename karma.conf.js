@@ -33,7 +33,9 @@ module.exports = function (config) {
         browserify: {
             debug: true,
             extensions: ['.js'],
-            transform: [flaggedBabelify, "istanbulify"]
+            transform: [flaggedBabelify, require('browserify-istanbul')({
+                instrumenterConfig: { embedSource: true }
+            })]
         },
 
         // test results reporter to use
@@ -74,7 +76,7 @@ module.exports = function (config) {
 
         // "html" currently fails, see https://github.com/karma-runner/karma-coverage/issues/157
         coverageReporter: {
-            type: "text",
+            type: "html",
             dir: "coverage/"
         }
     };

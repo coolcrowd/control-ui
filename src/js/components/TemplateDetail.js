@@ -47,10 +47,14 @@ class TemplateDetail extends React.Component {
 
                 content = (
                     <div>
+                        <div className="resource-actions">
+                            <Link to={this.props.location.pathname + "/edit"}><i className="fa fa-pencil icon" /> Edit</Link>
+                            <button onClick={this._onDeleteClick.bind(this)} className="action-destructive"><i className="fa fa-trash icon" /> Delete</button>
+                        </div>
+
                         <h1>{this.state.template.name}</h1>
 
-                        <Link to={this.props.location.pathname + "/edit"}><i className="fa fa-pencil icon" /> Edit</Link>
-
+                        <label>Content</label>
                         <pre>{this.state.template.content}</pre>
 
                         <label>Answer Type</label>
@@ -65,6 +69,18 @@ class TemplateDetail extends React.Component {
                 {content}
             </Loader>
         );
+    }
+
+    _onDeleteClick() {
+        var confirm = window.confirm("Do you really want to delete this template?");
+
+        if (confirm) {
+            Backend.delete("templates/" + this.props.params.id).then(() => {
+                history.replaceState(null, "/templates");
+            }).catch(() => {
+                alert("Deletion failed.");
+            });
+        }
     }
 
     componentDidMount() {

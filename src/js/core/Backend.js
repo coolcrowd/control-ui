@@ -1,4 +1,5 @@
 import HttpException from "./HttpException";
+import history from "../history";
 
 class Backend {
     static get(uri) {

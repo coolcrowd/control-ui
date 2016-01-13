@@ -1,6 +1,6 @@
 import React from "react";
 
-import Placeholder from "../placeholder";
+import Template from "../core/Template";
 
 function getPlaceholderItem(placeholder) {
     return (
@@ -94,8 +94,8 @@ class TemplateWizard extends React.Component {
 
     _onContentChange() {
         let value = this.refs.content.value;
-        let placeholders = Placeholder.parse(value);
-        let warnings = Placeholder.check(placeholders);
+        let placeholders = Template.parse(value);
+        let warnings = Template.check(placeholders);
 
         this.setState({
             placeholders: placeholders,

@@ -18,6 +18,7 @@ render((
             <Route path="templates" component={TemplateList} />
             <Route path="templates/new" component={TemplateWizard} />
             <Route path="templates/:id" component={TemplateDetail} />
+            <Route path="templates/:id/edit" component={TemplateWizard} />
         </Route>
     </Router>
 ), container);

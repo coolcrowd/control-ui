@@ -8,15 +8,41 @@ body {
   background: #fafafa;
 }
 
+.fa {
+  font-size: 14px;
+}
+
+.icon {
+  margin: 0 4px;
+}
+
 .max-width {
   max-width: 900px;
   padding: 0 20px;
   margin: 0 auto;
 }
 
+input {
+  font-family: "Source Code Pro", monospace;
+  font-size: 85%;
+}
+
+textarea {
+  font-family: "Source Code Pro", monospace;
+  font-size: 85%;
+}
+
 code {
   font-family: "Source Code Pro", monospace;
   font-size: 85%;
+}
+
+pre {
+  font-family: "Source Code Pro", monospace;
+  font-size: 85%;
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 15px;
+  word-wrap: break-word;
 }
 
 .no-display {

@@ -32,7 +32,7 @@ class TemplateList extends React.Component {
                 </p>
 
                 <div className="actions">
-                    <button className="action action-constructive" onClick={this._onClick.bind(this)}>
+                    <button className="action action-constructive" onClick={this._onCreateClick.bind(this)}>
                         <i className="fa fa-plus" /> Create new template…
                     </button>
                 </div>
@@ -46,7 +46,7 @@ class TemplateList extends React.Component {
         );
     }
 
-    _onClick() {
+    _onCreateClick() {
         history.replaceState(null, "/templates/new");
     }
 
@@ -54,11 +54,11 @@ class TemplateList extends React.Component {
         this.fetchData();
     }
 
-    componentDidUpdate(prev) {
+    componentWillReceiveProps(next) {
         return;
 
-        let oldId = prev.params.page;
-        let newId = this.props.page;
+        let oldId = this.props.params.id;
+        let newId = next.params.id;
 
         if (oldId !== newId) {
             this.fetchData();
@@ -70,10 +70,10 @@ class TemplateList extends React.Component {
     }
 
     fetchData() {
-        Backend.fetchTemplates().then((response) => {
+        Backend.get("templates").then((response) => {
             if (!this.ignoreLastFetch) {
                 this.setState({
-                    templates: response,
+                    templates: response.data.templates,
                     loaded: true
                 });
             }

@@ -23,11 +23,47 @@ class Backend {
 }
 
 function request(method, uri, data) {
+    if (method === "GET" && uri === "templates") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    templates: [
+                        {
+                            id: 1,
+                            name: "Mean Tweet",
+                            content: "Lorem Ipsum ... {{Person:Person ...}}."
+                        }
+                    ]
+                }
+            });
+        });
+    }
+
+    if (method === "GET" && uri === "templates/1") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    id: 1,
+                    name: "Mean Tweet",
+                    content: "Lorem Ipsum ... {{Person:Person ...}}."
+                }
+            });
+        });
+    }
+
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.open(method, uri, true); // TODO: Username + Password
 
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (this.readyState !== 4) {
                 return;
             }
@@ -39,7 +75,7 @@ function request(method, uri, data) {
                 if (body !== "") {
                     try {
                         data = JSON.parse(body);
-                    } catch(e) {
+                    } catch (e) {
                         reject(new HttpException(e));
                         return;
                     }

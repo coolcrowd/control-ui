@@ -1,11 +1,13 @@
 import React from "react";
-
+import Backend from "../core/Backend";
 import Template from "../core/Template";
+import Loader from "../core/Loader";
 
 function getPlaceholderItem(placeholder) {
     return (
         <li className="placeholder">
-            {placeholder}
+            <b>{placeholder.name}</b> ({placeholder.occurrences}x)<br/>
+            {placeholder.description}
         </li>
     )
 }
@@ -23,24 +25,104 @@ class TemplateWizard extends React.Component {
         super();
 
         this.state = {
+            new: false,
+            loaded: false,
+            failed: false,
+            template: null,
+
             placeholders: {},
-            warnings: []
+            warnings: [],
+
+            name: "",
+            content: "",
+            answerType: "TEXT"
+        };
+    }
+
+    componentDidMount() {
+        this.setState({
+            new: "id" in this.props.params,
+            loaded: "id" in this.props.params,
+            template: null
+        });
+
+        if (!this.state.new) {
+            this.fetchData();
         }
     }
 
+    componentWillReceiveProps(next) {
+        if ("id" in next.params) {
+            if ("id" in this.props.params) {
+                let oldId = this.props.params.id;
+                let newId = next.params.id;
+
+                if (oldId !== newId) {
+                    this.fetchData();
+                }
+            } else {
+                this.fetchData();
+            }
+        } else {
+            this.setState({
+                new: false,
+                loaded: true,
+                failed: false,
+                template: null,
+
+                name: "",
+                content: "",
+                answerType: "TEXT"
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        this.ignoreLastFetch = true;
+    }
+
+    fetchData() {
+        Backend.get("templates/" + this.props.params.id).then((response) => {
+            if (!this.ignoreLastFetch) {
+                this.setState({
+                    template: response.data,
+                    loaded: true,
+                    failed: false,
+
+                    name: response.data.name,
+                    content: response.data.content,
+                    answerType: "answerType" in response.data ? response.data.answerType : "TEXT"
+                });
+
+                this._onNameChange();
+                this._onContentChange();
+            }
+        }).catch(() => {
+            this.setState({
+                template: null,
+                loaded: true,
+                failed: true
+            })
+        });
+    }
+
     render() {
-        // TODO: Find out how to use {{ }} in React literally.
-        let html = "You can add placeholders by using the following syntax: <code>{{placeholder-name:placeholder-type}}</code>";
         let placeholderHelp = (
             <div className="help">
-                <p dangerouslySetInnerHTML={{__html: html}}/>
+                <p>
+                    You can add placeholders by using the following syntax:
+                    <code>{"{{"}name:description:type{"}}"}</code>
+                </p>
+
                 <ul>
-                    <li><code>placeholder-name</code><br />
-                        You may use the following characters:
-                        <code>a-z</code>, <code>-</code>, <code>_</code>.
+                    <li><code>name</code><br />
+                        You may use any character except <code>{"TODO"}</code>, <code>{"TODO"}</code> and <code>:</code>.
+                    </li>
+                    <li><code>description</code><br />
+                        You may use any character except <code>{"TODO"}</code>, <code>{"TODO"}</code> and <code>:</code>.
                     </li>
                     <li>
-                        <code>placeholder-type</code><br />
+                        <code>type</code><br />
                         You may use any <a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/Input">input
                         type defined in HTML 5</a>. Default: <code>text</code>.
                     </li>
@@ -53,7 +135,14 @@ class TemplateWizard extends React.Component {
         let placeholderLabel;
 
         if (Object.keys(this.state.placeholders).length) {
-            placeholders = Object.keys(this.state.placeholders).map(getPlaceholderItem);
+            placeholders = Object.keys(this.state.placeholders).map((key) => {
+                return getPlaceholderItem({
+                    name: key,
+                    description: this.state.placeholders[key].description,
+                    occurrences: this.state.placeholders[key].positions.length
+                });
+            });
+
             placeholderLabel = (
                 <label>Placeholders</label>
             );
@@ -63,13 +152,14 @@ class TemplateWizard extends React.Component {
             warnings = this.state.warnings.map(getWarningItem);
         }
 
-        return (
+        let wizard = (
             <div className="wizard">
                 <label>Name</label>
-                <input type="text" placeholder="Name" name="name"/>
+                <input type="text" placeholder="Name" name="name" value={this.state.name} ref="name"
+                       onChange={this._onNameChange.bind(this)}/>
 
                 <label>Content</label>
-                <textarea placeholder="Content" name="content" ref="content"
+                <textarea placeholder="Content" name="content" value={this.state.content} ref="content"
                           onChange={this._onContentChange.bind(this)}/>
 
                 {placeholderHelp}
@@ -90,6 +180,24 @@ class TemplateWizard extends React.Component {
                 </div>
             </div>
         );
+
+        if (this.state.new) {
+            return wizard;
+        } else {
+            return (
+                <Loader loaded={this.state.loaded} className="loader">
+                    {wizard}
+                </Loader>
+            );
+        }
+    }
+
+    _onNameChange() {
+        let value = this.refs.name.value;
+
+        this.setState({
+            name: value
+        });
     }
 
     _onContentChange() {
@@ -98,6 +206,7 @@ class TemplateWizard extends React.Component {
         let warnings = Template.check(placeholders);
 
         this.setState({
+            content: value,
             placeholders: placeholders,
             warnings: warnings
         });

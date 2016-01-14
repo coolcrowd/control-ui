@@ -15,14 +15,14 @@ class DataComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        this._fetchData();
     }
 
     componentWillUnmount() {
         this.ignoreLastFetch = true;
     }
 
-    fetchData() {
+    _fetchData() {
         Backend.get(this.getDataUri()).then((response) => {
             if (!this.ignoreLastFetch) {
                 this.setState({

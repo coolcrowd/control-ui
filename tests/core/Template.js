@@ -1,4 +1,4 @@
-import Template from "../src/js/core/Template";
+import Template from "../../src/js/core/Template";
 
 describe("Template", () => {
     it("should be empty without placeholders", () => {

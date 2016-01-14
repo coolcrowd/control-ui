@@ -1,7 +1,13 @@
 import HttpException from "./HttpException";
 import history from "../history";
 
+const root = "http://localhost:3000/";
+
 class Backend {
+    static request(method, uri, data) {
+        return request(method, uri, data);
+    }
+
     static get(uri) {
         return request("GET", uri);
     }
@@ -32,7 +38,7 @@ function request(method, uri, data) {
                     links: {}
                 },
                 data: {
-                    templates: [
+                    items: [
                         {
                             id: 1,
                             name: "Mean Tweet",
@@ -60,28 +66,40 @@ function request(method, uri, data) {
         });
     }
 
+    if (method === "DELETE" && uri === "templates/1") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 204,
+                    links: {}
+                },
+                data: null
+            });
+        });
+    }
+
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open(method, uri, true); // TODO: Username + Password
+        xhr.open(method, root + uri, true); // TODO: Username + Password
 
         xhr.onreadystatechange = function () {
             if (this.readyState !== 4) {
                 return;
             }
 
-            if (this.status === 200) {
-                let body = this.responseText;
-                let data = null;
+            let body = this.responseText;
+            let data = null;
 
-                if (body !== "") {
-                    try {
-                        data = JSON.parse(body);
-                    } catch (e) {
-                        reject(new HttpException(e));
-                        return;
-                    }
+            if (body !== "") {
+                try {
+                    data = JSON.parse(body);
+                } catch (e) {
+                    reject(new HttpException(e));
+                    return;
                 }
+            }
 
+            if (this.status === 200 || this.status === 201) {
                 resolve({
                     meta: {
                         status: this.status,
@@ -90,6 +108,17 @@ function request(method, uri, data) {
                         }
                     },
                     data: data
+                });
+            } else {
+                reject({
+                    meta: {
+                        status: this.status,
+                        links: {}
+                    },
+                    data: data || {
+                        code: "unknown",
+                        detail: "No response provided!"
+                    }
                 });
             }
         };

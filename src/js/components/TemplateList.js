@@ -2,26 +2,40 @@ import React from "react";
 import history from "../history";
 import Backend from "../core/Backend";
 import Loader from "../core/Loader";
+import DataComponent from "./DataComponent";
 import TemplateListItem from "./TemplateListItem";
 
-function getTemplateListItem(template) {
-    return (
-        <TemplateListItem key={template.id} template={template} />
-    )
-}
-
-class TemplateList extends React.Component {
+class TemplateList extends DataComponent {
     constructor() {
         super();
+    }
 
-        this.state = {
-            templates: [],
-            loaded: false
-        }
+    getDataUri() {
+        return "templates";
+    }
+
+    componentWillReceiveProps(next) {
+        // TODO: Implement pagination...
     }
 
     render() {
-        let children = this.state.templates.map(getTemplateListItem);
+        if (this.state.loaded && this.state.failed) {
+            return (
+                <div>
+                    <h1>Loading failed…</h1>
+
+                    <p>
+                        Data could not be loaded.
+                    </p>
+                </div>
+            );
+        }
+
+        let children = this.state.loaded ? this.state.data.items.map((template) => {
+            return (
+                <TemplateListItem key={template.id} template={template} onDelete={this._onDelete.bind(this)}/>
+            );
+        }) : [];
 
         return (
             <div>
@@ -32,8 +46,8 @@ class TemplateList extends React.Component {
                 </p>
 
                 <div className="actions">
-                    <button className="action action-constructive" onClick={this._onCreateClick.bind(this)}>
-                        <i className="fa fa-plus" /> Create new template…
+                    <button className="action action-constructive" onClick={this._onCreate.bind(this)}>
+                        <i className="fa fa-plus"/> Create new template…
                     </button>
                 </div>
 
@@ -46,43 +60,20 @@ class TemplateList extends React.Component {
         );
     }
 
-    _onCreateClick() {
+    _onCreate() {
         history.replaceState(null, "/templates/new");
     }
 
-    componentDidMount() {
-        this.fetchData();
-    }
+    _onDelete(id) {
+        let items = this.state.data.items.filter(function(i) {
+            return i.id !== id;
+        });
 
-    componentWillReceiveProps(next) {
-        return;
+        let data = this.state.data;
+        data.items = items;
 
-        let oldId = this.props.params.id;
-        let newId = next.params.id;
-
-        if (oldId !== newId) {
-            this.fetchData();
-        }
-    }
-
-    componentWillUnmount() {
-        this.ignoreLastFetch = true;
-    }
-
-    fetchData() {
-        Backend.get("templates").then((response) => {
-            if (!this.ignoreLastFetch) {
-                this.setState({
-                    templates: response.data.templates,
-                    loaded: true
-                });
-            }
-        }).catch(() => {
-            // TODO: Nice error message
-            alert("loading failed!");
-            this.setState({
-                loaded: true
-            })
+        this.setState({
+            data: data
         });
     }
 }

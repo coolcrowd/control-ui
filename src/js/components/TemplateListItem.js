@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
+import ResourceAction from "./ResourceAction";
 
 class TemplateListItem extends React.Component {
     render() {
@@ -10,12 +11,15 @@ class TemplateListItem extends React.Component {
                 </Link>
 
                 <div className="list-actions">
-                    <button className="list-action-delete">
-                        <i className="fa fa-times" />
-                    </button>
+                    <ResourceAction icon="trash" method="delete" uri={"templates/" + this.props.template.id}
+                                    onClick={() => window.confirm("Do you really want to delete this template?")}
+                                    onSuccess={() => this.props.onDelete(this.props.template.id)}
+                                    onError={() => window.alert("Could not delete template!")}>
+                        Delete
+                    </ResourceAction>
                 </div>
             </li>
-        )
+        );
     }
 }
 

@@ -2,16 +2,22 @@ import React from "react";
 import { Link } from "react-router";
 import Backend from "../core/Backend";
 import Loader from "../core/Loader";
+import DataComponent from "./DataComponent";
+import ResourceAction from "./ResourceAction";
+import history from "../history";
 
-class TemplateDetail extends React.Component {
-    constructor() {
-        super();
+class TemplateDetail extends DataComponent {
+    getDataUri() {
+        return "templates/" + this.props.params.id;
+    }
 
-        this.state = {
-            template: null,
-            loaded: false,
-            failed: false
-        };
+    componentWillReceiveProps(next) {
+        let oldId = this.props.params.id;
+        let newId = next.params.id;
+
+        if (oldId !== newId) {
+            this.fetchData();
+        }
     }
 
     render() {
@@ -29,17 +35,17 @@ class TemplateDetail extends React.Component {
             } else {
                 let type;
 
-                if ("answerType" in this.state.template) {
+                if ("answerType" in this.state.data) {
                     type = (
                         <span>
-                            <i className="fa fa-file-image-o icon" />
+                            <i className="fa fa-file-image-o icon"/>
                             Image
                         </span>
                     );
                 } else {
                     type = (
                         <span>
-                            <i className="fa fa-file-text-o icon" />
+                            <i className="fa fa-file-text-o icon"/>
                             Text
                         </span>
                     );
@@ -48,14 +54,23 @@ class TemplateDetail extends React.Component {
                 content = (
                     <div>
                         <div className="resource-actions">
-                            <Link to={this.props.location.pathname + "/edit"}><i className="fa fa-pencil icon" /> Edit</Link>
-                            <button onClick={this._onDeleteClick.bind(this)} className="action-destructive"><i className="fa fa-trash icon" /> Delete</button>
+                            <Link to={this.props.location.pathname + "/edit"}>
+                                <i className="fa fa-pencil icon"/>
+                                Edit
+                            </Link>
+
+                            <ResourceAction icon="trash" method="DELETE" uri={"templates/" + this.props.params.id}
+                                            onClick={() => window.confirm("Do you really want to delete this template?")}
+                                            onSuccess={() => history.replaceState(null, "/templates")}
+                                            onError={() => window.alert("Deletion failed.")}>
+                                Delete
+                            </ResourceAction>
                         </div>
 
-                        <h1>{this.state.template.name}</h1>
+                        <h1>{this.state.data.name}</h1>
 
                         <label>Content</label>
-                        <pre>{this.state.template.content}</pre>
+                        <pre>{this.state.data.content}</pre>
 
                         <label>Answer Type</label>
                         <div>{type}</div>
@@ -69,53 +84,6 @@ class TemplateDetail extends React.Component {
                 {content}
             </Loader>
         );
-    }
-
-    _onDeleteClick() {
-        var confirm = window.confirm("Do you really want to delete this template?");
-
-        if (confirm) {
-            Backend.delete("templates/" + this.props.params.id).then(() => {
-                history.replaceState(null, "/templates");
-            }).catch(() => {
-                alert("Deletion failed.");
-            });
-        }
-    }
-
-    componentDidMount() {
-        this.fetchData();
-    }
-
-    componentWillReceiveProps(next) {
-        let oldId = this.props.params.id;
-        let newId = next.params.id;
-
-        if (oldId !== newId) {
-            this.fetchData();
-        }
-    }
-
-    componentWillUnmount() {
-        this.ignoreLastFetch = true;
-    }
-
-    fetchData() {
-        Backend.get("templates/" + this.props.params.id).then((response) => {
-            if (!this.ignoreLastFetch) {
-                this.setState({
-                    template: response.data,
-                    loaded: true,
-                    failed: false
-                });
-            }
-        }).catch(() => {
-            this.setState({
-                template: null,
-                loaded: true,
-                failed: true
-            })
-        });
     }
 }
 

@@ -18,32 +18,12 @@ class ExperimentWizard extends Wizard {
             }
         };
 
-        let description = {
-            type: "longtext",
-            label: "Description",
-            help: "Description of the creative task."
-        };
-
-        if (!this.state.loaded || this.state.failed || this.state.new) {
-            base.description = description;
-        } else {
-            let text = this.state.data.description;
-            let placeholders = Template.parse(text);
-
-            if (Object.keys(placeholders).length === 0) {
-                base.description = description;
-            } else {
-                Object.keys(placeholders).forEach((name) => {
-                    base["placeholder[" + name + "]"] = {
-                        type: placeholders[name].type,
-                        label: name,
-                        help: placeholders[name].description
-                    };
-                });
-            }
-        }
-
-        Object.assign(base, {
+        let nonTemplate = {
+            description: {
+                type: "longtext",
+                label: "Description",
+                help: "Description of the creative task."
+            },
             answerType: {
                 type: "enum",
                 label: "Answer Type",
@@ -59,7 +39,29 @@ class ExperimentWizard extends Wizard {
                         text: "Images"
                     }
                 ]
-            },
+            }
+        };
+
+        if (this.state.loaded && !this.state.failed && !this.state.new) {
+            let text = this.state.data.description;
+            let placeholders = Template.parse(text);
+
+            if (Object.keys(placeholders).length > 0) {
+                Object.keys(placeholders).forEach((name) => {
+                    base["placeholder[" + name + "]"] = {
+                        type: placeholders[name].type,
+                        label: name,
+                        help: placeholders[name].description
+                    };
+                });
+            } else {
+                Object.assign(base, nonTemplate);
+            }
+        } else {
+            Object.assign(base, nonTemplate);
+        }
+
+        Object.assign(base, {
             paymentBase: {
                 type: "number",
                 label: "Base Payment",

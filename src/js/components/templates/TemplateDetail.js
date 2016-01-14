@@ -69,10 +69,10 @@ class TemplateDetail extends DataComponent {
 
                         <h1>{this.state.data.name}</h1>
 
-                        <label>Content</label>
+                        <label className="input-label">Content</label>
                         <pre>{this.state.data.content}</pre>
 
-                        <label>Answer Type</label>
+                        <label className="input-label">Answer Type</label>
                         <div>{type}</div>
                     </div>
                 );

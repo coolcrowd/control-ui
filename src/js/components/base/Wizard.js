@@ -138,7 +138,7 @@ class Wizard extends React.Component {
 
         keys.forEach((key) => {
             if (forceValidation || oldForm[key] !== this.state.form[key]) {
-                if ("validation" in form[key]) {
+                if (key in form && "validation" in form[key]) {
                     form[key].validation.validator(this.state.form[key]);
                 }
             }

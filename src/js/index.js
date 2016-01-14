@@ -14,6 +14,7 @@ import TemplateDetail from "./components/templates/TemplateDetail";
 import TemplateWizard from "./components/templates/TemplateWizard";
 
 import NotificationList from "./components/notifications/NotificationList";
+import NotificationDetail from "./components/notifications/NotificationDetail";
 import NotificationWizard from "./components/notifications/NotificationWizard";
 
 const container = document.createElement("div");
@@ -34,6 +35,7 @@ render((
 
             <Route path="notifications" component={NotificationList}/>
             <Route path="notifications/new" component={NotificationWizard}/>
+            <Route path="notifications/:id" component={NotificationDetail}/>
             <Route path="notifications/:id/edit" component={NotificationWizard}/>
         </Route>
     </Router>

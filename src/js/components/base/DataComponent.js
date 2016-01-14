@@ -1,7 +1,7 @@
 import React from "react";
-import history from "../history";
-import Backend from "../core/Backend";
-import Loader from "../core/Loader";
+import history from "../../history";
+import Backend from "../../core/Backend";
+import Loader from "../../core/Loader";
 
 class DataComponent extends React.Component {
     constructor() {

@@ -51,24 +51,22 @@
 }
 
 .wizard .placeholder {
-  margin: 6px 0;
+  margin: 15px 0;
 }
 
-.wizard .warnings {
-  margin: 10px 0;
-  background: #fff9d8;
-  padding: 10px;
-  border: 1px solid rgba(0,0,0,.05);
-  border-bottom: 2px solid rgba(0,0,0,.1);
-  color: #6e695a;
+.wizard .placeholder-type {
+  display: inline-block;
+  background-color: #ddd;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding: 2px 6px;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 80%;
+  margin: 0 10px;
+  transform: translateY(-2px);
 }
 
-.wizard .warning .fa {
-  margin-right: 5px;
-}
-
-.wizard .warnings:empty {
-  display: none;
+.input-help {
+  font-style: italic;
+  font-size: 80%;
+  margin: 10px 0;
 }

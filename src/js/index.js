@@ -4,9 +4,9 @@ import { Router, Route, IndexRoute, Link } from "react-router";
 import history from "./history";
 
 import App from "./components/App";
-import TemplateList from "./components/TemplateList";
-import TemplateDetail from "./components/TemplateDetail";
-import TemplateWizard from "./components/TemplateWizard";
+import TemplateList from "./components/templates/TemplateList";
+import TemplateDetail from "./components/templates/TemplateDetail";
+import TemplateWizard from "./components/templates/TemplateWizard";
 import Welcome from "./components/Welcome";
 
 const container = document.createElement("div");

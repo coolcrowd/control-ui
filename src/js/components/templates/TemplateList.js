@@ -1,8 +1,8 @@
 import React from "react";
-import history from "../history";
-import Backend from "../core/Backend";
-import Loader from "../core/Loader";
-import DataComponent from "./DataComponent";
+import history from "../../history";
+import Backend from "../../core/Backend";
+import Loader from "../../core/Loader";
+import DataComponent from "./../base/DataComponent";
 import TemplateListItem from "./TemplateListItem";
 
 class TemplateList extends DataComponent {

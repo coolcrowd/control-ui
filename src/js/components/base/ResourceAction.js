@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import Backend from "../core/Backend";
+import Backend from "../../core/Backend";
 import classNames from "classnames";
 
 class ResourceAction extends React.Component {

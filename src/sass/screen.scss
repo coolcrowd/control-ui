@@ -22,13 +22,32 @@ body {
   margin: 0 auto;
 }
 
-label {
+.input-label {
   display: block;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 12px;
   color: #444;
   margin: 16px 0 8px 0;
+}
+
+.input-enum-option {
+  padding: 6px 10px;
+  border: 1px solid rgba(0,0,0,.05);
+  margin: 5px;
+  display: inline-block;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.input-enum-option input {
+  margin: 0 6px 0 0;
+  display: inline-block;
+  line-height: inherit;
+  transform: translateY(1px);
 }
 
 input {

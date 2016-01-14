@@ -5,7 +5,7 @@ class Template {
         // format: {{name:description:type}}
         // type defaults to "text" if not present
 
-        let expr = new RegExp("\{\{([^:{}]+)(?::([^:{}]+))?(?::([^:{}]+))?\}\}", "g");
+        let expr = new RegExp("\{\{([^:{}]+)(?::([^:{}]*))?(?::([^:{}]+))?\}\}", "g");
         let matches = {};
         let match;
 
@@ -91,28 +91,6 @@ class Template {
         });
 
         return text;
-    }
-
-    static check(placeholders) {
-        let warnings = [];
-
-        for (var name in placeholders) {
-            if (!placeholders.hasOwnProperty(name)) {
-                continue;
-            }
-
-            let type;
-
-            placeholders[name].positions.forEach((position) => {
-                type = type || position.type;
-
-                if (type !== position.type) {
-                    warnings.push("Two different types have been found for placeholder '" + name + "': '" + type + "', '" + position.type + "'");
-                }
-            });
-        }
-
-        return warnings;
     }
 }
 

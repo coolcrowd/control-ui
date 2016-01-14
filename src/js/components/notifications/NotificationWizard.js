@@ -47,7 +47,7 @@ class NotificationWizard extends Wizard {
     _validateQuery() {
         let query = this.state.form.query;
 
-        if (query === "" || query.startsWith("SELECT ".substr(0, query.length))) {
+        if (query === "" || query.toUpperCase().startsWith("SELECT ".substr(0, query.length))) {
             this.setState({queryValid: true});
         } else {
             this.setState({queryValid: false});

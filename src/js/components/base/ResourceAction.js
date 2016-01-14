@@ -23,7 +23,7 @@ class ResourceAction extends React.Component {
     render() {
         return (
             <button type="button" className={classNames({
-                "resource-action": true,
+                "action": true,
                 "action-destructive": this.props.method.toUpperCase() === "DELETE"
             })} onClick={this._onClick.bind(this)} disabled={this.state.loading}>
                 <i className={"fa fa-" + this.props.icon + " icon"} />

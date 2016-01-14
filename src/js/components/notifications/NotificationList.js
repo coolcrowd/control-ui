@@ -11,8 +11,10 @@ class NotificationList extends ResourceList {
 
     getInfo() {
         return {
+            icon: "bell-o",
             headline: "Notifications",
-            description: "Info about notifications …"
+            description: "Create your own notifications to receive e-mails whenever something interesting happens. " +
+            "No need to log into any control panel. Use the full power of SQL."
         }
     }
 }

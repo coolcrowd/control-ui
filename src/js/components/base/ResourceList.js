@@ -20,25 +20,39 @@ class ResourceList extends DataComponent {
 
         let children = this.state.loaded ? this.state.data.items.map((item) => {
             return (
-                <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname} onDelete={this._onDelete.bind(this)}/>
+                <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
+                                  onDelete={this._onDelete.bind(this)}/>
             );
         }) : [];
 
         let info = this.getInfo();
 
+        if (children.length === 0) {
+            children = [(
+                <li className="list-empty">
+                    <i className={"fa fa-3x fa-" + info.icon}/>
+                    <br/>
+                    You have no {info.headline.toLowerCase()} yet!<br/>
+                    Let's change that!
+                </li>
+            )];
+        }
+
         return (
             <div>
-                <h1>{info.headline}</h1>
-
-                <p>
-                    {info.description}
-                </p>
-
                 <div className="actions">
-                    <button className="resource-action action-constructive" onClick={this._onCreate.bind(this)}>
+                    <button className="action action-constructive" onClick={this._onCreate.bind(this)}>
                         <i className="fa fa-plus icon"/> Create
                     </button>
                 </div>
+
+                <h1>{info.headline}</h1>
+
+                <p className="info">
+                    {info.description}
+                </p>
+
+                <br/>
 
                 <Loader loaded={this.state.loaded} className="loader">
                     <ul className="list">
@@ -54,7 +68,7 @@ class ResourceList extends DataComponent {
     }
 
     _onDelete(id) {
-        let items = this.state.data.items.filter(function(i) {
+        let items = this.state.data.items.filter(function (i) {
             return i.id !== id;
         });
 

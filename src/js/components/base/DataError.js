@@ -11,7 +11,7 @@ class DataError extends React.Component {
                 </p>
 
                 <p style={{textAlign: "center"}}>
-                    <button type="button" onClick={this._onClick.bind(this)} className="resource-action">
+                    <button type="button" onClick={this._onClick.bind(this)} className="action">
                         <i className="fa fa-refresh icon"/>
                         Reload
                     </button>

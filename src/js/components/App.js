@@ -13,7 +13,7 @@ class App extends React.Component {
                             <i className="fa fa-bars" />
                         </label>
 
-                        <h1><Link to="/">CrowdControl</Link></h1>
+                        <h2><Link to="/">CrowdControl</Link></h2>
                         {/* change the <a>s to <Link>s */}
                         <ul>
                             <li><Link to="/experiments">Experiments</Link></li>

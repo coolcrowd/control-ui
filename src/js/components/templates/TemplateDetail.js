@@ -53,8 +53,8 @@ class TemplateDetail extends DataComponent {
 
                 content = (
                     <div>
-                        <div className="resource-actions">
-                            <Link to={this.props.location.pathname + "/edit"}>
+                        <div className="actions">
+                            <Link to={this.props.location.pathname + "/edit"} className="action">
                                 <i className="fa fa-pencil icon"/>
                                 Edit
                             </Link>

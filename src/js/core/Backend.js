@@ -157,6 +157,11 @@ function request(method, uri, data) {
                             id: 1,
                             name: "Mean Tweet",
                             content: "Lorem Ipsum ... {{Person:Person ...}}."
+                        },
+                        {
+                            id: 2,
+                            name: "Lorem Ipsum",
+                            content: "Lorem Ipsum ... {{Person:Person ...}}."
                         }
                     ]
                 }
@@ -174,6 +179,22 @@ function request(method, uri, data) {
                 data: {
                     id: 1,
                     name: "Mean Tweet",
+                    content: "Lorem Ipsum ... {{Person:Person ...}}."
+                }
+            });
+        });
+    }
+
+    if (method === "GET" && uri === "templates/2") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    id: 2,
+                    name: "Lorem Ipsum",
                     content: "Lorem Ipsum ... {{Person:Person ...}}."
                 }
             });

@@ -11,8 +11,11 @@ class ExperimentList extends ResourceList {
 
     getInfo() {
         return {
+            icon: "flask",
             headline: "Experiments",
-            description: "Info about experiments …"
+            description: "Experiments are creative tasks. " +
+            "Workers can give answers to these tasks and rate previous answers from other workers. " +
+            "Multiple platforms can be used to publish these tasks."
         }
     }
 }

@@ -19,7 +19,7 @@ class TemplateWizard extends Wizard {
         return {
             name: {
                 type: "text",
-                label: "Text",
+                label: "Name",
                 help: "Name to identify the template."
             },
             content: {

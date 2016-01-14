@@ -70,11 +70,11 @@
 .input-help {
   font-style: italic;
   font-size: 80%;
-  margin: 10px 0;
+  margin: 4px 0 10px 0;
 }
 
 .wizard input[type="number"] {
-  width: 65px;
+  width: 100px;
   display: inline-block;
   margin: 8px 0;
   padding: 0 8px;
@@ -88,4 +88,16 @@
   font-size: 80%;
   display: inline-block;
   margin: 3px 15px;
+}
+
+.warnings .fa {
+  margin: 0 6px;
+}
+
+.warnings h3 {
+  font-size: inherit;
+}
+
+.warnings li {
+  font-size: 85%;
 }

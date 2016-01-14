@@ -18,6 +18,7 @@ class App extends React.Component {
                         <ul>
                             <li><Link to="/experiments">Experiments</Link></li>
                             <li><Link to="/templates">Templates</Link></li>
+                            <li><Link to="/notifications">Notifications</Link></li>
                         </ul>
                     </div>
                 </div>

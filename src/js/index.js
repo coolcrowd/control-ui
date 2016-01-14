@@ -13,6 +13,9 @@ import TemplateList from "./components/templates/TemplateList";
 import TemplateDetail from "./components/templates/TemplateDetail";
 import TemplateWizard from "./components/templates/TemplateWizard";
 
+import NotificationList from "./components/notifications/NotificationList";
+import NotificationWizard from "./components/notifications/NotificationWizard";
+
 const container = document.createElement("div");
 
 render((
@@ -28,6 +31,10 @@ render((
             <Route path="templates/new" component={TemplateWizard}/>
             <Route path="templates/:id" component={TemplateDetail}/>
             <Route path="templates/:id/edit" component={TemplateWizard}/>
+
+            <Route path="notifications" component={NotificationList}/>
+            <Route path="notifications/new" component={NotificationWizard}/>
+            <Route path="notifications/:id/edit" component={NotificationWizard}/>
         </Route>
     </Router>
 ), container);

@@ -66,19 +66,19 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Base Payment",
                 help: "Basic payment a worker gets for completing a task.",
-                unit: "cent"
+                unit: "cents"
             },
             paymentAnswer: {
                 type: "number",
                 label: "Answer Payment",
                 help: "Payment for each creative answer.",
-                unit: "cent"
+                unit: "cents"
             },
             paymentRating: {
                 type: "number",
                 label: "Rating Payment",
                 help: "Payment for each rating.",
-                unit: "cent"
+                unit: "cents"
             },
             constraints: {
                 type: "list",

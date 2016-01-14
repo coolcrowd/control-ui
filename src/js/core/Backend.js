@@ -32,6 +32,48 @@ class Backend {
 function request(method, uri, data) {
     console.log(method + " " + uri + " " + JSON.stringify(data));
 
+    if (method === "GET" && uri === "notifications") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    items: [
+                        {
+                            id: 1,
+                            name: "Lorem Ipsum",
+                            description: "Lorem Ipsum ... {{Person:Person ...}}.",
+                            query: "SELECT * FROM ... WHERE x = 1",
+                            checkPeriod: 600,
+                            sendThreshold: 86400
+                        }
+                    ]
+                }
+            });
+        });
+    }
+
+    if (method === "GET" && uri === "notifications/1") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    id: 1,
+                    name: "Lorem Ipsum",
+                    description: "Lorem Ipsum ... {{Person:Person ...}}.",
+                    query: "SELECT * FROM ... WHERE x = 1",
+                    checkPeriod: 600,
+                    sendThreshold: 86400
+                }
+            });
+        });
+    }
+
     if (method === "GET" && uri === "experiments") {
         return new Promise((resolve) => {
             resolve({

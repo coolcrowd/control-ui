@@ -47,6 +47,9 @@ class Wizard extends React.Component {
         }, () => {
             if (!this.state.new) {
                 this._fetchData();
+            } else {
+                // Force validation on load
+                this._validateChanges(this.state.form, true);
             }
         });
     }
@@ -123,7 +126,7 @@ class Wizard extends React.Component {
         let oldForm = this.state.form;
 
         this.setState({
-            form: serialize(this.refs.form, {hash: true})
+            form: serialize(this.refs.form, {hash: true, empty: true})
         }, this._validateChanges.bind(this, oldForm));
     }
 
@@ -135,7 +138,7 @@ class Wizard extends React.Component {
 
         keys.forEach((key) => {
             if (forceValidation || oldForm[key] !== this.state.form[key]) {
-                if (form[key] && "validation" in form[key]) {
+                if ("validation" in form[key]) {
                     form[key].validation.validator(this.state.form[key]);
                 }
             }

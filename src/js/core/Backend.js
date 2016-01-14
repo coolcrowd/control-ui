@@ -30,6 +30,8 @@ class Backend {
 }
 
 function request(method, uri, data) {
+    console.log(method + " " + uri + " " + JSON.stringify(data));
+
     if (method === "GET" && uri === "experiments") {
         return new Promise((resolve) => {
             resolve({
@@ -60,6 +62,39 @@ function request(method, uri, data) {
                                     name: "Lorem"
                                 }
                             ]
+                        }
+                    ]
+                }
+            });
+        });
+    }
+
+    if (method === "GET" && uri === "experiments/1") {
+        return new Promise((resolve) => {
+            resolve({
+                meta: {
+                    status: 200,
+                    links: {}
+                },
+                data: {
+                    id: 1,
+                    title: "Lorem Ipsum",
+                    description: "Lorem Ipsum ... {{Person:Person ...}}.",
+                    algorithmTaskChooser: "",
+                    algorithmQualityAnswer: "",
+                    algorithmQualityRating: "",
+                    ratingPerAnswer: 5,
+                    paymentBase: 0,
+                    paymentAnswer: 10,
+                    paymentRating: 5,
+                    constraints: [
+                        {
+                            name: "rassistisch"
+                        }
+                    ],
+                    tags: [
+                        {
+                            name: "Lorem"
                         }
                     ]
                 }

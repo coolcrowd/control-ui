@@ -22,6 +22,7 @@ render((
 
             <Route path="experiments" component={ExperimentList}/>
             <Route path="experiments/new" component={ExperimentWizard}/>
+            <Route path="experiments/:id/edit" component={ExperimentWizard}/>
 
             <Route path="templates" component={TemplateList}/>
             <Route path="templates/new" component={TemplateWizard}/>

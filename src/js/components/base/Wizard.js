@@ -11,8 +11,8 @@ class Wizard extends React.Component {
         super();
 
         this.state = {
-            new: true,
-            loaded: true,
+            new: false,
+            loaded: false,
             failed: false,
             data: null,
             form: this.getDefaultForm()
@@ -40,7 +40,7 @@ class Wizard extends React.Component {
     componentDidMount() {
         this.setState({
             new: !("id" in this.props.params),
-            loaded: "id" in this.props.params,
+            loaded: !("id" in this.props.params),
             failed: false,
             data: null,
             form: this.getDefaultForm()
@@ -221,9 +221,9 @@ class Wizard extends React.Component {
     _renderFormElement(name, input) {
         let formElement = null;
 
-        if (input.type === "text") {
+        if (input.type === "text" || input.type === "number") {
             formElement = (
-                <input type="text" name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
+                <input type={input.type} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
                        key={name} onChange={this._onFormChange.bind(this)}
                        ref={name} value={this.state.form[name]}/>
             );
@@ -249,6 +249,14 @@ class Wizard extends React.Component {
                     {formElement}
                 </div>
             );
+        } else if (input.type === "list") {
+            formElement = (
+                <div>
+                    DISPLAY LIST HERE... // TODO
+                </div>
+            );
+        } else {
+            console.warn("Unknown type: " + input.type);
         }
 
         return (
@@ -261,6 +269,7 @@ class Wizard extends React.Component {
 
                 {/* form element itself */}
                 {formElement}
+                {"unit" in input ? <span className="input-unit">{input.unit}</span> : null}
 
                 {/* any validation result */}
                 {"validation" in input ? input.validation.renderer() : null}

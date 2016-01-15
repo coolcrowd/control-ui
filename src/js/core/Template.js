@@ -34,10 +34,6 @@ class Template {
         let ops = [];
 
         for (var name in placeholders) {
-            if (!placeholders.hasOwnProperty(name)) {
-                continue;
-            }
-
             if (name in data) {
                 placeholders[name].positions.forEach((position) => {
                     ops.push({

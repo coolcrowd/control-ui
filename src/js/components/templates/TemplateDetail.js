@@ -67,7 +67,7 @@ class TemplateDetail extends DataComponent {
                             </ResourceAction>
                         </div>
 
-                        <h1>{this.state.data.name}</h1>
+                        <h1>Template: {this.state.data.name}</h1>
 
                         <label className="input-label">Content</label>
                         <pre>{this.state.data.content}</pre>

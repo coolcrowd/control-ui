@@ -46,7 +46,7 @@ class NotificationDetail extends DataComponent {
                             </ResourceAction>
                         </div>
 
-                        <h1>{this.state.data.name}</h1>
+                        <h1>Notification: {this.state.data.name}</h1>
 
                         <label className="input-label">Description</label>
                         <pre>{this.state.data.description}</pre>

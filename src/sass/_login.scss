@@ -1,0 +1,58 @@
+.login-form {
+  margin: 100px auto;
+  padding: 15px 30px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  background: white;
+  width: 300px;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+.login-form .input-label {
+  font-size: 12px;
+  padding: 10px;
+  float: left;
+}
+
+.login-form input {
+  clear: left;
+  font-size: 16px;
+  border: 1px solid rgba(0,0,0,.1);
+  padding: 10px;
+}
+
+.login-submit {
+  margin: 20px 0 5px 0;
+}
+
+.login-submit button {
+  padding: 15px 30px;
+  font-size: 16px;
+}
+
+.login-submit button:disabled {
+  background: grey;
+}
+
+@keyframes shake {
+  0% { transform: translate(2px, 1px) rotate(0deg); border-color: #ffa5a2; background: #ffdada; }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(0px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(2px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(2px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); border-color: transparent; background: white; }
+}
+
+.shake-enter {
+  animation-name: shake;
+  animation-duration: 0.8s;
+  transform-origin: 50% 50%;
+  animation-iteration-count: 3;
+  animation-timing-function: linear;
+  animation-fill-mode: backwards;
+}

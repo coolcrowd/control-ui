@@ -151,17 +151,9 @@ class Wizard extends React.Component {
 
         if (this.state.new) {
             Backend.put(this.getDataUri(), this.state.form).then((resp) => {
-                console.log(resp); // TODO
-
-                let newId = "1"; // TODO
-
-                history.replaceState(null, this.props.location.pathname + "/" + newId);
+                history.replaceState(null, resolve(this.props.location.pathname + "/..").pathname + resp.data.id);
             }).catch((e) => {
-                console.log(e); // TODO
-
-                let newId = "1"; // TODO
-
-                history.replaceState(null, this.props.location.pathname + "/" + newId);
+                alert(JSON.stringify(e));
             });
         } else {
             let oldItem = this.state.data;
@@ -185,7 +177,7 @@ class Wizard extends React.Component {
                 let uri = resolve(this.props.location.pathname + "/..");
                 history.replaceState(null, uri.pathname.substring(0, uri.pathname.length - 1));
             }).catch((e) => {
-                console.log(e); // TODO: Show Error!
+                alert(JSON.stringify(e));
             });
         }
     }

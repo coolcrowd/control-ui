@@ -5,12 +5,12 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <input type="checkbox" id="mobile-menu-switch" className="no-display" />
+                <input type="checkbox" id="mobile-menu-switch" className="no-display"/>
 
                 <div className="menu">
                     <div className="max-width">
                         <label id="mobile-menu-button" htmlFor="mobile-menu-switch">
-                            <i className="fa fa-bars" />
+                            <i className="fa fa-bars"/>
                         </label>
 
                         <h2><Link to="/">CrowdControl</Link></h2>
@@ -20,6 +20,10 @@ class App extends React.Component {
                             <li><Link to="/templates">Templates</Link></li>
                             <li><Link to="/notifications">Notifications</Link></li>
                         </ul>
+
+                        <button type="button" className="logout" onClick={this._onLogout.bind(this)}>
+                            <i className="fa fa-power-off icon"/>
+                        </button>
                     </div>
                 </div>
 
@@ -30,6 +34,11 @@ class App extends React.Component {
                 </div>
             </div>
         )
+    }
+
+    _onLogout() {
+        localStorage.removeItem("credentials");
+        window.location = "/login";
     }
 }
 

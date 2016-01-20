@@ -16,6 +16,7 @@
     "form-serialize": "^0.7.0",
     "history": "^1.17.0",
     "react": "^0.14",
+    "react-addons-css-transition-group": "^0.14.6",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.3"
   },
@@ -26,6 +27,7 @@
     "browser-sync": "^2.7.1",
     "browserify": "^9.0.3",
     "browserify-istanbul": "^0.2.1",
+    "browserify-optional": "^1.0.0",
     "browserify-shim": "^3.8.2",
     "connect-history-api-fallback": "^1.1.0",
     "gulp": "^3.8.11",

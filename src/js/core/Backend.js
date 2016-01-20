@@ -1,7 +1,8 @@
 import HttpException from "./HttpException";
 import history from "../history";
+import config from "../config";
 
-const root = "http://localhost:3000/";
+const credentials = JSON.parse(localStorage.getItem("credentials"));
 
 class Backend {
     static request(method, uri, data) {
@@ -144,78 +145,10 @@ function request(method, uri, data) {
         });
     }
 
-    if (method === "GET" && uri === "templates") {
-        return new Promise((resolve) => {
-            resolve({
-                meta: {
-                    status: 200,
-                    links: {}
-                },
-                data: {
-                    items: [
-                        {
-                            id: 1,
-                            name: "Mean Tweet",
-                            content: "Lorem Ipsum ... {{Person:Person ...}}."
-                        },
-                        {
-                            id: 2,
-                            name: "Lorem Ipsum",
-                            content: "Lorem Ipsum ... {{Person:Person ...}}."
-                        }
-                    ]
-                }
-            });
-        });
-    }
-
-    if (method === "GET" && uri === "templates/1") {
-        return new Promise((resolve) => {
-            resolve({
-                meta: {
-                    status: 200,
-                    links: {}
-                },
-                data: {
-                    id: 1,
-                    name: "Mean Tweet",
-                    content: "Lorem Ipsum ... {{Person:Person ...}}."
-                }
-            });
-        });
-    }
-
-    if (method === "GET" && uri === "templates/2") {
-        return new Promise((resolve) => {
-            resolve({
-                meta: {
-                    status: 200,
-                    links: {}
-                },
-                data: {
-                    id: 2,
-                    name: "Lorem Ipsum",
-                    content: "Lorem Ipsum ... {{Person:Person ...}}."
-                }
-            });
-        });
-    }
-
-    if (method === "DELETE" && uri === "templates/1") {
-        return new Promise((resolve) => {
-            resolve({
-                meta: {
-                    status: 204,
-                    links: {}
-                },
-                data: null
-            });
-        });
-    }
-
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open(method, root + uri, true); // TODO: Username + Password
+        xhr.open(method, config.apiRoot + uri, true);
+        xhr.setRequestHeader("Authorization", "Basic " + btoa(credentials.username + ":" + credentials.password));
 
         xhr.onreadystatechange = function () {
             if (this.readyState !== 4) {
@@ -234,7 +167,7 @@ function request(method, uri, data) {
                 }
             }
 
-            if (this.status === 200 || this.status === 201) {
+            if (this.status === 200 || this.status === 201 || this.status === 204) {
                 resolve({
                     meta: {
                         status: this.status,

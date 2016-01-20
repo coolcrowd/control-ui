@@ -42,7 +42,7 @@ module.exports = {
             dest: dest,
             outputName: 'bundle.js',
             extensions: [],
-            transform: [flaggedBabelify]
+            transform: [flaggedBabelify, "browserify-optional"]
         }]
     },
     production: {

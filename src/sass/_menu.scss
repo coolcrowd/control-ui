@@ -48,6 +48,22 @@
   color: white;
 }
 
+.logout {
+  float: right;
+  margin-right: 20px;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  line-height: 30px;
+  background: transparent;
+}
+
 @media (max-width: 600px) {
   .menu .max-width {
     padding: 0 5px;

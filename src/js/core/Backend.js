@@ -51,7 +51,10 @@ class Backend {
                     try {
                         data = JSON.parse(body);
                     } catch (e) {
+                        Backend._log("Couldn't parse response body…");
+
                         reject(new HttpException(e));
+
                         return;
                     }
                 }
@@ -60,7 +63,7 @@ class Backend {
                     resolve({
                         meta: {
                             status: this.status,
-                            links: parseLinkHeader(this.getResponseHeader("Link"))
+                            links: parseLinkHeader(this.getResponseHeader("Link")) || {}
                         },
                         data: data
                     });
@@ -68,7 +71,7 @@ class Backend {
                     reject({
                         meta: {
                             status: this.status,
-                            links: parseLinkHeader(this.getResponseHeader("Link"))
+                            links: parseLinkHeader(this.getResponseHeader("Link")) || {}
                         },
                         data: data || {
                             code: "unknown",

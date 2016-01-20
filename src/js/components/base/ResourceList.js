@@ -109,13 +109,13 @@ class ResourceList extends DataComponent {
     }
 
     _onNext() {
-        let from = encodeURIComponent(this.state.meta.links.next.from);
+        let from = encodeURIComponent(this.state.meta.links.next.from || "0");
         let asc = encodeURIComponent(this.state.meta.links.next.asc || "true");
         history.replaceState(null, this.props.location.pathname + "?from=" + from + "&asc=" + asc);
     }
 
     _onPrev() {
-        let from = encodeURIComponent(this.state.meta.links.prev.from);
+        let from = encodeURIComponent(this.state.meta.links.prev.from || "0");
         let asc = encodeURIComponent(this.state.meta.links.prev.asc || "true");
         history.replaceState(null, this.props.location.pathname + "?from=" + from + "&asc=" + asc);
     }

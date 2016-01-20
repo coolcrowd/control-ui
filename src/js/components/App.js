@@ -1,11 +1,12 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { Link } from "react-router";
 
 class App extends React.Component {
     render() {
         return (
             <div>
-                <input type="checkbox" id="mobile-menu-switch" className="no-display"/>
+                <input type="checkbox" id="mobile-menu-switch" className="no-display" ref="mobileSwitch"/>
 
                 <div className="menu">
                     <div className="max-width">
@@ -16,9 +17,9 @@ class App extends React.Component {
                         <h2><Link to="/">CrowdControl</Link></h2>
                         {/* change the <a>s to <Link>s */}
                         <ul>
-                            <li><Link to="/experiments">Experiments</Link></li>
-                            <li><Link to="/templates">Templates</Link></li>
-                            <li><Link to="/notifications">Notifications</Link></li>
+                            <li><Link to="/experiments" onClick={this._switchMobile.bind(this)}>Experiments</Link></li>
+                            <li><Link to="/templates" onClick={this._switchMobile.bind(this)}>Templates</Link></li>
+                            <li><Link to="/notifications" onClick={this._switchMobile.bind(this)}>Notifications</Link></li>
                         </ul>
 
                         <button type="button" className="logout" onClick={this._onLogout.bind(this)}>
@@ -39,6 +40,10 @@ class App extends React.Component {
     _onLogout() {
         localStorage.removeItem("credentials");
         window.location = "/login";
+    }
+
+    _switchMobile() {
+        ReactDOM.findDOMNode(this.refs.mobileSwitch).checked = false;
     }
 }
 

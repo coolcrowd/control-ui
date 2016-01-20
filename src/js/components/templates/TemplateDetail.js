@@ -15,7 +15,7 @@ class TemplateDetail extends DataComponent {
         let newId = next.params.id;
 
         if (oldId !== newId) {
-            this._fetchData();
+            this.fetchData();
         }
     }
 

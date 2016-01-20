@@ -17,7 +17,7 @@ class ResourceList extends DataComponent {
             );
         }
 
-        let children = this.state.loaded ? this.state.data.items.map((item) => {
+        let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
             return (
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
                                   onDelete={this._onDelete.bind(this)} backend={this.props.backend}/>

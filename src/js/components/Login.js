@@ -19,7 +19,7 @@ class Login extends React.Component {
         let key = "login-attempt-" + this.state.attempt;
 
         return (
-            <CSSTransitionGroup transitionName="shake" transitionEnterTimeout={700} transitionLeaveTimeout={100}>
+            <CSSTransitionGroup transitionName="shake" transitionEnterTimeout={700} transitionLeave={false}>
                 <form key={key} className="login-form" onSubmit={this._onSubmit.bind(this)}>
                     <h1>Login</h1>
 

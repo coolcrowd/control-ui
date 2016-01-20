@@ -25,12 +25,14 @@ class Login extends React.Component {
 
                     <div className="input">
                         <label className="input-label">Username</label>
-                        <input autoFocus type="text" ref="username" value={this.state.username} onChange={this._onChange.bind(this)}/>
+                        <input autoFocus type="text" ref="username" value={this.state.username}
+                               onChange={this._onChange.bind(this)}/>
                     </div>
 
                     <div className="input">
                         <label className="input-label">Password</label>
-                        <input type="password" ref="password" value={this.state.password} onChange={this._onChange.bind(this)}/>
+                        <input type="password" ref="password" value={this.state.password}
+                               onChange={this._onChange.bind(this)}/>
                     </div>
 
                     <div className="login-submit">
@@ -71,13 +73,23 @@ class Login extends React.Component {
                 });
 
                 ReactDOM.findDOMNode(this.refs.password).focus();
-            } else {
+            } else if (xhr.status === 200 || xhr.status === 204 || xhr.status === 404) {
                 window.localStorage.setItem("credentials", JSON.stringify({
                     username: username,
                     password: password
                 }));
 
                 window.location = "/";
+            } else {
+                alert("Internal error while authenticating…");
+
+                this.setState({
+                    loading: false,
+                    password: "",
+                    attempt: this.state.attempt + 1
+                });
+
+                ReactDOM.findDOMNode(this.refs.password).focus();
             }
         };
 

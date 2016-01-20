@@ -21,6 +21,8 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 
 const container = document.createElement("div");
+document.body.appendChild(container);
+
 const credentials = localStorage.getItem("credentials");
 
 if (credentials) {
@@ -56,5 +58,3 @@ if (credentials) {
         </Router>
     ), container);
 }
-
-document.body.appendChild(container);

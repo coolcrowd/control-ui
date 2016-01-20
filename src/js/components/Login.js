@@ -15,13 +15,6 @@ class Login extends React.Component {
         };
     }
 
-    componentDidMount() {
-        // Autofocus doesn't work, use async hack...
-        setTimeout(() => {
-            ReactDOM.findDOMNode(this.refs.username).focus();
-        }, 1);
-    }
-
     render() {
         let key = "login-attempt-" + this.state.attempt;
 
@@ -32,12 +25,12 @@ class Login extends React.Component {
 
                     <div className="input">
                         <label className="input-label">Username</label>
-                        <input autofocus type="text" name="username" ref="username" value={this.state.username} onChange={this._onChange.bind(this)}/>
+                        <input autoFocus type="text" ref="username" value={this.state.username} onChange={this._onChange.bind(this)}/>
                     </div>
 
                     <div className="input">
                         <label className="input-label">Password</label>
-                        <input type="password" name="password" ref="password" value={this.state.password} onChange={this._onChange.bind(this)}/>
+                        <input type="password" ref="password" value={this.state.password} onChange={this._onChange.bind(this)}/>
                     </div>
 
                     <div className="login-submit">

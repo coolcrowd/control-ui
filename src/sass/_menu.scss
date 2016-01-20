@@ -55,6 +55,7 @@
 
 .logout, #mobile-menu-button {
   display: inline-block;
+  margin: 0;
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
@@ -64,12 +65,16 @@
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
   line-height: 30px;
+  width: 20px;
   background: transparent;
+  box-sizing: content-box;
+  text-align: center;
 }
 
 @media (max-width: 600px) {
   #mobile-menu-button {
     margin-left: -20px;
+    float: left;
   }
 
   .logout {
@@ -77,7 +82,7 @@
   }
 
   .menu .max-width {
-    padding: 0 5px;
+    padding: 0;
   }
 
   .menu ul {

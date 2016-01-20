@@ -14,7 +14,7 @@ class App extends React.Component {
                             <i className="fa fa-bars"/>
                         </label>
 
-                        <h2><Link to="/">CrowdControl</Link></h2>
+                        <h2><Link to="/" onClick={this._switchMobile.bind(this)}>CrowdControl</Link></h2>
                         {/* change the <a>s to <Link>s */}
                         <ul>
                             <li><Link to="/experiments" onClick={this._switchMobile.bind(this)}>Experiments</Link></li>

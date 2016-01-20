@@ -69,11 +69,15 @@
   .list > li {
     display: block;
     line-height: 40px;
-    padding: 10px 0;
+    padding: 10px 25px;
+    background: white;
+    margin: 0 -25px;
+    width: calc(100% + 50px);
+    border-color: #eee !important;
   }
 
   .list > li > a {
-    display: block;
+    display: block !important;
     font-size: 110%;
   }
 

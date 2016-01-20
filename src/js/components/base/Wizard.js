@@ -1,5 +1,4 @@
 import React from "react";
-import Backend from "../../core/Backend";
 import Template from "../../core/Template";
 import Loader from "../../core/Loader";
 import history from "../../history";
@@ -82,7 +81,7 @@ class Wizard extends React.Component {
     }
 
     _fetchData() {
-        Backend.get(this.getDataUri() + "/" + this.props.params.id).then((response) => {
+        this.props.backend.request("GET", this.getDataUri() + "/" + this.props.params.id).then((response) => {
             if (!this.ignoreLastFetch) {
                 let form = response.data;
                 let defaultForm = this.getDefaultForm();
@@ -150,7 +149,7 @@ class Wizard extends React.Component {
         e.stopPropagation();
 
         if (this.state.new) {
-            Backend.put(this.getDataUri(), this.state.form).then((resp) => {
+            this.props.backend.request("PUT", this.getDataUri(), this.state.form).then((resp) => {
                 history.replaceState(null, resolve(this.props.location.pathname + "/..").pathname + resp.data.id);
             }).catch((e) => {
                 alert(JSON.stringify(e));
@@ -173,7 +172,7 @@ class Wizard extends React.Component {
                 return;
             }
 
-            Backend.patch(this.getDataUri() + "/" + this.props.params.id, newItem).then(() => {
+            this.props.backend.request("PATCH", this.getDataUri() + "/" + this.props.params.id, newItem).then(() => {
                 let uri = resolve(this.props.location.pathname + "/..");
                 history.replaceState(null, uri.pathname.substring(0, uri.pathname.length - 1));
             }).catch((e) => {

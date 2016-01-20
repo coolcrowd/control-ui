@@ -1,5 +1,6 @@
 let config = {
-    apiRoot: "/api/"
+    apiRoot: "/api/",
+    authentication: false
 };
 
 try {

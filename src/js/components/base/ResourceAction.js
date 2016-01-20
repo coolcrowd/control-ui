@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import Backend from "../../core/Backend";
 import classNames from "classnames";
 
 class ResourceAction extends React.Component {
@@ -48,7 +47,7 @@ class ResourceAction extends React.Component {
             loading: true
         });
 
-        Backend.request(this.props.method.toUpperCase(), this.props.uri, this.props.data).then((response) => {
+        this.props.backend.request(this.props.method.toUpperCase(), this.props.uri, this.props.data).then((response) => {
             if ("onSuccess" in this.props) {
                 this.props.onSuccess(response);
             }

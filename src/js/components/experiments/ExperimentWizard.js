@@ -1,7 +1,5 @@
 import React from "react";
-import Backend from "../../core/Backend";
 import Template from "../../core/Template";
-import Loader from "../../core/Loader";
 import Wizard from "../base/Wizard";
 
 class ExperimentWizard extends Wizard {

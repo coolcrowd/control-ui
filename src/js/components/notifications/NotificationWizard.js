@@ -1,5 +1,4 @@
 import React from "react";
-import Backend from "../../core/Backend";
 import Loader from "../../core/Loader";
 import Wizard from "../base/Wizard";
 

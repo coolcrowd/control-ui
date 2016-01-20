@@ -19,7 +19,8 @@ class ResourceListItem extends React.Component {
                     <ResourceAction icon="trash" method="delete" uri={this.props.basepath + "/" + this.props.item.id}
                                     onClick={() => window.confirm("Do you really want to delete this item?")}
                                     onSuccess={() => this.props.onDelete(this.props.item.id)}
-                                    onError={() => window.alert("Could not delete this item!")}>
+                                    onError={() => window.alert("Could not delete this item!")}
+                                    backend={this.props.backend}>
                         Delete
                     </ResourceAction>
                 </div>
@@ -29,4 +30,3 @@ class ResourceListItem extends React.Component {
 }
 
 export default ResourceListItem;
-

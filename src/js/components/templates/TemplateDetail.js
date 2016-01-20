@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import Backend from "../../core/Backend";
 import Loader from "../../core/Loader";
 import DataComponent from "./../base/DataComponent";
 import ResourceAction from "./../base/ResourceAction";
@@ -62,7 +61,8 @@ class TemplateDetail extends DataComponent {
                             <ResourceAction icon="trash" method="DELETE" uri={"templates/" + this.props.params.id}
                                             onClick={() => window.confirm("Do you really want to delete this template?")}
                                             onSuccess={() => history.replaceState(null, "/templates")}
-                                            onError={() => window.alert("Deletion failed.")}>
+                                            onError={() => window.alert("Deletion failed.")}
+                                            backend={this.props.backend}>
                                 Delete
                             </ResourceAction>
                         </div>

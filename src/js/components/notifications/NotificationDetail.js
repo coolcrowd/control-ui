@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import Backend from "../../core/Backend";
 import Loader from "../../core/Loader";
 import DataComponent from "../base/DataComponent";
 import DataError from "../base/DataError";
@@ -41,7 +40,8 @@ class NotificationDetail extends DataComponent {
                             <ResourceAction icon="trash" method="DELETE" uri={"notifications/" + this.props.params.id}
                                             onClick={() => window.confirm("Do you really want to delete this notification?")}
                                             onSuccess={() => history.replaceState(null, "/notifications")}
-                                            onError={() => window.alert("Deletion failed.")}>
+                                            onError={() => window.alert("Deletion failed.")}
+                                            backend={this.props.backend}>
                                 Delete
                             </ResourceAction>
                         </div>

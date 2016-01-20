@@ -1,6 +1,5 @@
 import React from "react";
 import history from "../../history";
-import Backend from "../../core/Backend";
 import Loader from "../../core/Loader";
 import DataComponent from "./../base/DataComponent";
 import ResourceListItem from "./ResourceListItem";
@@ -21,7 +20,7 @@ class ResourceList extends DataComponent {
         let children = this.state.loaded ? this.state.data.items.map((item) => {
             return (
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
-                                  onDelete={this._onDelete.bind(this)}/>
+                                  onDelete={this._onDelete.bind(this)} backend={this.props.backend}/>
             );
         }) : [];
 

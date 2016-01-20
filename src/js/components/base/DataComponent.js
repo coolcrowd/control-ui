@@ -1,6 +1,5 @@
 import React from "react";
 import history from "../../history";
-import Backend from "../../core/Backend";
 import Loader from "../../core/Loader";
 
 class DataComponent extends React.Component {
@@ -23,7 +22,7 @@ class DataComponent extends React.Component {
     }
 
     _fetchData() {
-        Backend.get(this.getDataUri()).then((response) => {
+        this.props.backend.request("GET", this.getDataUri()).then((response) => {
             if (!this.ignoreLastFetch) {
                 this.setState({
                     data: response.data,
@@ -42,4 +41,3 @@ class DataComponent extends React.Component {
 }
 
 export default DataComponent;
-

@@ -33,15 +33,18 @@
   text-align: right;
 }
 
+.list-actions > .action {
+  color: #08e !important;
+  background: transparent !important;
+  border-bottom: 0;
+}
+
 .list-actions > .action-constructive {
   color: #00ac4d !important;
-  background: transparent !important;
 }
 
 .list-actions > .action-destructive {
   color: #ab3900 !important;
-  background: transparent !important;
-  border-bottom: 0;
 }
 
 .list-empty {

@@ -48,7 +48,11 @@ class TemplateWizard extends Wizard {
         };
     }
 
-    getDataUri() {
+    getCollectionUri(query) {
+        if (typeof query !== "undefined") {
+            return "templates?" + query;
+        }
+
         return "templates";
     }
 

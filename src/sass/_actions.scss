@@ -20,7 +20,13 @@
   font-family: "Lato", sans-serif;
 }
 
-.action:hover {
+.action:disabled {
+  opacity: .5;
+  background: #ccc !important;
+  cursor: default;
+}
+
+.action:hover:not(:disabled) {
   box-shadow: 0 0 0 1000px rgba(0,0,0,.05) inset;
 }
 

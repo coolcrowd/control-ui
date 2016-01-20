@@ -36,6 +36,14 @@ class Wizard extends React.Component {
         return form;
     }
 
+    getCollectionUri(query) {
+        return "[override-this]";
+    }
+
+    getItemUri(id) {
+        return this.getCollectionUri() + "/" + id;
+    }
+
     componentDidMount() {
         this.setState({
             new: !("id" in this.props.params),
@@ -45,7 +53,7 @@ class Wizard extends React.Component {
             form: this.getDefaultForm()
         }, () => {
             if (!this.state.new) {
-                this._fetchData();
+                this.fetchData();
             } else {
                 // Force validation on load
                 this._validateChanges(this.state.form, true);
@@ -60,10 +68,10 @@ class Wizard extends React.Component {
                 let newId = next.params.id;
 
                 if (oldId !== newId) {
-                    this._fetchData();
+                    this.fetchData();
                 }
             } else {
-                this._fetchData();
+                this.fetchData();
             }
         } else {
             this.setState({
@@ -80,8 +88,8 @@ class Wizard extends React.Component {
         this.ignoreLastFetch = true;
     }
 
-    _fetchData() {
-        this.props.backend.request("GET", this.getDataUri() + "/" + this.props.params.id).then((response) => {
+    fetchData() {
+        this.props.backend.request("GET", this.getItemUri(this.props.params.id)).then((response) => {
             if (!this.ignoreLastFetch) {
                 let form = response.data;
                 let defaultForm = this.getDefaultForm();
@@ -149,7 +157,7 @@ class Wizard extends React.Component {
         e.stopPropagation();
 
         if (this.state.new) {
-            this.props.backend.request("PUT", this.getDataUri(), this.state.form).then((resp) => {
+            this.props.backend.request("PUT", this.getCollectionUri(), this.state.form).then((resp) => {
                 history.replaceState(null, resolve(this.props.location.pathname + "/..").pathname + resp.data.id);
             }).catch((e) => {
                 alert(JSON.stringify(e));
@@ -172,7 +180,7 @@ class Wizard extends React.Component {
                 return;
             }
 
-            this.props.backend.request("PATCH", this.getDataUri() + "/" + this.props.params.id, newItem).then(() => {
+            this.props.backend.request("PATCH", this.getItemUri(this.props.params.id), newItem).then(() => {
                 let uri = resolve(this.props.location.pathname + "/..");
                 history.replaceState(null, uri.pathname.substring(0, uri.pathname.length - 1));
             }).catch((e) => {

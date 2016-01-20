@@ -39,7 +39,11 @@ class NotificationWizard extends Wizard {
         };
     }
 
-    getDataUri() {
+    getCollectionUri(query) {
+        if (typeof query !== "undefined") {
+            return "notifications?" + query;
+        }
+
         return "notifications";
     }
 

@@ -93,7 +93,11 @@ class ExperimentWizard extends Wizard {
         return base;
     }
 
-    getDataUri() {
+    getCollectionUri(query) {
+        if (typeof query !== "undefined") {
+            return "experiments?" + query;
+        }
+
         return "experiments";
     }
 }

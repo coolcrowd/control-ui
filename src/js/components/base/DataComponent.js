@@ -9,7 +9,11 @@ class DataComponent extends React.Component {
         this.state = {
             loaded: false,
             failed: false,
-            data: null
+            data: null,
+            meta: {
+                status: null,
+                links: {}
+            }
         }
     }
 
@@ -27,16 +31,27 @@ class DataComponent extends React.Component {
                 this.setState({
                     data: response.data,
                     loaded: true,
-                    failed: false
+                    failed: false,
+                    meta: response.meta
                 });
+
+                this.onFetched();
             }
-        }).catch(() => {
+        }).catch((e) => {
             this.setState({
                 data: null,
                 loaded: true,
-                failed: true
+                failed: true,
+                meta: "meta" in e ? e.meta : {
+                    status: null,
+                    links: {}
+                }
             });
         });
+    }
+
+    onFetched() {
+
     }
 }
 

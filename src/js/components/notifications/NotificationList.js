@@ -3,7 +3,11 @@ import history from "../../history";
 import ResourceList from "./../base/ResourceList";
 
 class NotificationList extends ResourceList {
-    getDataUri() {
+    getCollectionUri(query) {
+        if (typeof query !== "undefined") {
+            return "notifications?" + query;
+        }
+
         return "notifications";
     }
 

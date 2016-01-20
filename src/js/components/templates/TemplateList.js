@@ -3,7 +3,11 @@ import history from "../../history";
 import ResourceList from "./../base/ResourceList";
 
 class TemplateList extends ResourceList {
-    getDataUri() {
+    getCollectionUri(query) {
+        if (typeof query !== "undefined") {
+            return "templates?" + query;
+        }
+
         return "templates";
     }
 

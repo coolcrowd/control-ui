@@ -1,5 +1,6 @@
 import HttpException from "./HttpException";
 import history from "../history";
+import parseLinkHeader from "parse-link-header";
 
 /**
  * Talks to the backend.
@@ -59,9 +60,7 @@ class Backend {
                     resolve({
                         meta: {
                             status: this.status,
-                            links: {
-                                // TODO: Parse Links
-                            }
+                            links: parseLinkHeader(this.getResponseHeader("Link"))
                         },
                         data: data
                     });
@@ -69,7 +68,7 @@ class Backend {
                     reject({
                         meta: {
                             status: this.status,
-                            links: {}
+                            links: parseLinkHeader(this.getResponseHeader("Link"))
                         },
                         data: data || {
                             code: "unknown",

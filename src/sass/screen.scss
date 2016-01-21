@@ -90,6 +90,20 @@ pre {
   word-wrap: break-word;
 }
 
+.key {
+  font-size: 13px;
+  background: #eee;
+  border: 1px solid rgba(0,0,0,.1);
+  border-bottom: 2px solid rgba(0,0,0,.2);
+  padding: 2px 4px;
+  display: inline-block;
+  font-family: "Lato", sans-serif;
+  border-radius: 3px;
+  min-width: 20px;
+  text-align: center;
+  margin: 3px;
+}
+
 .no-display {
   display: none !important;
 }
@@ -114,3 +128,4 @@ pre {
 @import "loader";
 @import "login";
 @import "pagination";
+@import "dialog";

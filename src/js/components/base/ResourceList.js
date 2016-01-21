@@ -5,13 +5,35 @@ import Loader from "../../core/Loader";
 import DataComponent from "./../base/DataComponent";
 import ResourceListItem from "./ResourceListItem";
 import DataError from "./DataError";
+import Combokeys from "combokeys";
 
 class ResourceList extends DataComponent {
+    constructor() {
+        super();
+
+        this.combokeys = new Combokeys(document.body);
+    }
+
+    componentDidMount() {
+        this.combokeys.bind("j", this._onPrev.bind(this));
+        this.combokeys.bind("k", this._onNext.bind(this));
+
+        return super.componentDidMount();
+    }
+
+    componentWillLeave() {
+        this.combokeys.detach();
+
+        return super.componentWillUnmount();
+    }
+
     componentWillReceiveProps(next) {
         if (next.location.query !== this.props.location.query) {
             // trigger after new props are applied
             setTimeout(this.fetchData.bind(this), 1);
         }
+
+        return super.componentWillReceiveProps(next);
     }
 
     getDataUri() {
@@ -109,12 +131,20 @@ class ResourceList extends DataComponent {
     }
 
     _onNext() {
+        if (!("next" in this.state.meta.links)) {
+            return;
+        }
+
         let from = encodeURIComponent(this.state.meta.links.next.from || "0");
         let asc = encodeURIComponent(this.state.meta.links.next.asc || "true");
         history.replaceState(null, this.props.location.pathname + "?from=" + from + "&asc=" + asc);
     }
 
     _onPrev() {
+        if (!("prev" in this.state.meta.links)) {
+            return;
+        }
+
         let from = encodeURIComponent(this.state.meta.links.prev.from || "0");
         let asc = encodeURIComponent(this.state.meta.links.prev.asc || "true");
         history.replaceState(null, this.props.location.pathname + "?from=" + from + "&asc=" + asc);

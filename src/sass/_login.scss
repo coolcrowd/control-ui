@@ -1,24 +1,53 @@
+.login {
+  margin: auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-inner {
+  max-width: 300px;
+  margin: auto;
+  padding: 20px 0 120px 0; /* logo */
+}
+
+.login-logo {
+  margin: 30px;
+}
+
 .login-form {
-  margin: 100px auto;
-  padding: 15px 30px;
+  padding: 30px;
   box-shadow: 0 1px 2px rgba(0,0,0,.1);
   background: white;
-  width: 300px;
   text-align: center;
   border: 1px solid transparent;
 }
 
+.login-form h1 {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0;
+  margin: -10px 0 5px 0;
+  font-style: normal;
+  color: #666;
+}
+
 .login-form .input-label {
   font-size: 12px;
-  padding: 10px;
+  margin: 20px 0 10px 0;
   float: left;
 }
 
 .login-form input {
+  margin: 0;
   clear: left;
   font-size: 16px;
   border: 1px solid rgba(0,0,0,.1);
   padding: 10px;
+  width: 100%;
 }
 
 .login-submit {
@@ -26,6 +55,8 @@
 }
 
 .login-submit button {
+  margin: 0;
+  width: 100%;
   padding: 15px 30px;
   font-size: 16px;
 }
@@ -55,4 +86,10 @@
   animation-iteration-count: 3;
   animation-timing-function: linear;
   animation-fill-mode: backwards;
+}
+
+@media (max-width: 600px) {
+  .login-inner {
+    padding: 0;
+  }
 }

@@ -19,29 +19,36 @@ class Login extends React.Component {
         let key = "login-attempt-" + this.state.attempt;
 
         return (
-            <CSSTransitionGroup transitionName="shake" transitionEnterTimeout={700} transitionLeave={false}>
-                <form key={key} className="login-form" onSubmit={this._onSubmit.bind(this)}>
-                    <h1>Login</h1>
+            <div className="login">
+                <div className="login-inner">
+                    <img className="login-logo" src="/img/logo.png" width="200" height="48" alt="CrowdControl"
+                         title="CrowdControl"/>
 
-                    <div className="input">
-                        <label className="input-label">Username</label>
-                        <input autoFocus type="text" ref="username" value={this.state.username}
-                               onChange={this._onChange.bind(this)}/>
-                    </div>
+                    <CSSTransitionGroup transitionName="shake" transitionEnterTimeout={700} transitionLeave={false}>
+                        <form key={key} className="login-form" onSubmit={this._onSubmit.bind(this)}>
+                            <h1>Log In</h1>
 
-                    <div className="input">
-                        <label className="input-label">Password</label>
-                        <input type="password" ref="password" value={this.state.password}
-                               onChange={this._onChange.bind(this)}/>
-                    </div>
+                            <div className="input">
+                                <label className="input-label">Username</label>
+                                <input autoFocus type="text" ref="username" value={this.state.username}
+                                       onChange={this._onChange.bind(this)}/>
+                            </div>
 
-                    <div className="login-submit">
-                        <button className="action" type="submit" disabled={this.state.loading}>
-                            Login
-                        </button>
-                    </div>
-                </form>
-            </CSSTransitionGroup>
+                            <div className="input">
+                                <label className="input-label">Password</label>
+                                <input type="password" ref="password" value={this.state.password}
+                                       onChange={this._onChange.bind(this)}/>
+                            </div>
+
+                            <div className="login-submit">
+                                <button className="action" type="submit" disabled={this.state.loading}>
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </CSSTransitionGroup>
+                </div>
+            </div>
         );
     }
 

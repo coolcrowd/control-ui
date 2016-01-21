@@ -1,6 +1,6 @@
 .menu {
   border-bottom: 1px solid rgba(0,0,0,.1);
-  background: #d6606d;
+  background: #eee;
   padding: 0 20px;
   line-height: 30px;
 }
@@ -8,9 +8,17 @@
 .menu h2 {
   font-size: inherit;
   display: inline-block;
-  line-height: inherit;
   padding: 0;
   margin: 0;
+}
+
+.menu h2 a {
+  line-height: 24px;
+  padding: 13px 20px;
+}
+
+.menu-logo {
+  vertical-align: top;
 }
 
 .menu ul {
@@ -29,7 +37,7 @@
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
+  color: #777;
   text-decoration: none;
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
@@ -39,6 +47,7 @@
 .menu a:hover {
   background: rgba(0,0,0,.05);
   border-bottom-color: rgba(0,0,0,.1);
+  color: #333;
 }
 
 #mobile-menu-button {
@@ -58,7 +67,7 @@
   margin: 0;
   padding: 10px 20px;
   font-size: 16px;
-  color: #fff;
+  color: #777;
   text-decoration: none;
   border-left: 0;
   border-right: 0;
@@ -74,7 +83,6 @@
 @media (max-width: 600px) {
   #mobile-menu-button {
     margin-left: -20px;
-    float: left;
   }
 
   .logout {
@@ -83,6 +91,11 @@
 
   .menu .max-width {
     padding: 0;
+    display: flex;
+  }
+
+  .menu h2 {
+    flex-grow: 1;
   }
 
   .menu ul {
@@ -114,6 +127,11 @@
 
   .menu a {
     display: block;
+    color: #ccc;
+  }
+
+  .menu a:hover {
+    color: #eee;
   }
 }
 

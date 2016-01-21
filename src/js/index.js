@@ -38,6 +38,7 @@ const renderLoggedIn = (authenticator) => {
         <Router history={history} createElement={createElement}>
             <Route path="/" component={App}>
                 <IndexRoute component={Welcome}/>
+                <Redirect from="/login" to="/"/>
 
                 <Route path="experiments" component={ExperimentList}/>
                 <Route path="experiments/new" component={ExperimentWizard}/>

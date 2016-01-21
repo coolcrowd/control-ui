@@ -39,7 +39,9 @@ class App extends React.Component {
                             <i className="fa fa-bars"/>
                         </label>
 
-                        <h2><Link to="/" onClick={this._switchMobile.bind(this)}>CrowdControl</Link></h2>
+                        <h2><Link to="/" onClick={this._switchMobile.bind(this)}>
+                            <img className="menu-logo" src="/img/logo.png" width="100" height="24" alt="CrowdControl" title="CrowdControl"/>
+                        </Link></h2>
                         {/* change the <a>s to <Link>s */}
                         <ul>
                             <li><Link to="/experiments" onClick={this._switchMobile.bind(this)}>Experiments</Link></li>
@@ -54,6 +56,7 @@ class App extends React.Component {
                     </div>
                 </div>
 
+                {/* TODO: Refactor into component */}
                 <div className={classNames({
                         "dialog-overlay": true,
                         "dialog-visible": this.state.shortcutHelp

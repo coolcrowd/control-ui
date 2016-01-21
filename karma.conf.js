@@ -33,7 +33,7 @@ module.exports = function (config) {
         browserify: {
             debug: true,
             extensions: ['.js'],
-            transform: [flaggedBabelify, require('browserify-istanbul')({
+            transform: [flaggedBabelify, "browserify-optional", require('browserify-istanbul')({
                 includeUntested: true,
                 instrumenterConfig: { embedSource: true }
             })]

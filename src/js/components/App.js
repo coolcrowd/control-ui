@@ -40,13 +40,20 @@ class App extends React.Component {
                         </label>
 
                         <h2><Link to="/" onClick={this._switchMobile.bind(this)}>
-                            <img className="menu-logo" src="/img/logo.png" width="100" height="24" alt="CrowdControl" title="CrowdControl"/>
+                            <img className="menu-logo" src="/img/logo.png" width="100" height="24" alt="CrowdControl"
+                                 title="CrowdControl"/>
                         </Link></h2>
-                        {/* change the <a>s to <Link>s */}
+
                         <ul>
-                            <li><Link to="/experiments" onClick={this._switchMobile.bind(this)}>Experiments</Link></li>
-                            <li><Link to="/templates" onClick={this._switchMobile.bind(this)}>Templates</Link></li>
-                            <li><Link to="/notifications" onClick={this._switchMobile.bind(this)}>Notifications</Link>
+                            <li><Link to="/experiments"
+                                      className={classNames({"selected": this.props.location.pathname == "/experiments"})}
+                                      onClick={this._switchMobile.bind(this)}>Experiments</Link></li>
+                            <li><Link to="/templates"
+                                      className={classNames({"selected": this.props.location.pathname == "/templates"})}
+                                      onClick={this._switchMobile.bind(this)}>Templates</Link></li>
+                            <li><Link to="/notifications"
+                                      className={classNames({"selected": this.props.location.pathname == "/notifications"})}
+                                      onClick={this._switchMobile.bind(this)}>Notifications</Link>
                             </li>
                         </ul>
 
@@ -64,7 +71,8 @@ class App extends React.Component {
                     <div className="dialog">
                         <div className="dialog-title">
                             <h2>Shortcuts</h2>
-                            <button type="button" className="dialog-close" onClick={() => this.setState({shortcutHelp: false})}>
+                            <button type="button" className="dialog-close"
+                                    onClick={() => this.setState({shortcutHelp: false})}>
                                 <i className="fa fa-times"/>
                             </button>
                         </div>

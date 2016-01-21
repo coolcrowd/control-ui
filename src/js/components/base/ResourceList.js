@@ -17,6 +17,7 @@ class ResourceList extends DataComponent {
     componentDidMount() {
         this.combokeys.bind("j", this._onPrev.bind(this));
         this.combokeys.bind("k", this._onNext.bind(this));
+        this.combokeys.bind("n", () => { this._onCreate(); return false; });
 
         return super.componentDidMount();
     }

@@ -4,6 +4,7 @@ import Loader from "../../core/Loader";
 import history from "../../history";
 import resolve from "../../resolve";
 import serialize from "form-serialize";
+import Combokeys from "combokeys";
 
 class Wizard extends React.Component {
     constructor() {
@@ -16,6 +17,9 @@ class Wizard extends React.Component {
             data: null,
             form: this.getDefaultForm()
         };
+
+        this.combokeys = new Combokeys(document.body);
+        this.combokeys.stopCallback = () => false;
     }
 
     getDefaultForm() {
@@ -45,6 +49,10 @@ class Wizard extends React.Component {
     }
 
     componentDidMount() {
+        this.combokeys.bind("ctrl+enter", this._onSave.bind(this));
+        this.combokeys.bind(["ctrl+s", "command+s"], () => { this._onSave(); return false; });
+        this.combokeys.bind("esc", this._onAbort.bind(this));
+
         this.setState({
             new: !("id" in this.props.params),
             loaded: !("id" in this.props.params),
@@ -59,6 +67,10 @@ class Wizard extends React.Component {
                 this._validateChanges(this.state.form, true);
             }
         });
+    }
+
+    componentWillLeave() {
+        this.combokeys.detach();
     }
 
     componentWillReceiveProps(next) {
@@ -156,9 +168,13 @@ class Wizard extends React.Component {
         e.preventDefault();
         e.stopPropagation();
 
+        this._onSave();
+    }
+
+    _onSave() {
         if (this.state.new) {
             this.props.backend.request("PUT", this.getCollectionUri(), this.state.form).then((resp) => {
-                history.replaceState(null, resolve(this.props.location.pathname + "/..").pathname + resp.data.id);
+                history.replaceState(null, "/" + this.getItemUri(resp.data.id));
             }).catch((e) => {
                 alert(JSON.stringify(e));
             });
@@ -175,26 +191,41 @@ class Wizard extends React.Component {
 
             // Nothing changed?
             if (Object.keys(newItem).length === 0) {
-                let uri = resolve(this.props.location.pathname + "/..");
-                history.replaceState(null, uri.pathname.substring(0, uri.pathname.length - 1));
+                history.replaceState(null, "/" + this.getItemUri(this.props.params.id));
                 return;
             }
 
             this.props.backend.request("PATCH", this.getItemUri(this.props.params.id), newItem).then(() => {
-                let uri = resolve(this.props.location.pathname + "/..");
-                history.replaceState(null, uri.pathname.substring(0, uri.pathname.length - 1));
+                history.replaceState(null, "/" + this.getItemUri(this.props.params.id));
             }).catch((e) => {
                 alert(JSON.stringify(e));
             });
         }
     }
 
+    _onAbort() {
+        if (!window.confirm("Do you really want to abort?")) {
+            return;
+        }
+
+        if (this.state.new) {
+            history.replaceState(null, "/" + this.getCollectionUri());
+        } else {
+            history.replaceState(null, "/" + this.getItemUri(this.props.params.id));
+        }
+    }
+
     render() {
         let form = this.getForm();
+        let first = true;
 
         let content = Object.keys(form).map((name) => {
             let input = form[name];
-            return this._renderFormElement(name, input);
+
+            let out = this._renderFormElement(name, input, first);
+            first = false;
+
+            return out;
         });
 
         let wizard = (
@@ -220,18 +251,18 @@ class Wizard extends React.Component {
         }
     }
 
-    _renderFormElement(name, input) {
+    _renderFormElement(name, input, first) {
         let formElement = null;
 
         if (input.type === "text" || input.type === "number") {
             formElement = (
-                <input type={input.type} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
+                <input autoFocus={first} type={input.type} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
                        key={name} onChange={this._onFormChange.bind(this)}
                        ref={name} value={this.state.form[name]}/>
             );
         } else if (input.type === "longtext") {
             formElement = (
-                <textarea name={name} placeholder={"placeholder" in input ? input.placeholder : ""} ref={name}
+                <textarea autoFocus={first} name={name} placeholder={"placeholder" in input ? input.placeholder : ""} ref={name}
                           key={name} onChange={this._onFormChange.bind(this)}
                           value={this.state.form[name]}/>
             );

@@ -2,19 +2,20 @@
   background: #eee;
   padding: 0 20px;
   line-height: 30px;
-  box-shadow: 0 -1px 0 0 rgba(0,0,0,.1) inset;
+  box-shadow: 0 -2px 0 0 rgba(0,0,0,.1) inset;
 }
 
 .menu h2 {
   font-size: inherit;
   display: inline-block;
+  vertical-align: top;
   padding: 0;
   margin: 0;
 }
 
 .menu h2 a {
   line-height: 24px;
-  padding: 13px 20px;
+  padding: 13px 20px 13px 20px;
 }
 
 .menu-logo {
@@ -44,9 +45,8 @@
   line-height: 30px;
 }
 
-.menu a:hover {
-  background: rgba(0,0,0,.05);
-  border-bottom-color: rgba(0,0,0,.1);
+.menu a:hover, .menu a.selected {
+  border-bottom-color: rgba(0,0,0,.3);
   color: #333;
 }
 

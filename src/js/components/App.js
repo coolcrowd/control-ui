@@ -39,7 +39,8 @@ class App extends React.Component {
                             <i className="fa fa-bars"/>
                         </label>
 
-                        <h2><Link to="/" onClick={this._switchMobile.bind(this)}>
+                        <h2><Link to="/" onClick={this._switchMobile.bind(this)}
+                                  className={classNames({"selected": this.props.location.pathname == "/"})}>
                             <img className="menu-logo" src="/img/logo.png" width="100" height="24" alt="CrowdControl"
                                  title="CrowdControl"/>
                         </Link></h2>

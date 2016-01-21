@@ -32,8 +32,6 @@ class ResourceList extends DataComponent {
             // trigger after new props are applied
             setTimeout(this.fetchData.bind(this), 1);
         }
-
-        return super.componentWillReceiveProps(next);
     }
 
     getDataUri() {

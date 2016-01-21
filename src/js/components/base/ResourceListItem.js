@@ -16,7 +16,7 @@ class ResourceListItem extends React.Component {
                         Edit
                     </Link>
 
-                    <ResourceAction icon="trash" method="delete" uri={this.props.basepath + "/" + this.props.item.id}
+                    <ResourceAction icon="trash" method="delete" uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
                                     onClick={() => window.confirm("Do you really want to delete this item?")}
                                     onSuccess={() => this.props.onDelete(this.props.item.id)}
                                     onError={() => window.alert("Could not delete this item!")}

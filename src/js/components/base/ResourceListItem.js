@@ -7,7 +7,7 @@ class ResourceListItem extends React.Component {
         return (
             <li>
                 <Link to={this.props.basepath + "/" + this.props.item.id}>
-                    {"name" in this.props.item ? this.props.item.name : this.props.item.title}
+                    {this.props.item.name || this.props.item.title}
                 </Link>
 
                 <div className="list-actions">

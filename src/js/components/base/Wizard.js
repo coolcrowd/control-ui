@@ -172,15 +172,24 @@ class Wizard extends React.Component {
     }
 
     _onSave() {
+        let form = this.state.form;
+        let spec = this.getForm();
+
+        for (let name in form) {
+            if (spec.hasOwnProperty(name) && "encoder" in spec[name]) {
+                form[name] = spec[name].encoder(form[name]);
+            }
+        }
+
         if (this.state.new) {
-            this.props.backend.request("PUT", this.getCollectionUri(), this.state.form).then((resp) => {
+            this.props.backend.request("PUT", this.getCollectionUri(), form).then((resp) => {
                 history.replaceState(null, "/" + this.getItemUri(resp.data.id));
             }).catch((e) => {
                 alert(JSON.stringify(e));
             });
         } else {
             let oldItem = this.state.data;
-            let newItem = this.state.form;
+            let newItem = form;
 
             // Delete all unchanged properties for minimal patch.
             Object.keys(newItem).forEach((name) => {

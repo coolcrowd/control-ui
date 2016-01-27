@@ -56,6 +56,10 @@ class App extends React.Component {
                                       className={classNames({"selected": this.props.location.pathname == "/notifications"})}
                                       onClick={this._switchMobile.bind(this)}>Notifications</Link>
                             </li>
+                            <li><Link to="/populations"
+                                      className={classNames({"selected": this.props.location.pathname == "/populations"})}
+                                      onClick={this._switchMobile.bind(this)}>Populations</Link>
+                            </li>
                         </ul>
 
                         <button type="button" className="logout" onClick={this._onLogout.bind(this)}>

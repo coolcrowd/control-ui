@@ -48,8 +48,8 @@ class PlatformWizard extends React.Component {
                             experiment: experiment,
                             loaded: true,
                             failed: false,
-                            payload: this._buildPayload(platforms.items),
-                            platformState: this._buildPlatformState(platforms.items)
+                            payload: this._buildPayload(platforms.items, experiment.populations || []),
+                            platformState: this._buildPlatformState(platforms.items, experiment.populations || [])
                         });
                     }
                 }).catch(() => {
@@ -226,21 +226,29 @@ class PlatformWizard extends React.Component {
         });
     }
 
-    _buildPlatformState(platforms) {
+    _buildPlatformState(platforms, populations) {
         let result = {};
 
         for (let i = 0; i < platforms.length; i++) {
             result[platforms[i].id] = false;
         }
 
+        for (let i = 0; i < populations.length; i++) {
+            result[populations[i].id] = true;
+        }
+
         return result;
     }
 
-    _buildPayload(platforms) {
+    _buildPayload(platforms, populations) {
         let result = {};
 
         for (let i = 0; i < platforms.length; i++) {
             result[platforms[i].id] = [];
+        }
+
+        for (let i = 0; i < populations.length; i++) {
+            result[populations[i].id] = populations[i].calibrations || [];
         }
 
         return result;

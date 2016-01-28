@@ -19,7 +19,7 @@ class CalibrationWizard extends Wizard {
                 type: "longtext",
                 label: "Possible answers",
                 help: "List all possible answers to this question, each on a separate line. Accepted answers will be chosen when you start an experiment.",
-                encoder: (text) => text.split("\n").map((item) => item.trim()).filter((item) => item.trim() !== "")
+                encoder: (text) => text.split("\n").map((item) => item.trim()).filter((item) => item.trim() !== "").filter((value, index, self) => self.indexOf(value) === index)
             }
         };
     }

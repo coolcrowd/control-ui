@@ -10,7 +10,7 @@ class RestrictionList extends DataComponent {
         super();
 
         this.state = {
-            url: "calibration"
+            url: "calibrations"
         };
     }
 

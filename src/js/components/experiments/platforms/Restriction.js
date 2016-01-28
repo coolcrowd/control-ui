@@ -10,7 +10,13 @@ class Restriction extends React.Component {
     }
 
     componentDidMount() {
-        let answers = this.props.item.answers || [];
+        let answers = this.props.item.acceptedAnswers || [];
+
+        if (answers.length === 0) {
+            // If there are no accepted answers, it's a new item and we default to true
+            answers = this.props.item.answers || [];
+        }
+
         let acceptedAnswers = {};
 
         for (let i = 0; i < answers.length; i++) {

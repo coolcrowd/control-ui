@@ -49,13 +49,13 @@ class PlatformWizardItem extends React.Component {
         return (
             <li className="platform">
                 <label className="platform-name">
-                    <input type="checkbox" checked={this.props.enabled} onClick={this.props.onToggle}/>
+                    <input type="checkbox" checked={this.props.enabled} onChange={this.props.onToggle}/>
                     <h4>{this.props.item.name}</h4>
                 </label>
 
                 <div className="list-actions">
                     <button type="button" className="action" onClick={this._onRestrictClick.bind(this)}
-                            disabled={false && !this.props.item.hasCalibrations}
+                            disabled={!this.props.item.hasCalibrations}
                             title={this.props.item.hasCalibrations ? "" : "This platform doesn't support restrictions."}>
                         <i className={"fa fa-child icon"}/>
                         Restrict

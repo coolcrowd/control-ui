@@ -15,7 +15,8 @@ class CalibrationList extends ResourceList {
         return {
             icon: "users",
             headline: "Calibrations",
-            description: "Create calibrations to restrict experiments on a platform to a certain user group."
+            description: "Create calibrations to restrict experiments on a platform to a certain user group.",
+            editable: false
         }
     }
 }

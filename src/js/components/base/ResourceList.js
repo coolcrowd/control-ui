@@ -17,7 +17,10 @@ class ResourceList extends DataComponent {
     componentDidMount() {
         this.combokeys.bind("j", this._onPrev.bind(this));
         this.combokeys.bind("k", this._onNext.bind(this));
-        this.combokeys.bind("n", () => { this._onAdd(); return false; });
+        this.combokeys.bind("n", () => {
+            this._onAdd();
+            return false;
+        });
 
         return super.componentDidMount();
     }
@@ -61,14 +64,15 @@ class ResourceList extends DataComponent {
             );
         }
 
+        let info = this.getInfo();
+
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
             return (
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
-                                  onDelete={this._onDelete.bind(this)} backend={this.props.backend}/>
+                                  onDelete={this._onDelete.bind(this)} backend={this.props.backend}
+                                  editable={"editable" in info ? info.editable : true}/>
             );
         }) : [];
-
-        let info = this.getInfo();
 
         if (children.length === 0) {
             children = [(
@@ -103,13 +107,15 @@ class ResourceList extends DataComponent {
                     </ul>
 
                     <div style={{textAlign: "center", padding: "20px"}}>
-                        <button className="action pagination pagination-prev" type="button" disabled={!(this.state.loaded && "prev" in this.state.meta.links)}
+                        <button className="action pagination pagination-prev" type="button"
+                                disabled={!(this.state.loaded && "prev" in this.state.meta.links)}
                                 onClick={this._onPrev.bind(this)}>
                             <i className="fa fa-angle-left icon"/>
                             previous
                         </button>
 
-                        <button className="action pagination pagination-next" type="button" disabled={!(this.state.loaded && "next" in this.state.meta.links)}
+                        <button className="action pagination pagination-next" type="button"
+                                disabled={!(this.state.loaded && "next" in this.state.meta.links)}
                                 onClick={this._onNext.bind(this)}>
                             <i className="fa fa-angle-right icon"/>
                             next

@@ -4,6 +4,17 @@ import ResourceAction from "./ResourceAction";
 
 class ResourceListItem extends React.Component {
     render() {
+        let editButton = null;
+
+        if (this.props.editable) {
+            editButton = (
+                <Link className="action" to={this.props.basepath + "/" + this.props.item.id + "/edit"}>
+                    <i className="fa fa-pencil icon"/>
+                    Edit
+                </Link>
+            );
+        }
+
         return (
             <li>
                 <Link to={this.props.basepath + "/" + this.props.item.id}>
@@ -11,10 +22,7 @@ class ResourceListItem extends React.Component {
                 </Link>
 
                 <div className="list-actions">
-                    <Link className="action" to={this.props.basepath + "/" + this.props.item.id + "/edit"}>
-                        <i className="fa fa-pencil icon"/>
-                        Edit
-                    </Link>
+                    {editButton}
 
                     <ResourceAction icon="trash" method="delete" uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
                                     onClick={() => window.confirm("Do you really want to delete this item?")}

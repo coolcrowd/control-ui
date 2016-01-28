@@ -41,7 +41,7 @@ class ExperimentWizard extends Wizard {
             placeholders: {
                 type: "hidden",
                 value: "",
-                encoder: (text) => []
+                encoder: () => { return {}; }
             }
         };
 
@@ -128,7 +128,7 @@ class ExperimentWizard extends Wizard {
             populations: {
                 type: "hidden",
                 value: "",
-                encoder: (value) => []
+                encoder: () => []
             },
             workerQualityThreshold: {
                 type: "number",

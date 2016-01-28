@@ -4,8 +4,8 @@ var babelify = require("babelify");
 var dest = "./build";
 var src = './src';
 
-var flaggedBabelify = function(file) {
-        return babelify(file, {presets: ["es2015", "react"]});
+var flaggedBabelify = function (file) {
+    return babelify(file, {presets: ["es2015", "react"]});
 };
 
 module.exports = {

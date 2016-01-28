@@ -147,10 +147,18 @@ class Wizard extends React.Component {
     }
 
     _onFormChange() {
+        let spec = this.getForm();
         let oldForm = this.state.form;
+        let form = serialize(this.refs.form, {hash: true, empty: true});
+
+        for (let key in form) {
+            if (key in spec && spec[key].type === "number") {
+                form[key] = parseInt(form[key]);
+            }
+        }
 
         this.setState({
-            form: serialize(this.refs.form, {hash: true, empty: true})
+            form: form
         }, this._validateChanges.bind(this, oldForm));
     }
 

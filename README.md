@@ -1,4 +1,4 @@
-# Control UI
+# Control UI [![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
 
 Web interface for [CrowdControl](https://github.com/coolcrowd/object-service).
 
@@ -26,7 +26,7 @@ During development, use `gulp` without any arguments to enter development mode.
 Files are automatically watched and rebuilt on change.
 Updated stylesheets will be injected automatically, no page reload required.
 
-## Tests [![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
+## Tests
 
 We use [Karma](https://karma-runner.github.io/0.13/index.html) for running tests.
 

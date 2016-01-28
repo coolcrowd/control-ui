@@ -2,20 +2,28 @@
 
 [![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
 
+Web interface for [CrowdControl](https://github.com/coolcrowd/object-service).
+
 ## Installation
 
-```
+```bash
+# Install gulp as global binary
 sudo npm install -g gulp
 
-git clone git@github.com:kelunik/pse-control
-cd pse-control
- 
+# Clone git repository and change directory
+git clone https://github.com/coolcrowd/control-ui && cd control-ui
+
+# Install dependencies using npm
 npm install
+
+# Build production version
 gulp production
+
+# Configure your web server to serve ./build
 ```
 
 ## Development
 
 During development, use `gulp` without any arguments to enter development mode.
-Files are automatically watched and rebuilt on change then.
-Updated stylesheets will be injected automatically, no reload required.
+Files are automatically watched and rebuilt on change.
+Updated stylesheets will be injected automatically, no page reload required.

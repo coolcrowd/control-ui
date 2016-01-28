@@ -125,7 +125,7 @@ class ExperimentWizard extends Wizard {
                 }),
                 decoder: (items) => items.map((item) => item.name).join(", ")
             },
-            platformPopulations: {
+            populations: {
                 type: "hidden",
                 value: "",
                 encoder: (value) => []

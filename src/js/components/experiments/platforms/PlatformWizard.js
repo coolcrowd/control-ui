@@ -170,7 +170,7 @@ class PlatformWizard extends React.Component {
         }
 
         let experiment = {
-            platformPopulations: populations
+            populations: populations
         };
 
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, experiment).then(() => {

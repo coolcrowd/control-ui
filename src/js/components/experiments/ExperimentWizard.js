@@ -79,14 +79,16 @@ class ExperimentWizard extends Wizard {
                 unit: "cents"
             },
             constraints: {
-                type: "list",
+                type: "text",
                 label: "Constraints",
                 help: "Constraints that should be matched by all creative answers."
             },
             tags: {
-                type: "list",
+                type: "text",
                 label: "Tags",
-                help: "Tags! TODO…" // TODO
+                help: "Tags! TODO…", // TODO
+                encoder: (text) => text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {name: item}),
+                decoder: (items) => items.map((item) => item.name).join(", ")
             }
         });
 

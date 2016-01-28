@@ -69,10 +69,6 @@ class Wizard extends React.Component {
         });
     }
 
-    componentWillLeave() {
-        this.combokeys.detach();
-    }
-
     componentWillReceiveProps(next) {
         if ("id" in next.params) {
             if ("id" in this.props.params) {
@@ -97,12 +93,14 @@ class Wizard extends React.Component {
     }
 
     componentWillUnmount() {
+        this.combokeys.detach();
         this.ignoreLastFetch = true;
     }
 
     fetchData() {
         this.props.backend.request("GET", this.getItemUri(this.props.params.id)).then((response) => {
             if (!this.ignoreLastFetch) {
+                let spec = this.getForm();
                 let form = response.data;
                 let defaultForm = this.getDefaultForm();
 
@@ -114,6 +112,10 @@ class Wizard extends React.Component {
 
                     if (!(name in form)) {
                         form[name] = defaultForm[name];
+                    }
+
+                    if (spec.hasOwnProperty(name) && "decoder" in spec[name]) {
+                        form[name] = spec[name].decoder(form[name]);
                     }
                 }
 

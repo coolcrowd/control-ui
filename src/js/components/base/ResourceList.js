@@ -17,12 +17,12 @@ class ResourceList extends DataComponent {
     componentDidMount() {
         this.combokeys.bind("j", this._onPrev.bind(this));
         this.combokeys.bind("k", this._onNext.bind(this));
-        this.combokeys.bind("n", () => { this._onCreate(); return false; });
+        this.combokeys.bind("n", () => { this._onAdd(); return false; });
 
         return super.componentDidMount();
     }
 
-    componentWillLeave() {
+    componentWillUnmount() {
         this.combokeys.detach();
 
         return super.componentWillUnmount();
@@ -84,7 +84,7 @@ class ResourceList extends DataComponent {
         return (
             <div>
                 <div className="actions">
-                    <button className="action action-constructive" onClick={this._onCreate.bind(this)}>
+                    <button className="action action-constructive" onClick={this._onAdd.bind(this)}>
                         <i className="fa fa-plus icon"/> Create
                     </button>
                 </div>
@@ -149,7 +149,7 @@ class ResourceList extends DataComponent {
         history.replaceState(null, this.props.location.pathname + "?from=" + from + "&asc=" + asc);
     }
 
-    _onCreate() {
+    _onAdd() {
         history.replaceState(null, this.props.location.pathname + "/new");
     }
 

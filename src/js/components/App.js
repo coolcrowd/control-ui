@@ -24,7 +24,7 @@ class App extends React.Component {
         this.combokeys.bind("g n", () => this.props.history.replaceState(null, "/notifications"));
     }
 
-    componentWillLeave() {
+    componentWillUnmount() {
         this.combokeys.detach();
     }
 

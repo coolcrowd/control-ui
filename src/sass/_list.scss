@@ -15,6 +15,10 @@
   border-bottom: 1px solid #ddd; /* solid color because of border-collapse */
 }
 
+.list-large > li {
+  display: block;
+}
+
 .list > li:first-child {
   border-top: 1px solid #ddd; /* solid color because of border-collapse */
 }
@@ -23,10 +27,21 @@
   display: table-cell;
 }
 
+.list-large > li:not(.list-empty) > * {
+  display: inline-block;
+  line-height: 18px;
+}
+
 .list a {
   font-weight: bold;
   text-decoration: none;
   color: #111;
+}
+
+.list-large .list-actions {
+  float: right;
+  line-height: 50px !important;
+  transform: translateY(4px);
 }
 
 .list-actions {

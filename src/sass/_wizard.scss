@@ -101,3 +101,47 @@
 .warnings li {
   font-size: 85%;
 }
+
+.platform h4 {
+  font-size: 16px;
+  display: inline-block;
+}
+
+.platform input[type="checkbox"] {
+  margin: 4px;
+}
+
+.platform-name input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 8px 8px 8px 0;
+  vertical-align:  middle;
+  transform: translateY(-2px);
+}
+
+.restrictions {
+  display: block !important;
+  margin-left: 26px;
+}
+
+.restriction {
+  padding: 5px 8px;
+}
+
+.restrictions h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.restriction-name {
+  font-weight: bold;
+}
+
+.restriction-answers {
+  padding: 8px;
+}
+
+.restriction label {
+  display: inline-block;
+  margin: 8px;
+}

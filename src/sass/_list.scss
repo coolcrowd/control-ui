@@ -76,6 +76,10 @@
     border-color: #eee !important;
   }
 
+  .list > li.list-empty {
+    display: block !important;
+  }
+
   .list > li > a {
     display: block !important;
     font-size: 110%;

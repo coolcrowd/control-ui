@@ -112,7 +112,7 @@
 
   .menu ul {
     position: fixed;
-    top: 55px;
+    top: 54px;
     bottom: 0;
     left: 0;
     width: 80%;
@@ -134,8 +134,14 @@
     color: #ccc;
   }
 
-  .menu a:hover {
+  .menu ul a:hover, .menu a.selected {
     color: #eee;
+    border-bottom: 2px solid transparent;
+  }
+
+  .menu ul a.selected {
+    color: #333;
+    background: #ea690a;
   }
 }
 

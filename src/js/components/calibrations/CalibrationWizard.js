@@ -2,13 +2,13 @@ import React from "react";
 import Loader from "../../core/Loader";
 import Wizard from "../base/Wizard";
 
-class PopulationWizard extends Wizard {
+class CalibrationWizard extends Wizard {
     getForm() {
         return {
             name: {
                 type: "text",
                 label: "Name",
-                help: "Internal name of this population."
+                help: "Internal name of this calibration."
             },
             question: {
                 type: "text",
@@ -26,11 +26,11 @@ class PopulationWizard extends Wizard {
 
     getCollectionUri(query) {
         if (typeof query !== "undefined") {
-            return "populations?" + query;
+            return "calibrations?" + query;
         }
 
-        return "populations";
+        return "calibrations";
     }
 }
 
-export default PopulationWizard;
+export default CalibrationWizard;

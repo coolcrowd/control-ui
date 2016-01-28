@@ -22,9 +22,9 @@ import NotificationList from "./components/notifications/NotificationList";
 import NotificationDetail from "./components/notifications/NotificationDetail";
 import NotificationWizard from "./components/notifications/NotificationWizard";
 
-import PopulationList from "./components/populations/PopulationList";
-import PopulationDetail from "./components/populations/PopulationDetail";
-import PopulationWizard from "./components/populations/PopulationWizard";
+import CalibrationList from "./components/calibrations/CalibrationList";
+import CalibrationDetail from "./components/calibrations/CalibrationDetail";
+import CalibrationWizard from "./components/calibrations/CalibrationWizard";
 
 import history from "./history";
 import config from "./config";
@@ -60,9 +60,9 @@ const renderLoggedIn = (authenticator) => {
                 <Route path="notifications/:id" component={NotificationDetail}/>
                 <Route path="notifications/:id/edit" component={NotificationWizard}/>
 
-                <Route path="populations" component={PopulationList}/>
-                <Route path="populations/new" component={PopulationWizard}/>
-                <Route path="populations/:id" component={PopulationDetail}/>
+                <Route path="calibrations" component={CalibrationList}/>
+                <Route path="calibrations/new" component={CalibrationWizard}/>
+                <Route path="calibrations/:id" component={CalibrationDetail}/>
 
                 {/* NotFoundRoute doesn't work */}
                 <Route path="*" component={NotFound}/>

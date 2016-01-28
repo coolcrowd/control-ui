@@ -46,19 +46,25 @@ class App extends React.Component {
                         </Link></h2>
 
                         <ul>
-                            <li><Link to="/experiments"
+                            <li>
+                                <Link to="/experiments"
                                       className={classNames({"selected": this.props.location.pathname == "/experiments"})}
-                                      onClick={this._switchMobile.bind(this)}>Experiments</Link></li>
-                            <li><Link to="/templates"
+                                      onClick={this._switchMobile.bind(this)}>Experiments</Link>
+                            </li>
+                            <li>
+                                <Link to="/templates"
                                       className={classNames({"selected": this.props.location.pathname == "/templates"})}
-                                      onClick={this._switchMobile.bind(this)}>Templates</Link></li>
-                            <li><Link to="/notifications"
+                                      onClick={this._switchMobile.bind(this)}>Templates</Link>
+                            </li>
+                            <li>
+                                <Link to="/notifications"
                                       className={classNames({"selected": this.props.location.pathname == "/notifications"})}
                                       onClick={this._switchMobile.bind(this)}>Notifications</Link>
                             </li>
-                            <li><Link to="/populations"
-                                      className={classNames({"selected": this.props.location.pathname == "/populations"})}
-                                      onClick={this._switchMobile.bind(this)}>Populations</Link>
+                            <li>
+                                <Link to="/calibrations"
+                                      className={classNames({"selected": this.props.location.pathname == "/calibrations"})}
+                                      onClick={this._switchMobile.bind(this)}>Calibrations</Link>
                             </li>
                         </ul>
 

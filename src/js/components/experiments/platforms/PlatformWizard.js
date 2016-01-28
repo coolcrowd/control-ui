@@ -145,7 +145,7 @@ class PlatformWizard extends React.Component {
 
             let population = {
                 id: id,
-                populations: []
+                calibration: []
             };
 
             payload[id].forEach((item) => {
@@ -154,7 +154,7 @@ class PlatformWizard extends React.Component {
                     return;
                 }
 
-                population.populations.push({
+                population.calibrations.push({
                     id: item.id,
                     acceptedAnswers: item.acceptedAnswers
                 });

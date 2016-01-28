@@ -37,6 +37,11 @@ class ExperimentWizard extends Wizard {
                         text: "Images"
                     }
                 ]
+            },
+            placeholders: {
+                type: "hidden",
+                value: "",
+                encoder: (text) => []
             }
         };
 
@@ -60,6 +65,30 @@ class ExperimentWizard extends Wizard {
         }
 
         Object.assign(base, {
+            state: {
+                type: "hidden",
+                value: "DRAFT"
+            },
+            neededAnswers: {
+                type: "number",
+                label: "Needed Answers",
+                help: "How many creative answers should be collected?"
+            },
+            answersPerWorker: {
+                type: "number",
+                label: "Answers / Worker",
+                help: "How many answers should each worker be able to give?"
+            },
+            ratingsPerWorker: {
+                type: "number",
+                label: "Ratings / Worker",
+                help: "How many ratings should each worker be able to give?"
+            },
+            ratingsPerAnswer: {
+                type: "number",
+                label: "Ratings / Answer",
+                help: "How many ratings should each answer receive?"
+            },
             paymentBase: {
                 type: "number",
                 label: "Base Payment",
@@ -79,16 +108,32 @@ class ExperimentWizard extends Wizard {
                 unit: "cents"
             },
             constraints: {
-                type: "text",
+                type: "longtext",
                 label: "Constraints",
-                help: "Constraints that should be matched by all creative answers."
+                help: "Constraints that should be matched by all creative answers.",
+                encoder: (text) => text.split("\n").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
+                    return {name: item}
+                }),
+                decoder: (items) => items.map((item) => item.name).join("\n")
             },
             tags: {
                 type: "text",
                 label: "Tags",
                 help: "Tags! TODO…", // TODO
-                encoder: (text) => text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {name: item}),
+                encoder: (text) => text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
+                    return {name: item}
+                }),
                 decoder: (items) => items.map((item) => item.name).join(", ")
+            },
+            platformPopulations: {
+                type: "hidden",
+                value: "",
+                encoder: (value) => []
+            },
+            workerQualityThreshold: {
+                type: "number",
+                label: "Worker Quality Threshold",
+                help: "Minimum worker quality to participate in this experiment. Values from 0 to 9."
             }
         });
 

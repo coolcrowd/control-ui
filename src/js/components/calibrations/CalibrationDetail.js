@@ -6,9 +6,9 @@ import DataError from "../base/DataError";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
-class PopulationDetail extends DataComponent {
+class CalibrationDetail extends DataComponent {
     getDataUri() {
-        return "populations/" + this.props.params.id;
+        return "calibrations/" + this.props.params.id;
     }
 
     componentWillReceiveProps(next) {
@@ -34,16 +34,16 @@ class PopulationDetail extends DataComponent {
                 content = (
                     <div>
                         <div className="actions">
-                            <ResourceAction icon="trash" method="DELETE" uri={"populations/" + this.props.params.id}
-                                            onClick={() => window.confirm("Do you really want to delete this population?")}
-                                            onSuccess={() => history.replaceState(null, "/populations")}
+                            <ResourceAction icon="trash" method="DELETE" uri={"calibrations/" + this.props.params.id}
+                                            onClick={() => window.confirm("Do you really want to delete this calibration?")}
+                                            onSuccess={() => history.replaceState(null, "/calibrations")}
                                             onError={() => window.alert("Deletion failed.")}
                                             backend={this.props.backend}>
                                 Delete
                             </ResourceAction>
                         </div>
 
-                        <h1>Population: {this.state.data.name}</h1>
+                        <h1>Calibration: {this.state.data.name}</h1>
 
                         <label className="input-label">Question</label>
                         <pre>{this.state.data.question}</pre>
@@ -65,4 +65,4 @@ class PopulationDetail extends DataComponent {
     }
 }
 
-export default PopulationDetail;
+export default CalibrationDetail;

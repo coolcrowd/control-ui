@@ -50,7 +50,10 @@ class Wizard extends React.Component {
 
     componentDidMount() {
         this.combokeys.bind("ctrl+enter", this._onSave.bind(this));
-        this.combokeys.bind(["ctrl+s", "command+s"], () => { this._onSave(); return false; });
+        this.combokeys.bind(["ctrl+s", "command+s"], () => {
+            this._onSave();
+            return false;
+        });
         this.combokeys.bind("esc", this._onAbort.bind(this));
 
         this.setState({
@@ -267,37 +270,35 @@ class Wizard extends React.Component {
 
         if (input.type === "text" || input.type === "number") {
             formElement = (
-                <input autoFocus={first} type={input.type} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
+                <input autoFocus={first} type={input.type} name={name}
+                       placeholder={"placeholder" in input ? input.placeholder : ""}
                        key={name} onChange={this._onFormChange.bind(this)}
                        ref={name} value={this.state.form[name]}/>
             );
         } else if (input.type === "longtext") {
             formElement = (
-                <textarea autoFocus={first} name={name} placeholder={"placeholder" in input ? input.placeholder : ""} ref={name}
+                <textarea autoFocus={first} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
+                          ref={name}
                           key={name} onChange={this._onFormChange.bind(this)}
                           value={this.state.form[name]}/>
             );
         } else if (input.type === "enum") {
             formElement = input.values.map((value) => {
                 return (
-                    <label className="input-enum-option">
-                        <input type="radio" name={name} value={value.value} onChange={this._onFormChange.bind(this)}
-                               checked={value.value === this.state.form[name]}/>
+                    <option value={value.value} selected={value.value === this.state.form[name]}>
                         {value.text}
-                    </label>
+                    </option>
                 );
             });
 
             formElement = (
-                <div key={name}>
+                <select key={name} name={name} onChange={this._onFormChange.bind(this)} size="1">
                     {formElement}
-                </div>
+                </select>
             );
-        } else if (input.type === "list") {
-            formElement = (
-                <div>
-                    DISPLAY LIST HERE... // TODO
-                </div>
+        } else if (input.type === "hidden") {
+            return (
+                <input type="hidden" name={name} value={input.value}/>
             );
         } else {
             console.warn("Unknown type: " + input.type);

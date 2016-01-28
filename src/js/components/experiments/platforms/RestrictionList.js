@@ -10,7 +10,7 @@ class RestrictionList extends DataComponent {
         super();
 
         this.state = {
-            url: "populations"
+            url: "calibration"
         };
     }
 
@@ -40,7 +40,7 @@ class RestrictionList extends DataComponent {
                 <li className="list-empty">
                     <i className={"fa fa-3x fa-child"}/>
                     <br/>
-                    You have no populations yet!<br/>
+                    You have no calibrations yet!<br/>
                     Let's change that!
                 </li>
             )];
@@ -89,7 +89,7 @@ class RestrictionList extends DataComponent {
         let asc = encodeURIComponent(this.state.meta.links.next.asc || "true");
 
         this.setState({
-            url: "populations?from=" + from + "&asc=" + asc
+            url: "calibration?from=" + from + "&asc=" + asc
         }, this.fetchData.bind(this));
     }
 
@@ -102,7 +102,7 @@ class RestrictionList extends DataComponent {
         let asc = encodeURIComponent(this.state.meta.links.prev.asc || "true");
 
         this.setState({
-            url: "populations?from=" + from + "&asc=" + asc
+            url: "calibration?from=" + from + "&asc=" + asc
         }, this.fetchData.bind(this));
     }
 }

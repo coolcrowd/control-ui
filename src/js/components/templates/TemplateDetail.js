@@ -53,6 +53,11 @@ class TemplateDetail extends DataComponent {
                 content = (
                     <div>
                         <div className="actions">
+                            <button type="button" className="action" onClick={this._onUseClick.bind(this)}>
+                                <i className="fa fa-clone icon"/>
+                                Use
+                            </button>
+
                             <Link to={this.props.location.pathname + "/edit"} className="action">
                                 <i className="fa fa-pencil icon"/>
                                 Edit
@@ -84,6 +89,12 @@ class TemplateDetail extends DataComponent {
                 {content}
             </Loader>
         );
+    }
+
+    _onUseClick() {
+        history.replaceState({
+            template: this.state.data
+        }, "/experiments/new");
     }
 }
 

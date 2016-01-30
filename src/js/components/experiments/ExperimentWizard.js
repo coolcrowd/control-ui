@@ -41,15 +41,26 @@ class ExperimentWizard extends Wizard {
             placeholders: {
                 type: "hidden",
                 value: "",
-                encoder: () => { return {}; }
+                encoder: () => {
+                    return {};
+                }
             }
         };
 
-        if (this.state.loaded && !this.state.failed && !this.state.new) {
-            let text = this.state.data.description;
-            let placeholders = Template.parse(text);
+        if (this.state.loaded && !this.state.failed) {
+            let isTemplate = this.state.new && this.props.location.state && "template" in this.props.location.state || this.state.data && "templateId" in this.state.data;
 
-            if (Object.keys(placeholders).length > 0) {
+            if (isTemplate) {
+                let text;
+
+                if (this.state.new && this.props.location.state && "template" in this.props.location.state) {
+                    text = this.props.location.state.template.content;
+                } else {
+                    text = this.state.data.description;
+                }
+
+                let placeholders = Template.parse(text);
+
                 Object.keys(placeholders).forEach((name) => {
                     base["placeholder[" + name + "]"] = {
                         type: placeholders[name].type,
@@ -57,6 +68,16 @@ class ExperimentWizard extends Wizard {
                         help: placeholders[name].description
                     };
                 });
+
+                if (Object.keys(placeholders).length === 0) {
+                    base["placeholders"] = {
+                        type: "hidden",
+                        value: "",
+                        encoder: () => {
+                            return {};
+                        }
+                    }
+                }
             } else {
                 Object.assign(base, nonTemplate);
             }

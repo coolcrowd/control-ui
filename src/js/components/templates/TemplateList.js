@@ -19,6 +19,23 @@ class TemplateList extends ResourceList {
             "Changes to templates will only affect new experiments to keep your already existing ones in the known state."
         }
     }
+
+    renderAdditionalAction() {
+        // this method will be rebound to ResourceListItem and executes in its context
+
+        let onClick = function() {
+            history.replaceState({
+                template: this.props.item
+            }, "/experiments/new");
+        };
+
+        return (
+            <button type="button" className="action" onClick={onClick.bind(this)}>
+                <i className="fa fa-clone icon"/>
+                Use
+            </button>
+        );
+    }
 }
 
 export default TemplateList;

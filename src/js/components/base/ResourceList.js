@@ -70,7 +70,8 @@ class ResourceList extends DataComponent {
             return (
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
                                   onDelete={this._onDelete.bind(this)} backend={this.props.backend}
-                                  editable={"editable" in info ? info.editable : true}/>
+                                  editable={"editable" in info ? info.editable : true}
+                                  renderAdditionalAction={this.renderAdditionalAction}/>
             );
         }) : [];
 
@@ -124,6 +125,10 @@ class ResourceList extends DataComponent {
                 </Loader>
             </div>
         );
+    }
+
+    renderAdditionalAction() {
+        return null;
     }
 
     onFetched() {

@@ -15,6 +15,8 @@ class ResourceListItem extends React.Component {
             );
         }
 
+        let additionalAction = this.props.renderAdditionalAction.call(this);
+
         return (
             <li>
                 <Link to={this.props.basepath + "/" + this.props.item.id}>
@@ -22,6 +24,8 @@ class ResourceListItem extends React.Component {
                 </Link>
 
                 <div className="list-actions">
+                    {additionalAction}
+
                     {editButton}
 
                     <ResourceAction icon="trash" method="delete" uri={this.props.basepath.substring(1) + "/" + this.props.item.id}

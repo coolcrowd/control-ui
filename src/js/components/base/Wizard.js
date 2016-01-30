@@ -34,6 +34,12 @@ class Wizard extends React.Component {
                 form[name] = "";
             } else if (form[name].type === "enum") {
                 form[name] = form[name].default;
+            } else if (form[name].type === "hidden") {
+                form[name] = form[name].value;
+            } else if (form[name].type === "number") {
+                form[name] = "default" in form[name] ? form[name].default : 0;
+            } else {
+                console.warn("No default value defined for " + name);
             }
         }
 

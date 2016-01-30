@@ -54,7 +54,24 @@ class ExperimentWizard extends Wizard {
                 let text;
 
                 if (this.state.new && this.props.location.state && "template" in this.props.location.state) {
-                    text = this.props.location.state.template.content;
+                    let template = this.props.location.state.template;
+                    text = template.content;
+
+                    Object.assign(base, {
+                        description: {
+                            type: "hidden",
+                            value: text
+                        },
+                        answerType: {
+                            type: "hidden",
+                            value: template.answerType
+                        },
+                        templateId: {
+                            type: "hidden",
+                            value: template.id,
+                            encoder: parseInt
+                        }
+                    });
                 } else {
                     text = this.state.data.description;
                 }

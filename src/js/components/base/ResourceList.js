@@ -71,7 +71,7 @@ class ResourceList extends DataComponent {
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
                                   onDelete={this._onDelete.bind(this)} backend={this.props.backend}
                                   editable={"editable" in info ? info.editable : true}
-                                  renderAdditionalAction={this.renderAdditionalAction}/>
+                                  renderAdditionalAction={this.renderAdditionalItemAction}/>
             );
         }) : [];
 
@@ -86,9 +86,13 @@ class ResourceList extends DataComponent {
             )];
         }
 
+        let additionalAction = this.renderAdditionalAction();
+
         return (
             <div>
                 <div className="actions">
+                    {additionalAction}
+
                     <button className="action action-constructive" onClick={this._onAdd.bind(this)}>
                         <i className="fa fa-plus icon"/> Create
                     </button>
@@ -128,6 +132,10 @@ class ResourceList extends DataComponent {
     }
 
     renderAdditionalAction() {
+        return null;
+    }
+
+    renderAdditionalItemAction() {
         return null;
     }
 

@@ -20,10 +20,10 @@ class TemplateList extends ResourceList {
         }
     }
 
-    renderAdditionalAction() {
+    renderAdditionalItemAction() {
         // this method will be rebound to ResourceListItem and executes in its context
 
-        let onClick = function() {
+        let onClick = function () {
             history.replaceState({
                 template: this.props.item
             }, "/experiments/new");

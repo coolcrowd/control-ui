@@ -3,6 +3,23 @@ import Template from "../../core/Template";
 import Wizard from "../base/Wizard";
 
 class ExperimentWizard extends Wizard {
+    constructor() {
+        super();
+
+        this.state = Object.assign(this.state || {}, {
+            algorithms: {
+                taskChooserAlgorithms: [],
+                ratingQualityAlgorithms: [],
+                answerQualityAlgorithms: []
+            }
+        });
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.fetchAlgorithms();
+    }
+
     getForm() {
         if (!this.state) {
             return {};
@@ -102,6 +119,62 @@ class ExperimentWizard extends Wizard {
             Object.assign(base, nonTemplate);
         }
 
+        let algorithmMapper = (chooser) => {
+            return {
+                value: chooser.name,
+                text: chooser.description
+            };
+        };
+
+        let algorithmOptions = (formName, specName) => {
+            let current = this.state.form[formName] ? this.state.form[formName].name : null;
+            let availableAlgorithms = this.state.algorithms[specName];
+
+            for (let key in availableAlgorithms) {
+                if (availableAlgorithms[key].name !== current) {
+                    continue;
+                }
+
+                let parameters = availableAlgorithms[key].parameters || [];
+
+                parameters.map((item) => {
+                    base["algorithmTaskChooser[parameters][]"] = {
+                        type: "text",
+                        label: item.description,
+                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
+                        value: item.value || ""
+                    }
+                })
+            }
+        };
+
+        base["algorithmTaskChooser[name]"] = {
+            type: "enum",
+            label: "Task Chooser Algorithm",
+            help: "How should tasks be chosen?",
+            values: this.state.algorithms.taskChooserAlgorithms.map(algorithmMapper)
+        };
+
+        Object.assign(base, algorithmOptions("algorithmTaskChooser", "taskChooserAlgorithms"));
+
+        base["algorithmQualityAnswer[name]"] = {
+            type: "enum",
+            label: "Answer Quality Algorithm",
+            help: "How should the quality of an answer be determined?",
+            values: this.state.algorithms.answerQualityAlgorithms.map(algorithmMapper)
+        };
+
+        Object.assign(base, algorithmOptions("algorithmQualityAnswer", "answerQualityAlgorithms"));
+
+        base["algorithmQualityRating[name]"] = {
+            type: "enum",
+            label: "Rating Quality Algorithm",
+            help: "How should the quality of a rating be determined?",
+            values: this.state.algorithms.ratingQualityAlgorithms.map(algorithmMapper)
+        };
+
+        Object.assign(base, algorithmOptions("algorithmQualityRating", "ratingQualityAlgorithms"));
+
         Object.assign(base, {
             state: {
                 type: "hidden",
@@ -184,6 +257,22 @@ class ExperimentWizard extends Wizard {
         }
 
         return "experiments";
+    }
+
+    fetchAlgorithms() {
+        this.props.backend.request("GET", "algorithms").then((response) => {
+            this.setState({
+                algorithms: {
+                    taskChooserAlgorithms: response.data.taskChooserAlgorithms || [],
+                    ratingQualityAlgorithms: response.data.ratingQualityAlgorithms || [],
+                    answerQualityAlgorithms: response.data.answerQualityAlgorithms || []
+                }
+            });
+        }).catch(() => {
+            this.setState({
+                failed: true
+            });
+        });
     }
 }
 

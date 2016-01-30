@@ -10,13 +10,13 @@ class Wizard extends React.Component {
     constructor() {
         super();
 
-        this.state = {
+        this.state = Object.assign(this.state || {}, {
             new: false,
             loaded: false,
             failed: false,
             data: null,
             form: this.getDefaultForm()
-        };
+        });
 
         this.combokeys = new Combokeys(document.body);
         this.combokeys.stopCallback = () => false;

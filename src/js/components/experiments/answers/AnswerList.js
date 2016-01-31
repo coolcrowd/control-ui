@@ -7,6 +7,9 @@ import DataError from "./../../base/DataError";
 import DataComponent from "./../../base/DataComponent";
 import Combokeys from "combokeys";
 import Loader from "../../../core/Loader";
+import JsonFormatter from "../../../formatters/JsonFormatter";
+import CsvFormatter from "../../../formatters/CsvFormatter";
+import { saveAs } from "filesaver.js";
 
 class AnswerList extends DataComponent {
     constructor() {
@@ -82,6 +85,14 @@ class AnswerList extends DataComponent {
         return (
             <div>
                 <div className="actions">
+                    <button className="action" onClick={this._onCsvExport.bind(this)}>
+                        <i className="fa fa-file-excel-o icon"/> Export CSV
+                    </button>
+
+                    <button className="action" onClick={this._onJsonExport.bind(this)}>
+                        <i className="fa fa-file-text-o icon"/> Export JSON
+                    </button>
+
                     <button className="action" onClick={this._onRefresh.bind(this)}>
                         <i className="fa fa-refresh icon"/> Refresh
                     </button>
@@ -151,6 +162,63 @@ class AnswerList extends DataComponent {
         });
 
         this.fetchData();
+    }
+
+    _onJsonExport() {
+        this._export().then((items) => {
+            let formatter = new JsonFormatter(2);
+            let content = formatter.format(items);
+
+            saveAs(new Blob([content], {
+                type: "application/json; charset=utf-8"
+            }), this._promptForFilename("json"));
+        });
+    }
+
+    _onCsvExport() {
+        this._export().then((items) => {
+            let formatter = new CsvFormatter();
+            let content = formatter.format(items);
+
+            saveAs(new Blob([content], {
+                type: "text/csv; charset=utf-8"
+            }), this._promptForFilename("csv"));
+        });
+    }
+
+    _promptForFilename(extension) {
+        let filename = prompt("Filename");
+
+        if (filename.length - extension.length > 0 && filename.substr(filename.length - extension.length, extension.length) !== extension) {
+            return filename + "." + extension;
+        }
+
+        return filename;
+    }
+
+    _export() {
+        let all = [];
+
+        let handler = (url) => {
+            return new Promise((resolve, reject) => {
+                url = url || "experiments/" + this.props.params.id + "/answers";
+
+                this.props.backend.request("GET", url).then((response) => {
+                    response.data.items.forEach((item) => {
+                        all.push(item);
+                    });
+
+                    if ("next" in response.meta.links) {
+                        let nextUrl = response.meta.links.next.url.substr(1);
+                        resolve(handler(nextUrl));
+                    } else {
+                        resolve(all);
+                    }
+                });
+            });
+        };
+
+        return handler();
     }
 }
 

@@ -19,3 +19,5 @@ class JsonFormatter {
         return JSON.stringify(data, null, this.space);
     }
 }
+
+export default JsonFormatter;

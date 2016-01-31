@@ -108,9 +108,11 @@ class PlatformWizard extends React.Component {
             )];
         }
 
+        let experimentTitle = this.state.loaded ? this.state.experiment.title : "";
+
         return (
             <div>
-                <h1>Platforms</h1>
+                <h1>Platforms for &ldquo;{experimentTitle}&rdquo;</h1>
 
                 <p className="info">
                     Experiments can be published on one or multiple platforms.
@@ -144,21 +146,27 @@ class PlatformWizard extends React.Component {
             }
 
             let population = {
-                id: id,
-                calibration: []
+                platformId: id,
+                calibrations: []
             };
 
-            payload[id].forEach((item) => {
-                if (item.acceptedAnswers.length === 0) {
-                    alert("You must select at least one accepted answer.");
-                    return;
-                }
+            try {
+                payload[id].some((item) => {
+                    if (item.acceptedAnswers.length === 0) {
+                        throw "You must select at least one accepted answer.";
+                    }
 
-                population.calibrations.push({
-                    id: item.id,
-                    acceptedAnswers: item.acceptedAnswers
+                    population.calibrations.push({
+                        id: item.id,
+                        acceptedAnswers: item.acceptedAnswers
+                    });
                 });
-            });
+            } catch (e) {
+                alert(e);
+
+                return;
+            }
+
 
             populations.push(population);
         }

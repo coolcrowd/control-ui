@@ -36,29 +36,38 @@ class ExperimentDetail extends DataComponent {
                     </Link>
                 ) : null;
 
-                let populations = (this.state.data.populations || []).map((population) => {
-                    return (
-                        <li>
-                            <b>{population.name}</b>
-                        </li>
-                    );
-                });
+                let stateButton = null;
 
-                if (populations.length > 0) {
-                    populations = (
-                        <ul>
-                            {populations}
-                        </ul>
+                if (this.state.data.state === "DRAFT") {
+                    stateButton = (
+                        <button className="action action-constructive" type="button"
+                                disabled={this.state.data.populations.length === 0}
+                                title={this.state.data.populations.length === 0 ? "Add at least one population to publish an experiment" : ""}
+                                onClick={this._onPublishClick.bind(this)}>
+                            <i className="fa fa-play icon"/>
+                            Publish
+                        </button>
                     );
-                } else {
-                    populations = (
-                        <i>None yet.</i>
+                } else if (this.state.data.state === "PUBLISHED") {
+                    stateButton = (
+                        <button className="action action-destructive" type="button"
+                                onClick={this._onAbortClick.bind(this)}>
+                            <i className="fa fa-stop icon"/>
+                            Abort
+                        </button>
                     );
                 }
 
                 content = (
                     <div>
                         <div className="actions">
+                            {stateButton}
+
+                            <Link className="action" to={this.props.location.pathname + "/platforms"}>
+                                <i className="fa fa-users icon"/>
+                                Edit Populations
+                            </Link>
+
                             {editButton}
 
                             <ResourceAction icon="trash" method="DELETE" uri={"experiments/" + this.props.params.id}
@@ -71,9 +80,6 @@ class ExperimentDetail extends DataComponent {
                         </div>
 
                         <h1>Experiment: {this.state.data.title}</h1>
-
-                        <label className="input-label">Description</label>
-                        <pre>{this.state.data.description}</pre>
 
                         <label className="input-label">Parameters</label>
                         <table className="input-table-info">
@@ -105,8 +111,8 @@ class ExperimentDetail extends DataComponent {
                             </tbody>
                         </table>
 
-                        <label className="input-label">Populations</label>
-                        {populations}
+                        <label className="input-label">Description</label>
+                        <pre>{this.state.data.description}</pre>
                     </div>
                 );
             }
@@ -117,6 +123,26 @@ class ExperimentDetail extends DataComponent {
                 {content}
             </Loader>
         );
+    }
+
+    _onPublishClick() {
+        this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
+            state: "PUBLISHED"
+        }).then(() => {
+            alert("Experiment has been published.");
+        }).catch(() => {
+            alert("Experiment could not be published.");
+        });
+    }
+
+    _onAbortClick() {
+        this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
+            state: "CREATIVE_STOPPED"
+        }).then(() => {
+            alert("No more creative answers will be collected.");
+        }).catch(() => {
+            alert("Experiment could not be stopped.");
+        });
     }
 }
 

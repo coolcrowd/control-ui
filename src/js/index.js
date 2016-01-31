@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import ExperimentList from "./components/experiments/ExperimentList";
 import ExperimentWizard from "./components/experiments/ExperimentWizard";
 import ExperimentDetail from "./components/experiments/ExperimentDetail";
+import AnswerList from "./components/experiments/answers/AnswerList";
 import PlatformWizard from "./components/experiments/platforms/PlatformWizard";
 
 import TemplateList from "./components/templates/TemplateList";
@@ -51,6 +52,7 @@ const renderLoggedIn = (authenticator) => {
                 <Route path="experiments/:id" component={ExperimentDetail}/>
                 <Route path="experiments/:id/edit" component={ExperimentWizard}/>
                 <Route path="experiments/:id/platforms" component={PlatformWizard}/>
+                <Route path="experiments/:id/answers" component={AnswerList}/>
 
                 <Route path="templates" component={TemplateList}/>
                 <Route path="templates/new" component={TemplateWizard}/>

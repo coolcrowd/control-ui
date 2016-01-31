@@ -39,11 +39,15 @@ body {
   margin: 0 auto;
 }
 
+button[title]:not([title=""]) {
+  cursor: help;
+}
+
 .input-table-info {
   vertical-align: top;
   border-collapse: collapse;
   padding: 0;
-  margin: 0;
+  margin: 15px 0;
 }
 
 .input-table-info td {

@@ -96,7 +96,7 @@ class ExperimentWizard extends Wizard {
                 let placeholders = Template.parse(text);
 
                 Object.keys(placeholders).forEach((name) => {
-                    base["placeholder[" + name + "]"] = {
+                    base["placeholders[" + name + "]"] = {
                         type: placeholders[name].type,
                         label: name,
                         help: placeholders[name].description
@@ -142,7 +142,12 @@ class ExperimentWizard extends Wizard {
                         type: "text",
                         label: item.description,
                         help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
-                        value: item.value || ""
+                        value: item.value || "",
+                        encoder: (value) => {
+                            return Object.assign(item, {
+                                value: value
+                            });
+                        }
                     }
                 })
             }
@@ -183,22 +188,26 @@ class ExperimentWizard extends Wizard {
             neededAnswers: {
                 type: "number",
                 label: "Needed Answers",
-                help: "How many creative answers should be collected?"
+                help: "How many creative answers should be collected?",
+                default: 10
             },
             answersPerWorker: {
                 type: "number",
                 label: "Answers / Worker",
-                help: "How many answers should each worker be able to give?"
+                help: "How many answers should each worker be able to give?",
+                default: 3
             },
             ratingsPerWorker: {
                 type: "number",
                 label: "Ratings / Worker",
-                help: "How many ratings should each worker be able to give?"
+                help: "How many ratings should each worker be able to give?",
+                default: 3
             },
             ratingsPerAnswer: {
                 type: "number",
                 label: "Ratings / Answer",
-                help: "How many ratings should each answer receive?"
+                help: "How many ratings should each answer receive?",
+                default: 3
             },
             paymentBase: {
                 type: "number",
@@ -210,13 +219,23 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Answer Payment",
                 help: "Payment for each creative answer.",
-                unit: "cents"
+                unit: "cents",
+                default: 10
             },
             paymentRating: {
                 type: "number",
                 label: "Rating Payment",
                 help: "Payment for each rating.",
-                unit: "cents"
+                unit: "cents",
+                default: 10
+            },
+            ratingOptions: {
+                type: "hidden",
+                value: "",
+                encoder: () => [
+                    {name: "good", value: 10},
+                    {name: "bad", value: 0}
+                ]
             },
             constraints: {
                 type: "longtext",

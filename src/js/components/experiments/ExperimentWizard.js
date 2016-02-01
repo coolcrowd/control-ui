@@ -260,9 +260,28 @@ class ExperimentWizard extends Wizard {
                 type: "longtext",
                 label: "Constraints",
                 help: "Constraints that should be matched by all creative answers.",
-                encoder: (text) => text.split("\n").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
-                    return {name: item}
-                }),
+                encoder: (text) => {
+                    let items = text.split("\n");
+
+                    // Remove whitespace and empty elements
+                    items = items.map((item) => item.trim()).filter((item) => item !== "");
+
+                    if (items.length === 0) {
+                        // Special value to signal no elements, because proto can't differentiate
+                        // between default value and empty collection…
+                        return [
+                            {
+                                name: ""
+                            }
+                        ];
+                    }
+
+                    return items.map((item) => {
+                        return {
+                            name: item
+                        };
+                    })
+                },
                 decoder: (items) => items.map((item) => item.name).join("\n")
             },
             tags: {
@@ -270,7 +289,22 @@ class ExperimentWizard extends Wizard {
                 label: "Tags",
                 help: "Tags! TODO…", // TODO
                 encoder: (text) => {
-                    text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
+                    let items = text.split(",");
+
+                    // Remove whitespace and empty elements
+                    items = items.map((item) => item.trim()).filter((item) => item !== "");
+
+                    if (items.length === 0) {
+                        // Special value to signal no elements, because proto can't differentiate
+                        // between default value and empty collection…
+                        return [
+                            {
+                                name: ""
+                            }
+                        ];
+                    }
+
+                    return items.map((item) => {
                         return {
                             name: item
                         };

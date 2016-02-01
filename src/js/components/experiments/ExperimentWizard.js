@@ -106,11 +106,12 @@ class ExperimentWizard extends Wizard {
                 if (Object.keys(placeholders).length === 0) {
                     base["placeholders"] = {
                         type: "hidden",
-                        value: "",
+                        value: "{}",
                         encoder: () => {
                             return {};
-                        }
-                    }
+                        },
+                        decoder: (i) => "{}"
+                    };
                 }
             } else {
                 Object.assign(base, nonTemplate);
@@ -137,8 +138,8 @@ class ExperimentWizard extends Wizard {
 
                 let parameters = availableAlgorithms[key].parameters || [];
 
-                parameters.map((item) => {
-                    base["algorithmTaskChooser[parameters][]"] = {
+                parameters.map((item, i) => {
+                    base["algorithmTaskChooser[parameters][" + i + "]"] = {
                         type: "text",
                         label: item.description,
                         help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
@@ -229,13 +230,27 @@ class ExperimentWizard extends Wizard {
                 unit: "cents",
                 default: 10
             },
-            ratingOptions: {
+            ratingOptions: { // TODO: Add editor for rating options, just preserve them for now…
                 type: "hidden",
                 value: "",
-                encoder: () => [
-                    {name: "good", value: 10},
-                    {name: "bad", value: 0}
-                ]
+                encoder: (json) => {
+                    console.log(json);
+                    try {
+                        return JSON.parse(json);
+                    } catch(e) {
+                        console.error(e);
+                    }
+                },
+                decoder: (items) => {
+                    if (items.length) {
+                        return JSON.stringify(items);
+                    } else {
+                        return JSON.stringify([
+                            {name: "good", value: 10},
+                            {name: "bad", value: 0}
+                        ]);
+                    }
+                }
             },
             constraints: {
                 type: "longtext",
@@ -250,15 +265,14 @@ class ExperimentWizard extends Wizard {
                 type: "text",
                 label: "Tags",
                 help: "Tags! TODO…", // TODO
-                encoder: (text) => text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
-                    return {name: item}
-                }),
+                encoder: (text) => {
+                    text.split(",").map((item) => item.trim()).filter((item) => item !== "").map((item) => {
+                        return {
+                            name: item
+                        };
+                    });
+                },
                 decoder: (items) => items.map((item) => item.name).join(", ")
-            },
-            populations: {
-                type: "hidden",
-                value: "",
-                encoder: () => []
             },
             workerQualityThreshold: {
                 type: "number",

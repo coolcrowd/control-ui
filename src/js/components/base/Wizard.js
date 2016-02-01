@@ -26,12 +26,8 @@ class Wizard extends React.Component {
         let form = this.getForm();
 
         for (let name in form) {
-            if (!form.hasOwnProperty(name)) {
-                continue;
-            }
-
             if (form[name].type === "text" || form[name].type === "longtext") {
-                form[name] = "";
+                form[name] = "default" in form[name] ? form[name].default : "";
             } else if (form[name].type === "enum") {
                 form[name] = form[name].default;
             } else if (form[name].type === "hidden") {
@@ -47,7 +43,7 @@ class Wizard extends React.Component {
     }
 
     getCollectionUri(query) {
-        return "[override-this]";
+        throw "Must be implemented in sub classes";
     }
 
     getItemUri(id) {
@@ -55,11 +51,11 @@ class Wizard extends React.Component {
     }
 
     componentDidMount() {
-        this.combokeys.bind("ctrl+enter", this._onSave.bind(this));
-        this.combokeys.bind(["ctrl+s", "command+s"], () => {
+        this.combokeys.bind(["ctrl+enter", "ctrl+s", "command+s"], () => {
             this._onSave();
             return false;
         });
+
         this.combokeys.bind("esc", this._onAbort.bind(this));
 
         this.setState({
@@ -108,37 +104,26 @@ class Wizard extends React.Component {
 
     fetchData() {
         this.props.backend.request("GET", this.getItemUri(this.props.params.id)).then((response) => {
-            if (!this.ignoreLastFetch) {
-                let spec = this.getForm();
-                let form = response.data;
-                let defaultForm = this.getDefaultForm();
-
-                // Fill in default values, e.g. from enums
-                for (let name in defaultForm) {
-                    if (!defaultForm.hasOwnProperty(name)) {
-                        continue;
-                    }
-
-                    if (!(name in form)) {
-                        form[name] = defaultForm[name];
-                    }
-
-                    if (spec.hasOwnProperty(name) && "decoder" in spec[name]) {
-                        form[name] = spec[name].decoder(form[name]);
-                    }
-                }
-
-                this.setState({
-                    new: false,
-                    data: response.data,
-                    form: form,
-                    loaded: true,
-                    failed: false
-                });
-
-                // Force validation on load
-                this._validateChanges(form, true);
+            if (this.ignoreLastFetch) {
+                return;
             }
+
+            let spec = this.getForm();
+            let form = response.data;
+            let defaultForm = this.getDefaultForm();
+
+            form = Wizard.decodeForm(form, spec, defaultForm);
+
+            this.setState({
+                new: false,
+                data: response.data,
+                form: form,
+                loaded: true,
+                failed: false
+            });
+
+            // Force validation on load
+            this._validateChanges(form, true);
         }).catch(() => {
             if (!this.ignoreLastFetch) {
                 this.setState({
@@ -194,13 +179,9 @@ class Wizard extends React.Component {
         let form = this.state.form;
         let spec = this.getForm();
 
-        for (let name in form) {
-            if (spec.hasOwnProperty(name) && "encoder" in spec[name]) {
-                form[name] = spec[name].encoder(form[name]);
-            }
-        }
-
         if (this.state.new) {
+            Wizard.encodeForm(form, spec);
+
             this.props.backend.request("PUT", this.getCollectionUri(), form).then((resp) => {
                 history.replaceState(null, "/" + this.getItemUri(resp.data.id));
             }).catch((e) => {
@@ -212,10 +193,27 @@ class Wizard extends React.Component {
 
             // Delete all unchanged properties for minimal patch.
             Object.keys(newItem).forEach((name) => {
-                if (newItem[name] === oldItem[name]) {
+                // Ignore all exactly equal objects
+                if (JSON.stringify(newItem[name]) === JSON.stringify(oldItem[name])) {
                     delete newItem[name];
                 }
+
+                // Ignore all objects which are subsets of the API response
+                // Some fields are received but not sent again.
+                else if (typeof newItem[name] === "object") {
+                    if (Object.keys(newItem[name]) > Object.keys(oldItem[name])) {
+                        return;
+                    }
+
+                    let tmpItem = Object.assign({}, oldItem[name], newItem[name]);
+
+                    if (JSON.stringify(tmpItem) === JSON.stringify(oldItem[name])) {
+                        delete newItem[name];
+                    }
+                }
             });
+
+            Wizard.encodeForm(newItem, spec);
 
             // Nothing changed?
             if (Object.keys(newItem).length === 0) {
@@ -299,20 +297,21 @@ class Wizard extends React.Component {
         } else if (input.type === "enum") {
             formElement = input.values.map((value) => {
                 return (
-                    <option value={value.value} selected={value.value === this.state.form[name]}>
+                    <option value={value.value}>
                         {value.text}
                     </option>
                 );
             });
 
             formElement = (
-                <select key={name} name={name} onChange={this._onFormChange.bind(this)} size="1">
+                <select key={name} name={name} value={this.state.form[name]} onChange={this._onFormChange.bind(this)}
+                        size="1">
                     {formElement}
                 </select>
             );
         } else if (input.type === "hidden") {
             return (
-                <input type="hidden" name={name} value={input.value}/>
+                <input type="hidden" name={name} value={this.state.form[name]}/>
             );
         } else {
             console.warn("Unknown type: " + input.type);
@@ -334,6 +333,58 @@ class Wizard extends React.Component {
                 {"validation" in input ? input.validation.renderer() : null}
             </div>
         );
+    }
+
+    static decodeForm(form, spec, defaults) {
+        for (let name in spec) {
+            let specElement = spec[name];
+            let formElement = form[name];
+
+            let regex = /\[([a-z0-9]+)]/ig;
+            let matches = regex.exec(name);
+
+            if (matches) {
+                matches.forEach((element, i) => {
+                    if (i > 0) {
+                        if (formElement && element in formElement) {
+                            formElement = formElement[element];
+                        }
+                    }
+                });
+            }
+
+            if (name in defaults && typeof formElement === "undefined") {
+                formElement = defaults[name];
+            }
+
+            if ("decoder" in specElement) {
+                form[name] = specElement.decoder(formElement);
+            }
+        }
+
+        return form;
+    }
+
+    static encodeForm(form, spec, name) {
+        if (typeof form === "object") {
+            for (let key in form) {
+                let specElement = spec[name ? name + "[" + key + "]" : key];
+
+                if (specElement && "encoder" in specElement) {
+                    form[key] = specElement.encoder(form[key]);
+                }
+
+                form[key] = Wizard.encodeForm(form[key], spec, name ? name + "[" + key + "]" : key);
+            }
+        } else {
+            let specElement = spec[name];
+
+            if (specElement && "encoder" in specElement) {
+                return specElement.encoder(form);
+            }
+        }
+
+        return form;
     }
 }
 

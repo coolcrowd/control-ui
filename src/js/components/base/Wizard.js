@@ -279,39 +279,56 @@ class Wizard extends React.Component {
 
     _renderFormElement(name, input, first) {
         let formElement = null;
+        let value = (() => {
+            let bracketPos = name.indexOf("[");
+            let key = bracketPos === -1 ? name : name.substr(0, bracketPos);
+            let value = this.state.form[key];
+            let regex = /\[([a-z0-9]+)]/ig;
+            let match;
+
+            while ((match = regex.exec(name)) !== null) {
+                let element = match[1];
+
+                if (value && element in value) {
+                    value = value[element];
+                }
+            }
+
+            return value;
+        })();
 
         if (input.type === "text" || input.type === "number") {
             formElement = (
                 <input autoFocus={first} type={input.type} name={name}
                        placeholder={"placeholder" in input ? input.placeholder : ""}
                        key={name} onChange={this._onFormChange.bind(this)}
-                       ref={name} value={this.state.form[name]}/>
+                       ref={name} value={value}/>
             );
         } else if (input.type === "longtext") {
             formElement = (
                 <textarea autoFocus={first} name={name} placeholder={"placeholder" in input ? input.placeholder : ""}
                           ref={name}
                           key={name} onChange={this._onFormChange.bind(this)}
-                          value={this.state.form[name]}/>
+                          value={value}/>
             );
         } else if (input.type === "enum") {
-            formElement = input.values.map((value) => {
+            formElement = input.values.map((item) => {
                 return (
-                    <option value={value.value}>
-                        {value.text}
+                    <option value={item.value}>
+                        {item.text}
                     </option>
                 );
             });
 
             formElement = (
-                <select key={name} name={name} value={this.state.form[name]} onChange={this._onFormChange.bind(this)}
+                <select key={name} name={name} value={value} onChange={this._onFormChange.bind(this)}
                         size="1">
                     {formElement}
                 </select>
             );
         } else if (input.type === "hidden") {
             return (
-                <input type="hidden" name={name} value={this.state.form[name]}/>
+                <input type="hidden" name={name} value={value}/>
             );
         } else {
             console.warn("Unknown type: " + input.type);
@@ -337,20 +354,20 @@ class Wizard extends React.Component {
 
     static decodeForm(form, spec, defaults) {
         for (let name in spec) {
-            let specElement = spec[name];
-            let formElement = form[name];
-
+            let bracketPos = name.indexOf("[");
+            let key = bracketPos === -1 ? name : name.substr(0, bracketPos);
             let regex = /\[([a-z0-9]+)]/ig;
-            let matches = regex.exec(name);
+            let match;
 
-            if (matches) {
-                matches.forEach((element, i) => {
-                    if (i > 0) {
-                        if (formElement && element in formElement) {
-                            formElement = formElement[element];
-                        }
-                    }
-                });
+            let formElement = form[key];
+            let specElement = spec[name];
+
+            while ((match = regex.exec(name)) !== null) {
+                let element = match[1];
+
+                if (formElement && element in formElement) {
+                    formElement = formElement[element];
+                }
             }
 
             if (name in defaults && typeof formElement === "undefined") {

@@ -140,17 +140,17 @@ class ExperimentWizard extends Wizard {
                 let parameters = availableAlgorithms[key].parameters || [];
 
                 parameters.map((item, i) => {
-                    base["algorithmTaskChooser[parameters][" + i + "]"] = {
+                    base[formName + "[parameters][" + i + "][id]"] = {
+                        type: "hidden",
+                        value: availableAlgorithms[key].id,
+                        encoder: parseInt
+                    };
+
+                    base[formName + "[parameters][" + i + "][value]"] = {
                         type: "text",
                         label: item.description,
-                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
-                        value: item.value || "",
-                        encoder: (value) => {
-                            return Object.assign(item, {
-                                value: value
-                            });
-                        }
-                    }
+                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>
+                    };
                 })
             }
         };
@@ -238,7 +238,7 @@ class ExperimentWizard extends Wizard {
                     console.log(json);
                     try {
                         return JSON.parse(json);
-                    } catch(e) {
+                    } catch (e) {
                         console.error(e);
                     }
                 },

@@ -39,46 +39,43 @@ class PlatformWizard extends React.Component {
     }
 
     fetchData() {
+        let failedState = {
+            platforms: null,
+            experiment: null,
+            loaded: true,
+            failed: true,
+            payload: [],
+            platformState: []
+        };
+
         this.props.backend.request("GET", "experiments/" + this.props.params.id).then((response) => {
             if (!this.ignoreLastFetch) {
                 let experiment = response.data;
 
                 this.props.backend.request("GET", "platforms").then((response) => {
-                    if (!this.ignoreLastFetch) {
-                        let platforms = response.data;
-
-                        this.setState({
-                            platforms: platforms,
-                            experiment: experiment,
-                            loaded: true,
-                            failed: false,
-                            payload: this._buildPayload(platforms.items, experiment.populations || []),
-                            platformState: this._buildPlatformState(platforms.items, experiment.populations || [])
-                        });
+                    if (this.ignoreLastFetch) {
+                        return;
                     }
+
+                    let platforms = response.data;
+
+                    this.setState({
+                        platforms: platforms,
+                        experiment: experiment,
+                        loaded: true,
+                        failed: false,
+                        payload: this._buildPayload(platforms.items, experiment.populations || []),
+                        platformState: this._buildPlatformState(platforms.items, experiment.populations || [])
+                    });
                 }).catch(() => {
                     if (!this.ignoreLastFetch) {
-                        this.setState({
-                            platforms: null,
-                            experiment: null,
-                            loaded: true,
-                            failed: true,
-                            payload: [],
-                            platformState: []
-                        });
+                        this.setState(failedState);
                     }
                 });
             }
         }).catch(() => {
             if (!this.ignoreLastFetch) {
-                this.setState({
-                    platforms: null,
-                    experiment: null,
-                    loaded: true,
-                    failed: true,
-                    payload: [],
-                    platformState: []
-                });
+                this.setState(failedState);
             }
         });
     }
@@ -168,7 +165,6 @@ class PlatformWizard extends React.Component {
 
                 return;
             }
-
 
             populations.push(population);
         }

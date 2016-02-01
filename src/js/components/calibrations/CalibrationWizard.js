@@ -22,7 +22,21 @@ class CalibrationWizard extends Wizard {
                 type: "longtext",
                 label: "Possible answers",
                 help: "List all possible answers to this question, each on a separate line. Accepted answers will be chosen when you start an experiment.",
-                encoder: (text) => text.split("\n").map((item) => item.trim()).filter((item) => item.trim() !== "").filter((value, index, self) => self.indexOf(value) === index)
+                encoder: (text) => {
+                    let items = text.split("\n");
+
+                    // Remove empty elements and whitespace
+                    items = items.map((item) => item.trim()).filter((item) => item !== "");
+
+                    // Remove duplicates
+                    items = items.filter((value, index, self) => self.indexOf(value) === index);
+
+                    return items.map((item) => {
+                        return {
+                            answer: item
+                        };
+                    });
+                }
             }
         };
     }

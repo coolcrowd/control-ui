@@ -32,7 +32,7 @@ class CalibrationDetail extends DataComponent {
                     <DataError />
                 );
             } else {
-                let answers = this.state.loaded ? this.state.data.answers.map((answer) => <li><b>{answer}</b></li>) : [];
+                let answers = this.state.loaded ? this.state.data.answers.map((answer) => <li><b>{answer.answer}</b></li>) : [];
 
                 content = (
                     <div>

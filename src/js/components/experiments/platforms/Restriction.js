@@ -23,7 +23,7 @@ class Restriction extends React.Component {
         let acceptedAnswers = {};
 
         for (let i = 0; i < answers.length; i++) {
-            acceptedAnswers[answers[i]] = answers[i];
+            acceptedAnswers[answers[i].id] = answers[i].answer;
         }
 
         this.setState({
@@ -33,9 +33,9 @@ class Restriction extends React.Component {
 
     render() {
         let answers = this.props.item.answers.map((answer) => (
-            <label key={answer}>
-                <input type="checkbox" checked={answer in this.state.acceptedAnswers}
-                       onClick={() => this._toggleAnswer(answer)}/> {answer}
+            <label key={answer.id}>
+                <input type="checkbox" checked={answer.id in this.state.acceptedAnswers}
+                       onClick={() => this._toggleAnswer(answer.id)}/> {answer.answer}
             </label>
         ));
 
@@ -64,7 +64,12 @@ class Restriction extends React.Component {
         });
 
         let item = this.props.item;
-        item.acceptedAnswers = Object.keys(this.state.acceptedAnswers);
+        item.acceptedAnswers = Object.keys(this.state.acceptedAnswers).map((key) => {
+            return {
+                id: key,
+                answer: this.state.acceptedAnswers[key]
+            }
+        });
 
         this.props.onChange(item);
     }

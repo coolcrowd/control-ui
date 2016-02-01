@@ -1,6 +1,7 @@
 import React from "react";
 import Template from "../../core/Template";
 import Wizard from "../base/Wizard";
+import DataError from "../base/DataError";
 
 class ExperimentWizard extends Wizard {
     constructor() {
@@ -284,6 +285,16 @@ class ExperimentWizard extends Wizard {
         return base;
     }
 
+    render() {
+        if (this.state.algorithmsFailed) {
+            return (
+                <DataError />
+            );
+        }
+
+        return super.render();
+    }
+
     getCollectionUri(query) {
         if (typeof query !== "undefined") {
             return "experiments?" + query;
@@ -303,7 +314,7 @@ class ExperimentWizard extends Wizard {
             });
         }).catch(() => {
             this.setState({
-                failed: true
+                algorithmsFailed: true
             });
         });
     }

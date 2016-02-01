@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router";
 import ResourceAction from "./ResourceAction";
 
+/**
+ * @author Niklas Keller
+ */
 class ResourceListItem extends React.Component {
     render() {
         let editButton = null;

@@ -3,6 +3,9 @@ import { Link } from "react-router";
 import history from "../../history";
 import ResourceList from "./../base/ResourceList";
 
+/**
+ * @author Niklas Keller
+ */
 class ExperimentList extends ResourceList {
     getCollectionUri(query) {
         if (typeof query !== "undefined") {

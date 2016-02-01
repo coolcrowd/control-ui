@@ -1,6 +1,9 @@
 import React from "react";
 import Shortcut from "./Shortcut";
 
+/**
+ * @author Niklas Keller
+ */
 class ShortcutHelp extends React.Component {
     render() {
         return (

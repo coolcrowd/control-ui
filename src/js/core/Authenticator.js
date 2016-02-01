@@ -1,3 +1,6 @@
+/**
+ * @author Niklas Keller
+ */
 class Authenticator {
     /**
      * Constructs the authorization header for use in HTTP requests.

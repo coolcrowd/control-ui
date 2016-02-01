@@ -3,6 +3,9 @@ import Template from "../../core/Template";
 import Wizard from "../base/Wizard";
 import DataError from "../base/DataError";
 
+/**
+ * @author Niklas Keller
+ */
 class ExperimentWizard extends Wizard {
     constructor() {
         super();
@@ -151,7 +154,7 @@ class ExperimentWizard extends Wizard {
                         label: item.description,
                         help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>
                     };
-                })
+                });
             }
         };
 

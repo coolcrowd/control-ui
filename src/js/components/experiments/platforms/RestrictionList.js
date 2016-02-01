@@ -5,6 +5,9 @@ import Loader from "../../../core/Loader";
 import DataComponent from "../../base/DataComponent";
 import DataError from "../../base/DataError";
 
+/**
+ * @author Niklas Keller
+ */
 class RestrictionList extends DataComponent {
     constructor() {
         super();

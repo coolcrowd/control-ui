@@ -6,6 +6,9 @@ import DataError from "../base/DataError";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
+/**
+ * @author Niklas Keller
+ */
 class CalibrationDetail extends DataComponent {
     getDataUri() {
         return "calibrations/" + this.props.params.id;

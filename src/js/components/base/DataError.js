@@ -1,6 +1,14 @@
 import React from "react";
 
+/**
+ * Shows that an error occurred while loading data.
+ * @author Niklas Keller
+ */
 class DataError extends React.Component {
+    /**
+     * React hook to render the component.
+     * @returns {XML}
+     */
     render() {
         return (
             <div>
@@ -20,6 +28,9 @@ class DataError extends React.Component {
         );
     }
 
+    /**
+     * Handles clicks to the refresh button. Reloads the page.
+     */
     _onClick() {
         window.location.reload(true);
     }

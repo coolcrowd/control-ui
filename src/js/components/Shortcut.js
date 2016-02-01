@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @author Niklas Keller
+ */
 class Shortcut extends React.Component {
     render() {
         let keys = this.props.keys.split(" ").map((key) => {

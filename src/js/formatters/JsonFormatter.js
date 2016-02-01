@@ -1,4 +1,5 @@
 /**
+ * @author Niklas Keller
  * @see http://www.json.org/
  */
 class JsonFormatter {

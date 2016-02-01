@@ -2,6 +2,9 @@ import React from "react";
 import Authenticator from "./Authenticator";
 import Login from "../components/Login";
 
+/**
+ * @author Niklas Keller
+ */
 class BasicAuthenticator extends Authenticator {
     constructor(username, password) {
         super();

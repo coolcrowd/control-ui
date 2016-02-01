@@ -3,6 +3,9 @@ import RestrictionList from "./RestrictionList";
 import Restriction from "./Restriction";
 import classNames from "classnames";
 
+/**
+ * @author Niklas Keller
+ */
 class PlatformWizardItem extends React.Component {
     constructor() {
         super();

@@ -1,3 +1,6 @@
+/**
+ * @author Niklas Keller
+ */
 class HttpException {
     constructor(message) {
         this.message = message;

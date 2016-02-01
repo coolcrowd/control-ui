@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @author Niklas Keller
+ */
 class NotFound extends React.Component {
     render() {
         return (

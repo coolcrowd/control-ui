@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import CSSTransitionGroup from "react-addons-css-transition-group";
 import config from "../config.js";
 
+/**
+ * @author Niklas Keller
+ */
 class Login extends React.Component {
     constructor() {
         super();

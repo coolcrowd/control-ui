@@ -4,6 +4,9 @@ import DataError from "../../base/DataError";
 import PlatformWizardItem from "./PlatformWizardItem";
 import history from "../../../history";
 
+/**
+ * @author Niklas Keller
+ */
 class PlatformWizard extends React.Component {
     constructor() {
         super();
@@ -82,9 +85,7 @@ class PlatformWizard extends React.Component {
 
     render() {
         if (this.state.loaded && this.state.failed) {
-            return (
-                <DataError />
-            );
+            return <DataError />;
         }
 
         let children = this.state.loaded ? (this.state.platforms.items || []).map((item) => {

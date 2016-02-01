@@ -6,6 +6,9 @@ import DataError from "../base/DataError";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
+/**
+ * @author Niklas Keller
+ */
 class NotificationDetail extends DataComponent {
     getDataUri() {
         return "notifications/" + this.props.params.id;

@@ -3,6 +3,9 @@ import React from "react";
 // Show loader while page is not loaded yet, but without spin.js!
 // https://github.com/quickleft/react-loader/blob/master/lib/react-loader.js
 
+/**
+ * @author Niklas Keller
+ */
 class Loader extends React.Component {
     constructor() {
         super();

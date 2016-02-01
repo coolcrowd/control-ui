@@ -5,6 +5,9 @@ import DataComponent from "./../base/DataComponent";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
+/**
+ * @author Niklas Keller
+ */
 class TemplateDetail extends DataComponent {
     getDataUri() {
         return "templates/" + this.props.params.id;

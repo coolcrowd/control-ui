@@ -12,6 +12,9 @@ function getPlaceholderItem(placeholder) {
     );
 }
 
+/**
+ * @author Niklas Keller
+ */
 class TemplateWizard extends Wizard {
     getForm() {
         return {

@@ -6,6 +6,9 @@ import resolve from "../../resolve";
 import serialize from "form-serialize";
 import Combokeys from "combokeys";
 
+/**
+ * @author Niklas Keller
+ */
 class Wizard extends React.Component {
     constructor() {
         super();

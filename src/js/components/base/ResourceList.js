@@ -7,6 +7,9 @@ import ResourceListItem from "./ResourceListItem";
 import DataError from "./DataError";
 import Combokeys from "combokeys";
 
+/**
+ * @author Niklas Keller
+ */
 class ResourceList extends DataComponent {
     constructor() {
         super();

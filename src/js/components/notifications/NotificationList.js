@@ -2,6 +2,9 @@ import React from "react";
 import history from "../../history";
 import ResourceList from "./../base/ResourceList";
 
+/**
+ * @author Niklas Keller
+ */
 class NotificationList extends ResourceList {
     getCollectionUri(query) {
         if (typeof query !== "undefined") {

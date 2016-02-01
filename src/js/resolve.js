@@ -1,3 +1,6 @@
+/**
+ * @author Niklas Keller
+ */
 function resolve(uri) {
     let resolver = document.createElement("a");
     resolver.href = uri;

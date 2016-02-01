@@ -1,4 +1,5 @@
 /**
+ * @author Niklas Keller
  * @see https://en.wikipedia.org/wiki/Comma-separated_values
  */
 class CsvFormatter {

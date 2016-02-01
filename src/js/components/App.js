@@ -5,6 +5,9 @@ import Combokeys from "combokeys";
 import ShortcutHelp from "./ShortcutHelp";
 import classNames from "classnames";
 
+/**
+ * @author Niklas Keller
+ */
 class App extends React.Component {
     constructor() {
         super();

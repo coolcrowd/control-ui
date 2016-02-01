@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @author Niklas Keller
+ */
 class Restriction extends React.Component {
     constructor() {
         super();

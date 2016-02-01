@@ -6,6 +6,9 @@ import DataError from "../base/DataError";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
+/**
+ * @author Niklas Keller
+ */
 class ExperimentDetail extends DataComponent {
     getDataUri() {
         return "experiments/" + this.props.params.id;

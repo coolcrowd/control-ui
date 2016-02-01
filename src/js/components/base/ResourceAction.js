@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router";
 import classNames from "classnames";
 
+/**
+ * @author Niklas Keller
+ */
 class ResourceAction extends React.Component {
     constructor() {
         super();

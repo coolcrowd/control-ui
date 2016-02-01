@@ -2,6 +2,9 @@ import React from "react";
 import Loader from "../../core/Loader";
 import Wizard from "../base/Wizard";
 
+/**
+ * @author Niklas Keller
+ */
 class CalibrationWizard extends Wizard {
     getForm() {
         return {

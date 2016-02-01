@@ -1,5 +1,8 @@
 import TemplateException from "./TemplateException";
 
+/**
+ * @author Niklas Keller
+ */
 class Template {
     static parse(text) {
         // format: {{name:description:type}}

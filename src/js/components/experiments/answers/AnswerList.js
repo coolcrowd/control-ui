@@ -11,6 +11,9 @@ import JsonFormatter from "../../../formatters/JsonFormatter";
 import CsvFormatter from "../../../formatters/CsvFormatter";
 import { saveAs } from "filesaver.js";
 
+/**
+ * @author Niklas Keller
+ */
 class AnswerList extends DataComponent {
     constructor() {
         super();

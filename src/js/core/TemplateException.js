@@ -1,3 +1,6 @@
+/**
+ * @author Niklas Keller
+ */
 class TemplateException {
     constructor(message) {
         this.message = message;

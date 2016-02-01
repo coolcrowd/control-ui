@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @author Niklas Keller
+ */
 class Welcome extends React.Component {
     constructor() {
         super();

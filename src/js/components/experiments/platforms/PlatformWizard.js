@@ -2,6 +2,7 @@ import React from "react";
 import Loader from "../../../core/Loader";
 import DataError from "../../base/DataError";
 import PlatformWizardItem from "./PlatformWizardItem";
+import history from "../../../history";
 
 class PlatformWizard extends React.Component {
     constructor() {
@@ -242,7 +243,7 @@ class PlatformWizard extends React.Component {
         }
 
         for (let i = 0; i < populations.length; i++) {
-            result[populations[i].id] = true;
+            result[populations[i].platformId] = true;
         }
 
         return result;
@@ -256,7 +257,7 @@ class PlatformWizard extends React.Component {
         }
 
         for (let i = 0; i < populations.length; i++) {
-            result[populations[i].id] = populations[i].calibrations || [];
+            result[populations[i].platformId] = populations[i].calibrations || [];
         }
 
         return result;

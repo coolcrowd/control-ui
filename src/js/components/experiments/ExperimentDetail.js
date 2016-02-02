@@ -3,7 +3,8 @@ import { Link } from "react-router";
 import Loader from "../../core/Loader";
 import DataComponent from "../base/DataComponent";
 import DataError from "../base/DataError";
-import ResourceAction from "./../base/ResourceAction";
+import ResourceAction from "../base/ResourceAction";
+import Template from "../../core/Template";
 import history from "../../history";
 
 /**
@@ -61,6 +62,10 @@ class ExperimentDetail extends DataComponent {
                     );
                 }
 
+                let description = Object.keys(this.state.data.placeholders).length > 0
+                    ? Template.apply(this.state.data.description, this.state.data.placeholders)
+                    : this.state.data.description;
+
                 content = (
                     <div>
                         <div className="actions">
@@ -115,7 +120,7 @@ class ExperimentDetail extends DataComponent {
                         </table>
 
                         <label className="input-label">Description</label>
-                        <pre>{this.state.data.description}</pre>
+                        <pre>{description}</pre>
                     </div>
                 );
             }

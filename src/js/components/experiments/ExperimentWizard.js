@@ -80,6 +80,15 @@ class ExperimentWizard extends Wizard {
             return {};
         }
 
+        let qualityThresholdValues = [];
+
+        for (let i = 0; i < 10; i++) {
+            qualityThresholdValues.push({
+                text: Math.round(100 * i / 9) + "%",
+                value: i
+            });
+        }
+
         let base = {
             title: {
                 type: "text",
@@ -280,12 +289,24 @@ class ExperimentWizard extends Wizard {
                 unit: "cents",
                 default: 10
             },
+            paymentQualityThresholdAnswer: {
+                type: "enum",
+                label: "Minimum Answer Quality",
+                help: "How good must a answer be to enable payments?",
+                values: qualityThresholdValues
+            },
             paymentRating: {
                 type: "number",
                 label: "Rating Payment",
                 help: "Payment for each rating.",
                 unit: "cents",
                 default: 10
+            },
+            paymentQualityThresholdRating: {
+                type: "enum",
+                label: "Minimum Answer Quality",
+                help: "How good must a rating be to enable payments?",
+                values: qualityThresholdValues
             },
             ratingOptions: { // TODO: Add editor for rating options, just preserve them for now…
                 type: "hidden",
@@ -324,9 +345,10 @@ class ExperimentWizard extends Wizard {
                 decoder: (items) => items.map((item) => item.name).join(", ")
             },
             workerQualityThreshold: {
-                type: "number",
+                type: "enum",
                 label: "Worker Quality Threshold",
-                help: "Minimum worker quality to participate in this experiment. Values from 0 to 9."
+                help: "Minimum worker quality to participate in this experiment.",
+                values: qualityThresholdValues
             }
         });
 

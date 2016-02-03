@@ -47,6 +47,7 @@ class ExperimentWizard extends Wizard {
         this.fetchAlgorithms();
 
         let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+        delete form.id;
 
         if ("experiment" in this.props.location.state) {
             this.setState({
@@ -62,6 +63,7 @@ class ExperimentWizard extends Wizard {
         super.componentWillReceiveProps(next);
 
         let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+        delete form.id;
 
         if ("experiment" in this.props.location.state) {
             this.setState({
@@ -123,8 +125,21 @@ class ExperimentWizard extends Wizard {
             if (isTemplate) {
                 let text;
 
-                if (this.state.new && this.props.location.state && "template" in this.props.location.state) {
-                    let template = this.props.location.state.template;
+                if (this.state.new && this.props.location.state) {
+                    let template;
+
+                    if ("template" in this.props.location.state) {
+                        template = this.props.location.state.template;
+                    } else if ("experiment" in this.props.location.state) {
+                        template = {
+                            content: this.props.location.state.experiment.description,
+                            answerType: this.props.location.state.experiment.answerType,
+                            id: this.props.location.state.experiment.templateId
+                        }
+                    } else {
+                        throw "Invalid state!";
+                    }
+
                     text = template.content;
 
                     Object.assign(base, {
@@ -155,17 +170,6 @@ class ExperimentWizard extends Wizard {
                         help: placeholders[name].description
                     };
                 });
-
-                if (Object.keys(placeholders).length === 0) {
-                    base["placeholders"] = {
-                        type: "hidden",
-                        value: "{}",
-                        encoder: () => {
-                            return {};
-                        },
-                        decoder: (i) => "{}"
-                    };
-                }
             } else {
                 Object.assign(base, nonTemplate);
             }
@@ -194,7 +198,7 @@ class ExperimentWizard extends Wizard {
                 parameters.map((item, i) => {
                     base[formName + "[parameters][" + i + "][id]"] = {
                         type: "hidden",
-                        value: availableAlgorithms[key].id,
+                        value: item.id,
                         encoder: parseInt
                     };
 

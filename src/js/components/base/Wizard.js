@@ -181,7 +181,7 @@ class Wizard extends React.Component {
     }
 
     _onSave() {
-        let form = this.state.form;
+        let form = Object.assign({}, this.state.form);
         let spec = this.getForm();
 
         if (this.state.new) {

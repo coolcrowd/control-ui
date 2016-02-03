@@ -33,6 +33,23 @@ class ExperimentList extends ResourceList {
             </Link>
         );
     }
+
+    renderAdditionalItemAction() {
+        // this method will be rebound to ResourceListItem and executes in its context
+
+        let onClick = function () {
+            history.replaceState({
+                experiment: this.props.item
+            }, "/experiments/new");
+        };
+
+        return (
+            <button type="button" className="action" onClick={onClick.bind(this)}>
+                <i className="fa fa-clone icon"/>
+                Clone
+            </button>
+        );
+    }
 }
 
 export default ExperimentList;

@@ -38,6 +38,8 @@ class Wizard extends React.Component {
             } else if (form[name].type === "number") {
                 form[name] = "default" in form[name] ? form[name].default : 0;
             } else {
+                form[name] = "";
+
                 console.warn("No default value defined for " + name);
             }
         }
@@ -331,7 +333,7 @@ class Wizard extends React.Component {
             );
         } else if (input.type === "hidden") {
             return (
-                <input type="hidden" name={name} value={value}/>
+                <input type="hidden" name={name} value={input.value}/>
             );
         } else {
             console.warn("Unknown type: " + input.type);

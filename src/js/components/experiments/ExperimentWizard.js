@@ -45,6 +45,32 @@ class ExperimentWizard extends Wizard {
     componentDidMount() {
         super.componentDidMount();
         this.fetchAlgorithms();
+
+        let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+
+        if ("experiment" in this.props.location.state) {
+            this.setState({
+                form: form,
+                data: form,
+                loaded: true,
+                failed: false
+            });
+        }
+    }
+
+    componentWillReceiveProps(next) {
+        super.componentWillReceiveProps(next);
+
+        let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+
+        if ("experiment" in this.props.location.state) {
+            this.setState({
+                form: form,
+                data: form,
+                loaded: true,
+                failed: false
+            });
+        }
     }
 
     getForm() {

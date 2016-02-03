@@ -163,7 +163,10 @@ class ExperimentWizard extends Wizard {
                         templateId: {
                             type: "hidden",
                             value: template.id,
-                            encoder: parseInt
+                            decoder: (i) => i.value,
+                            encoder: (i) => {
+                                return {value: parseInt(i)};
+                            }
                         }
                     });
                 } else {
@@ -256,57 +259,93 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Needed Answers",
                 help: "How many creative answers should be collected?",
-                default: 10
+                default: 10,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             answersPerWorker: {
                 type: "number",
                 label: "Answers / Worker",
                 help: "How many answers should each worker be able to give?",
-                default: 3
+                default: 3,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             ratingsPerWorker: {
                 type: "number",
                 label: "Ratings / Worker",
                 help: "How many ratings should each worker be able to give?",
-                default: 3
+                default: 3,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             ratingsPerAnswer: {
                 type: "number",
                 label: "Ratings / Answer",
                 help: "How many ratings should each answer receive?",
-                default: 3
+                default: 3,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             paymentBase: {
                 type: "number",
                 label: "Base Payment",
                 help: "Basic payment a worker gets for completing a task.",
-                unit: "cents"
+                unit: "cents",
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             paymentAnswer: {
                 type: "number",
                 label: "Answer Payment",
                 help: "Payment for each creative answer.",
                 unit: "cents",
-                default: 10
+                default: 10,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             paymentQualityThresholdAnswer: {
                 type: "enum",
                 label: "Minimum Answer Quality",
                 help: "How good must a answer be to enable payments?",
-                values: qualityThresholdValues
+                values: qualityThresholdValues,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             paymentRating: {
                 type: "number",
                 label: "Rating Payment",
                 help: "Payment for each rating.",
                 unit: "cents",
-                default: 10
+                default: 10,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             paymentQualityThresholdRating: {
                 type: "enum",
                 label: "Minimum Answer Quality",
                 help: "How good must a rating be to enable payments?",
-                values: qualityThresholdValues
+                values: qualityThresholdValues,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             },
             ratingOptions: { // TODO: Add editor for rating options, just preserve them for now…
                 type: "hidden",
@@ -348,7 +387,11 @@ class ExperimentWizard extends Wizard {
                 type: "enum",
                 label: "Worker Quality Threshold",
                 help: "Minimum worker quality to participate in this experiment.",
-                values: qualityThresholdValues
+                values: qualityThresholdValues,
+                decoder: (i) => i.value,
+                encoder: (i) => {
+                    return {value: i};
+                }
             }
         });
 

@@ -96,25 +96,25 @@ class ExperimentDetail extends DataComponent {
                                 <td>Answer Type</td>
                                 <td>{this.state.data.answerType === "TEXT" ? "Text" : "Images"}</td>
                                 <td>Needed Answers</td>
-                                <td>{this.state.data.neededAnswers || 0}</td>
+                                <td>{this.state.data.neededAnswers.value}</td>
                             </tr>
                             <tr>
                                 <td>Answers / Worker</td>
-                                <td>{this.state.data.answersPerWorker || 0}</td>
+                                <td>{this.state.data.answersPerWorker.value}</td>
                                 <td>Base Payment</td>
-                                <td>{this.state.data.paymentBase || 0}</td>
+                                <td>{this.state.data.paymentBase.value}</td>
                             </tr>
                             <tr>
                                 <td>Ratings / Worker</td>
-                                <td>{this.state.data.ratingsPerWorker || 0}</td>
+                                <td>{this.state.data.ratingsPerWorker.value}</td>
                                 <td>Payment / Answer</td>
-                                <td>{this.state.data.paymentAnswer || 0}</td>
+                                <td>{this.state.data.paymentAnswer.value}</td>
                             </tr>
                             <tr>
                                 <td>Ratings / Answer</td>
-                                <td>{this.state.data.ratingsPerAnswer || 0}</td>
+                                <td>{this.state.data.ratingsPerAnswer.value}</td>
                                 <td>Payment / Rating</td>
-                                <td>{this.state.data.paymentRating || 0}</td>
+                                <td>{this.state.data.paymentRating.value}</td>
                             </tr>
                             </tbody>
                         </table>

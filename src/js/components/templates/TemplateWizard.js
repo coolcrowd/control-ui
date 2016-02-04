@@ -26,7 +26,7 @@ class TemplateWizard extends Wizard {
             content: {
                 type: "longtext",
                 label: "Content",
-                help: "Description of the creative task. You can use placeholders with {{name:description:type}}.",
+                help: "Description of the creative task. You can use placeholders with {{name:description}}.",
                 validation: {
                     validator: this._onContentChange.bind(this),
                     renderer: this._renderContent.bind(this)

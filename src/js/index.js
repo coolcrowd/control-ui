@@ -38,7 +38,7 @@ const renderLoggedIn = (authenticator) => {
     let backend = new Backend(config.apiRoot, authenticator);
 
     let createElement = (Component, props) => {
-        return <Component {...props} backend={backend}/>;
+        return <Component {...props} backend={backend} authentication={config.authentication}/>;
     };
 
     return render((

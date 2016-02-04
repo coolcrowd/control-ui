@@ -32,6 +32,12 @@ class App extends React.Component {
     }
 
     render() {
+        let logoutButton = this.props.authentication ? (
+            <button type="button" className="logout" onClick={this._onLogout.bind(this)}>
+                <i className="fa fa-power-off icon"/>
+            </button>
+        ) : null;
+
         return (
             <div>
                 <input type="checkbox" id="mobile-menu-switch" className="no-display" ref="mobileSwitch"/>
@@ -71,9 +77,7 @@ class App extends React.Component {
                             </li>
                         </ul>
 
-                        <button type="button" className="logout" onClick={this._onLogout.bind(this)}>
-                            <i className="fa fa-power-off icon"/>
-                        </button>
+                        {logoutButton}
                     </div>
                 </div>
 

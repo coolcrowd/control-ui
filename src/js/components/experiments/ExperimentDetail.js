@@ -66,6 +66,14 @@ class ExperimentDetail extends DataComponent {
                     ? Template.apply(this.state.data.description, this.state.data.placeholders)
                     : this.state.data.description;
 
+                let constraints = this.state.data.constraints.map((constraint) => (
+                    <li key={constraint.name}>{constraint.name}</li>
+                ));
+
+                let tags = this.state.data.tags.map((tag) => (
+                    <li key={tag.name}>{tag.name}</li>
+                ));
+
                 content = (
                     <div>
                         <div className="actions">
@@ -121,6 +129,12 @@ class ExperimentDetail extends DataComponent {
 
                         <label className="input-label">Description</label>
                         <pre>{description}</pre>
+
+                        <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
+                        {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}
+
+                        <label className="input-label"><i className="fa fa-tags icon"/> Tags</label>
+                        {tags.length ? <ul>{tags}</ul> : <i>none</i>}
                     </div>
                 );
             }

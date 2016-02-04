@@ -12,6 +12,29 @@ function getPlaceholderItem(placeholder) {
     );
 }
 
+function encodeTextCollection(text, separator) {
+    let items = text.split(separator);
+
+    // Remove whitespace and empty elements
+    items = items.map((item) => item.trim()).filter((item) => item !== "");
+
+    if (items.length === 0) {
+        // Special value to signal no elements, because proto can't differentiate
+        // between default value and empty collection…
+        return [
+            {
+                name: ""
+            }
+        ];
+    }
+
+    return items.map((item) => {
+        return {
+            name: item
+        };
+    });
+}
+
 /**
  * @author Niklas Keller
  */
@@ -47,6 +70,20 @@ class TemplateWizard extends Wizard {
                         text: "Images"
                     }
                 ]
+            },
+            constraints: {
+                type: "longtext",
+                label: "Constraints",
+                help: "Constraints that should be matched by all creative answers.",
+                encoder: (text) => encodeTextCollection(text, "\n"),
+                decoder: (items) => items.map((item) => item.name).join("\n")
+            },
+            tags: {
+                type: "text",
+                label: "Tags",
+                help: "Tags! TODO…", // TODO
+                encoder: (text) => encodeTextCollection(text, ","),
+                decoder: (items) => items.map((item) => item.name).join(", ")
             }
         };
     }

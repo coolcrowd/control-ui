@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import Loader from "../../core/Loader";
 import DataComponent from "./../base/DataComponent";
+import DataError from "./../base/DataError";
 import ResourceAction from "./../base/ResourceAction";
 import history from "../../history";
 
@@ -28,11 +29,7 @@ class TemplateDetail extends DataComponent {
         if (this.state.loaded) {
             if (this.state.failed) {
                 content = (
-                    <div>
-                        <h1>Error while loading…</h1>
-
-                        <p>Content couldn't be loaded.</p>
-                    </div>
+                    <DataError />
                 );
             } else {
                 let type;
@@ -52,6 +49,14 @@ class TemplateDetail extends DataComponent {
                         </span>
                     );
                 }
+
+                let constraints = this.state.data.constraints.map((constraint) => (
+                    <li key={constraint.name}>{constraint.name}</li>
+                ));
+
+                let tags = this.state.data.tags.map((tag) => (
+                    <li key={tag.name}>{tag.name}</li>
+                ));
 
                 content = (
                     <div>
@@ -82,6 +87,12 @@ class TemplateDetail extends DataComponent {
 
                         <label className="input-label">Answer Type</label>
                         <div>{type}</div>
+
+                        <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
+                        {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}
+
+                        <label className="input-label"><i className="fa fa-tags icon"/> Tags</label>
+                        {tags.length ? <ul>{tags}</ul> : <i>none</i>}
                     </div>
                 );
             }

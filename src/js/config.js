@@ -1,5 +1,5 @@
 let config = {
-    apiRoot: "/api/",
+    apiRoot: "http://localhost:4567/",
     authentication: false
 };
 

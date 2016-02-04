@@ -56,6 +56,18 @@ class ExperimentWizard extends Wizard {
                 loaded: true,
                 failed: false
             });
+        } else if (this.props.location.state && "template" in this.props.location.state) {
+            let template = this.props.location.state.template;
+            let form = this.getDefaultForm();
+
+            Object.assign(form, {
+                constraints: template.constraints.map(i => i.name).join("\n"),
+                tags: template.tags.map(i => i.name).join(", ")
+            });
+
+            this.setState({
+                form: form
+            });
         }
     }
 
@@ -71,6 +83,18 @@ class ExperimentWizard extends Wizard {
                 data: form,
                 loaded: true,
                 failed: false
+            });
+        } else if (this.props.location.state && "template" in this.props.location.state) {
+            let template = this.props.location.state.template;
+            let form = this.getDefaultForm();
+
+            Object.assign(form, {
+                constraints: template.constraints.map(i => i.name).join("\n"),
+                tags: template.tags.map(i => i.name).join(", ")
+            });
+
+            this.setState({
+                form: form
             });
         }
     }

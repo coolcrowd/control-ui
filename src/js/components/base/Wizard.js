@@ -161,13 +161,31 @@ class Wizard extends React.Component {
     _validateChanges(oldForm, forceValidation) {
         forceValidation = forceValidation || false;
 
-        let keys = Object.keys(oldForm);
-        let form = this.getForm();
+        let spec = this.getForm();
+        let specKeys = Object.keys(spec);
 
-        keys.forEach((key) => {
-            if (forceValidation || oldForm[key] !== this.state.form[key]) {
-                if (key in form && "validation" in form[key]) {
-                    form[key].validation.validator(this.state.form[key]);
+        specKeys.forEach((name) => {
+            let bracket = name.indexOf("[");
+            let key = bracket === -1 ? name : name.substr(0, bracket);
+            let regex = /\[([a-z0-9]+)]/ig;
+            let match;
+
+            let formElement = this.state.form[key];
+            let oldFormElement = oldForm[key];
+            let specElement = spec[name];
+
+            while ((match = regex.exec(key)) !== null) {
+                let element = match[1];
+
+                if (formElement && element in formElement) {
+                    formElement = formElement[element];
+                    oldFormElement = oldFormElement[element];
+                }
+            }
+
+            if (forceValidation || oldFormElement !== formElement) {
+                if (specElement && "validation" in specElement) {
+                    specElement.validation.validator(formElement);
                 }
             }
         });

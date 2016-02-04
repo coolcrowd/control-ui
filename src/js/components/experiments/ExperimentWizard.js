@@ -46,10 +46,10 @@ class ExperimentWizard extends Wizard {
         super.componentDidMount();
         this.fetchAlgorithms();
 
-        let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
-        delete form.id;
+        if (this.props.location.state && "experiment" in this.props.location.state) {
+            let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+            delete form.id;
 
-        if ("experiment" in this.props.location.state) {
             this.setState({
                 form: form,
                 data: form,
@@ -62,10 +62,10 @@ class ExperimentWizard extends Wizard {
     componentWillReceiveProps(next) {
         super.componentWillReceiveProps(next);
 
-        let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
-        delete form.id;
+        if (this.props.location.state && "experiment" in this.props.location.state) {
+            let form = Wizard.decodeForm(this.props.location.state.experiment, this.getForm(), this.getDefaultForm());
+            delete form.id;
 
-        if ("experiment" in this.props.location.state) {
             this.setState({
                 form: form,
                 data: form,
@@ -217,7 +217,29 @@ class ExperimentWizard extends Wizard {
                     base[formName + "[parameters][" + i + "][value]"] = {
                         type: "text",
                         label: item.description,
-                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>
+                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
+                        validation: {
+                            validator: () => {
+                                let value = this.refs[formName + "[parameters][" + i + "][value]"].value;
+                                let regex = new RegExp(item.regex);
+
+                                let state = {};
+                                state["validation." + formName + "[parameters][" + i + "][value]"] = value === "" || regex.exec(value) !== null;
+
+                                this.setState(state);
+                            },
+                            renderer: () => {
+                                let valid = this.state["validation." + formName + "[parameters][" + i + "][value]"];
+
+                                if (!valid) {
+                                    return (
+                                        <div className="validation-error">
+                                            Parameter does not match required format: <b>{item.regex}</b>
+                                        </div>
+                                    );
+                                }
+                            }
+                        }
                     };
                 });
             }

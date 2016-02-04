@@ -11,12 +11,13 @@ class PlatformWizardItem extends React.Component {
         super();
 
         this.state = {
-            showRestrictionList: false
+            calibrationList: false
         }
     }
 
     render() {
-        let restrictions = this.props.restrictions.map((item) => <Restriction key={item.id} item={item} onChange={this.props.onChange}/>);
+        let restrictions = this.props.restrictions.map((item) => <Restriction key={item.id} item={item}
+                                                                              onChange={this.props.onChange}/>);
 
         if (restrictions.length > 0) {
             restrictions = (
@@ -28,22 +29,22 @@ class PlatformWizardItem extends React.Component {
             );
         }
 
-        let restrictionsDialog = this.state.showRestrictionList ? (
+        let restrictionsDialog = this.state.calibrationList ? (
             <div className={classNames({
                         "dialog-overlay": true,
-                        "dialog-visible": this.state.showRestrictionList
+                        "dialog-visible": this.state.calibrationList
                     })}>
                 <div className="dialog">
                     <div className="dialog-title">
                         <h2>Restrictions</h2>
                         <button type="button" className="dialog-close"
-                                onClick={() => this.setState({showRestrictionList: false})}>
+                                onClick={() => this.setState({calibrationList: false})}>
                             <i className="fa fa-times"/>
                         </button>
                     </div>
                     <div className="dialog-content">
                         <RestrictionList backend={this.props.backend}
-                                         onNew={(item) => {this.setState({showRestrictionList: false}); this.props.onNew(item); }}/>
+                                         onNew={this._onNewRestriction.bind(this)}/>
                     </div>
                 </div>
             </div>
@@ -72,10 +73,30 @@ class PlatformWizardItem extends React.Component {
         );
     }
 
+    /**
+     * Executed when the "restrict" button is clicked.
+     * @private
+     */
     _onRestrictClick() {
         this.setState({
-            showRestrictionList: true
+            calibrationList: true
         });
+    }
+
+    /**
+     * Adds a new calibration and enables the platform if not already enabled.
+     * @private
+     */
+    _onNewRestriction(item) {
+        this.setState({
+            calibrationList: false
+        });
+
+        if (!this.props.enabled) {
+            this.props.onToggle();
+        }
+
+        this.props.onNew(item);
     }
 }
 

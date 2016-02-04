@@ -263,9 +263,9 @@ class Wizard extends React.Component {
             <form className="wizard" ref="form">
                 {content}
 
-                <div className="actions actions-right">
+                <div className="actions actions-right actions-bottom">
                     <button type="button" className="action action-constructive" onClick={this._onSubmit.bind(this)}>
-                        <i className="fa fa-save"/> Save
+                        <i className="fa fa-save icon"/> Save
                     </button>
                 </div>
             </form>

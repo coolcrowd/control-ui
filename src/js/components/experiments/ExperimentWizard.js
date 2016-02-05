@@ -308,7 +308,7 @@ class ExperimentWizard extends Wizard {
                 default: 10,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             answersPerWorker: {
@@ -318,7 +318,7 @@ class ExperimentWizard extends Wizard {
                 default: 3,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             ratingsPerWorker: {
@@ -328,7 +328,7 @@ class ExperimentWizard extends Wizard {
                 default: 3,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             ratingsPerAnswer: {
@@ -338,7 +338,7 @@ class ExperimentWizard extends Wizard {
                 default: 3,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             paymentBase: {
@@ -348,7 +348,7 @@ class ExperimentWizard extends Wizard {
                 unit: "cents",
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             paymentAnswer: {
@@ -359,17 +359,7 @@ class ExperimentWizard extends Wizard {
                 default: 10,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
-                }
-            },
-            paymentQualityThresholdAnswer: {
-                type: "enum",
-                label: "Minimum Answer Quality",
-                help: "How good must a answer be to enable payments?",
-                values: qualityThresholdValues,
-                decoder: (i) => i.value,
-                encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             paymentRating: {
@@ -380,17 +370,17 @@ class ExperimentWizard extends Wizard {
                 default: 10,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
-            paymentQualityThresholdRating: {
+            paymentQualityThreshold: {
                 type: "enum",
-                label: "Minimum Answer Quality",
-                help: "How good must a rating be to enable payments?",
+                label: "Minimum Quality",
+                help: "How good must a task answer be to pay for it?",
                 values: qualityThresholdValues,
                 decoder: (i) => i.value,
                 encoder: (i) => {
-                    return {value: i};
+                    return {value: parseInt(i)};
                 }
             },
             ratingOptions: { // TODO: Add editor for rating options, just preserve them for now…

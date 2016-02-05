@@ -24,6 +24,7 @@ module.exports = {
         src: src + "/sass/**/*.scss",
         dest: dest,
         settings: {
+            outputStyle: "compressed",
             indentedSyntax: false, // Disable .sass syntax!
             imagePath: 'img' // Used by the image-url helper
         }

@@ -41,6 +41,7 @@ class ExperimentDetail extends DataComponent {
                 ) : null;
 
                 let stateButton = null;
+                let answerLink = null;
 
                 if (this.state.data.state === "DRAFT") {
                     stateButton = (
@@ -59,6 +60,17 @@ class ExperimentDetail extends DataComponent {
                             <i className="fa fa-stop icon"/>
                             Abort
                         </button>
+                    );
+                }
+
+                if (this.state.data.state !== "DRAFT") {
+                    answerLink = (
+                        <div className="actions actions-right">
+                            <Link to={this.props.location.pathname + "/answers"} className="action action-large">
+                                <i className="fa fa-eye icon"/>
+                                View Answers
+                            </Link>
+                        </div>
                     );
                 }
 
@@ -96,6 +108,8 @@ class ExperimentDetail extends DataComponent {
                         </div>
 
                         <h1>Experiment: {this.state.data.title}</h1>
+
+                        {answerLink}
 
                         <label className="input-label">Parameters</label>
                         <table className="input-table-info">

@@ -6,6 +6,7 @@
 body {
   margin: 0;
   background: #fafafa;
+  font-size: 16px;
 }
 
 .fa {
@@ -67,6 +68,7 @@ button[title]:not([title=""]) {
 
 .input-label {
   display: block;
+  font-size: 16px;
 }
 
 .input-table-info td:nth-child(2n+1) {
@@ -98,25 +100,26 @@ button[title]:not([title=""]) {
 
 input {
   font-family: "Source Code Pro", monospace;
-  font-size: 85%;
+  font-size: 14px;
 }
 
 textarea {
   font-family: "Source Code Pro", monospace;
-  font-size: 85%;
+  font-size: 14px;
 }
 
 code {
   font-family: "Source Code Pro", monospace;
-  font-size: 85%;
+  font-size: 14px;
 }
 
 pre {
   font-family: "Source Code Pro", monospace;
-  font-size: 85%;
+  font-size: 14px;
   border: 1px solid rgba(0,0,0,.1);
+  border-radius: 2px;
   padding: 15px;
-  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .key {

@@ -32,6 +32,16 @@ class NotificationDetail extends DataComponent {
                     <DataError />
                 );
             } else {
+                let emails = this.state.data.emails.map((item) => (
+                    <li><code>{item}</code></li>
+                ));
+
+                emails = (
+                    <ul>
+                        {emails}
+                    </ul>
+                );
+
                 content = (
                     <div>
                         <div className="actions">
@@ -60,8 +70,11 @@ class NotificationDetail extends DataComponent {
                         <label className="input-label">Check Period</label>
                         <div>Checked every <code>{this.state.data.checkPeriod}</code> seconds.</div>
 
-                        <label className="input-label">Send Threshold</label>
-                        <div>Next sent only after <code>{this.state.data.sendThreshold}</code> seconds.</div>
+                        <label className="input-label">E-Mails</label>
+                        <div>{emails}</div>
+
+                        <label className="input-label">Send Once</label>
+                        <div>{this.state.data.sendOnce.value ? "Yes, will be sent once and then be deleted." : "No, will be sent on every change."}</div>
                     </div>
                 );
             }

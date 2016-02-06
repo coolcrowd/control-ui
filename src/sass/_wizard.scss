@@ -1,3 +1,8 @@
+.wizard label input[type="checkbox"] {
+  transform: translateY(3px);
+  margin: 4px 8px;
+}
+
 .wizard input[type="text"] {
   display: block;
   margin: 8px 0;
@@ -62,15 +67,13 @@
   border-bottom: 1px solid rgba(0,0,0,.1);
   padding: 2px 6px;
   font-weight: bold;
-  font-size: 80%;
   margin: 0 10px;
   transform: translateY(-2px);
 }
 
 .input-help {
-  font-style: italic;
-  font-size: 80%;
   margin: 4px 0 10px 0;
+  color: #444;
 }
 
 .wizard input[type="number"] {
@@ -89,18 +92,6 @@
   font-size: 80%;
   display: inline-block;
   margin: 3px 15px;
-}
-
-.warnings .fa {
-  margin: 0 6px;
-}
-
-.warnings h3 {
-  font-size: inherit;
-}
-
-.warnings li {
-  font-size: 85%;
 }
 
 .platform h4 {

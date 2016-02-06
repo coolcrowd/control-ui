@@ -2,6 +2,13 @@ import React from "react";
 import Loader from "../../core/Loader";
 import Wizard from "../base/Wizard";
 
+function encodeCollection(text, separator) {
+    let items = text.split(separator);
+
+    // Remove whitespace and empty elements
+    return items.map((item) => item.trim()).filter((item) => item !== "");
+}
+
 /**
  * @author Niklas Keller
  */
@@ -31,13 +38,44 @@ class NotificationWizard extends Wizard {
                 type: "number",
                 label: "Check Period",
                 help: "How often should we check this query?",
-                unit: "seconds"
+                unit: "seconds",
+                default: "86400"
             },
-            sendThreshold: {
-                type: "number",
-                label: "Send Threshold",
-                help: "If a notification has been sent, wait X seconds until another one is sent.",
-                unit: "seconds"
+            emails: {
+                type: "text",
+                label: "E-Mails",
+                help: "Addresses to receive notifications. Separate multiple values with commas.",
+                encoder: (text) => encodeCollection(text, ","),
+                decoder: (items) => items.join(", "),
+                validation: {
+                    validator: () => {
+                        this.setState({
+                            "validation.emails": this.refs.emails.value === "" || this.refs.emails.value.indexOf("@") > 0
+                        });
+                    },
+                    renderer: () => {
+                        if (!this.state["validation.emails"]) {
+                            return (
+                                <div className="validation-error">
+                                    You must add at least one valid e-mail address.
+                                </div>
+                            );
+                        }
+                    }
+                }
+            },
+            sendOnce: {
+                type: "boolean",
+                label: "Send Once",
+                help: "Delete this notification if it has been sent once?",
+                active: "send once and delete afterwards",
+                inactive: "send whenever the result changes",
+                encoder: (i) => {
+                    return {
+                        value: !!i
+                    };
+                },
+                decoder: (i) => i.value ? "1" : ""
             }
         };
     }
@@ -63,11 +101,8 @@ class NotificationWizard extends Wizard {
     _renderQueryValidation() {
         if (!this.state.queryValid) {
             return (
-                <div className="warnings">
-                    <h3><i className="fa fa-warning"/> Warnings</h3>
-                    <ul>
-                        <li>Your SQL query must be a <code>SELECT</code> statement.</li>
-                    </ul>
+                <div className="validation-error">
+                    Your SQL query must be a <code>SELECT</code> statement.
                 </div>
             );
         } else {

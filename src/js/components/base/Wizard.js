@@ -37,6 +37,8 @@ class Wizard extends React.Component {
                 form[name] = form[name].value;
             } else if (form[name].type === "number") {
                 form[name] = "default" in form[name] ? form[name].default : 0;
+            } else if (form[name].type === "boolean") {
+                form[name] = false;
             } else {
                 form[name] = "";
 
@@ -352,6 +354,13 @@ class Wizard extends React.Component {
         } else if (input.type === "hidden") {
             return (
                 <input type="hidden" name={name} value={input.value}/>
+            );
+        } else if (input.type === "boolean") {
+            formElement = (
+                <label>
+                    <input type="checkbox" name={name} checked={value} onChange={this._onFormChange.bind(this)} value="1"/>
+                    {value ? (input.active || "active") : (input.inactive || "inactive")}
+                </label>
             );
         } else {
             console.warn("Unknown type: " + input.type);

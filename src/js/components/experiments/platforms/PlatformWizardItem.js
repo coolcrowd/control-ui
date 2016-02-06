@@ -53,7 +53,7 @@ class PlatformWizardItem extends React.Component {
         return (
             <li className="platform">
                 <label className="platform-name">
-                    <input type="checkbox" checked={this.props.enabled} onChange={this.props.onToggle}/>
+                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive} onChange={this.props.onToggle}/>
                     <h4>{this.props.item.name}</h4>
                 </label>
 

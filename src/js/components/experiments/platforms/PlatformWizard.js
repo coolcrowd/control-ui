@@ -124,10 +124,10 @@ class PlatformWizard extends React.Component {
                         {children}
                     </ul>
 
-                    <div className="actions actions-right">
+                    <div className="actions actions-right actions-bottom">
                         <button type="button" className="action action-constructive"
                                 onClick={this._onSubmit.bind(this)}>
-                            <i className="fa fa-save"/> Save
+                            <i className="fa fa-save icon"/> Save
                         </button>
                     </div>
                 </Loader>

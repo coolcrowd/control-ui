@@ -345,7 +345,7 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Base Payment",
                 help: "Basic payment a worker gets for completing a task.",
-                unit: "cents",
+                unit: "¢ (USD)",
                 decoder: (i) => i.value,
                 encoder: (i) => {
                     return {value: parseInt(i)};
@@ -355,7 +355,7 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Answer Payment",
                 help: "Payment for each creative answer.",
-                unit: "cents",
+                unit: "¢ (USD)",
                 default: 10,
                 decoder: (i) => i.value,
                 encoder: (i) => {
@@ -366,7 +366,7 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Rating Payment",
                 help: "Payment for each rating.",
-                unit: "cents",
+                unit: "¢ (USD)",
                 default: 10,
                 decoder: (i) => i.value,
                 encoder: (i) => {

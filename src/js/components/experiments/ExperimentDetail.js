@@ -102,27 +102,27 @@ class ExperimentDetail extends DataComponent {
                             <tbody>
                             <tr>
                                 <td>Answer Type</td>
-                                <td>{this.state.data.answerType === "TEXT" ? "Text" : "Images"}</td>
+                                <td><b>{this.state.data.answerType === "TEXT" ? "Text" : "Images"}</b></td>
                                 <td>Needed Answers</td>
-                                <td>{this.state.data.neededAnswers.value}</td>
+                                <td><b>{this.state.data.neededAnswers.value}</b></td>
                             </tr>
                             <tr>
                                 <td>Answers / Worker</td>
-                                <td>{this.state.data.answersPerWorker.value}</td>
+                                <td><b>{this.state.data.answersPerWorker.value}</b></td>
                                 <td>Base Payment</td>
-                                <td>{this.state.data.paymentBase.value}</td>
+                                <td><b>{this.state.data.paymentBase.value} ¢</b> (USD)</td>
                             </tr>
                             <tr>
                                 <td>Ratings / Worker</td>
-                                <td>{this.state.data.ratingsPerWorker.value}</td>
+                                <td><b>{this.state.data.ratingsPerWorker.value}</b></td>
                                 <td>Payment / Answer</td>
-                                <td>{this.state.data.paymentAnswer.value}</td>
+                                <td><b>{this.state.data.paymentAnswer.value} ¢</b> (USD)</td>
                             </tr>
                             <tr>
                                 <td>Ratings / Answer</td>
-                                <td>{this.state.data.ratingsPerAnswer.value}</td>
+                                <td><b>{this.state.data.ratingsPerAnswer.value}</b></td>
                                 <td>Payment / Rating</td>
-                                <td>{this.state.data.paymentRating.value}</td>
+                                <td><b>{this.state.data.paymentRating.value} ¢</b> (USD)</td>
                             </tr>
                             </tbody>
                         </table>

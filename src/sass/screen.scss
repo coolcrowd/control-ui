@@ -73,6 +73,10 @@ button[title]:not([title=""]) {
   margin: 0;
 }
 
+.input-table-info td:nth-child(2n) {
+  text-align: right;
+}
+
 .input-enum-option {
   padding: 6px 10px;
   border: 1px solid rgba(0,0,0,.05);

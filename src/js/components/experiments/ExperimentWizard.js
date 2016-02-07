@@ -104,15 +104,6 @@ class ExperimentWizard extends Wizard {
             return {};
         }
 
-        let qualityThresholdValues = [];
-
-        for (let i = 0; i < 10; i++) {
-            qualityThresholdValues.push({
-                text: Math.round(100 * i / 9) + "%",
-                value: i
-            });
-        }
-
         let base = {
             title: {
                 type: "text",
@@ -374,13 +365,30 @@ class ExperimentWizard extends Wizard {
                 }
             },
             paymentQualityThreshold: {
-                type: "enum",
+                type: "number",
                 label: "Minimum Quality",
                 help: "How good must a task answer be to pay for it?",
-                values: qualityThresholdValues,
+                default: 0,
                 decoder: (i) => i.value,
                 encoder: (i) => {
                     return {value: parseInt(i)};
+                },
+                validation: {
+                    validator: () => {
+                        let value = parseInt(this.refs.paymentQualityThreshold.value);
+                        this.setState({
+                            "validation.paymentQualityThreshold": value >= 0 && value <= 9
+                        });
+                    },
+                    renderer: () => {
+                        if (!this.state["validation.paymentQualityThreshold"]) {
+                            return (
+                                <div className="validation-error">
+                                    Value must be between 0 and 9.
+                                </div>
+                            );
+                        }
+                    }
                 }
             },
             ratingOptions: { // TODO: Add editor for rating options, just preserve them for now…
@@ -420,13 +428,30 @@ class ExperimentWizard extends Wizard {
                 decoder: (items) => items.map((item) => item.name).join(", ")
             },
             workerQualityThreshold: {
-                type: "enum",
+                type: "number",
                 label: "Worker Quality Threshold",
                 help: "Minimum worker quality to participate in this experiment.",
-                values: qualityThresholdValues,
+                default: 0,
                 decoder: (i) => i.value,
                 encoder: (i) => {
                     return {value: i};
+                },
+                validation: {
+                    validator: () => {
+                        let value = parseInt(this.refs.workerQualityThreshold.value);
+                        this.setState({
+                            "validation.workerQualityThreshold": value >= 0 && value <= 9
+                        });
+                    },
+                    renderer: () => {
+                        if (!this.state["validation.workerQualityThreshold"]) {
+                            return (
+                                <div className="validation-error">
+                                    Value must be between 0 and 9.
+                                </div>
+                            );
+                        }
+                    }
                 }
             }
         });

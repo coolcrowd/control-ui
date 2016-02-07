@@ -235,7 +235,8 @@ class ExperimentWizard extends Wizard {
                         help: item.description,
                         validation: {
                             validator: () => {
-                                let value = this.refs[formName + "[parameters][" + i + "][value]"].value;
+                                let key = formName + "[parameters][" + i + "][value]";
+                                let value = key in this.refs ? this.refs[key].value : "";
                                 let regex = new RegExp(item.regex);
 
                                 let state = {};
@@ -246,7 +247,7 @@ class ExperimentWizard extends Wizard {
                             renderer: () => {
                                 let valid = this.state["validation." + formName + "[parameters][" + i + "][value]"];
 
-                                if (!valid) {
+                                if (valid === false) {
                                     return (
                                         <div className="validation-error">
                                             Parameter does not match required format: <b>{item.regex}</b>

@@ -7,6 +7,8 @@ Web interface for [CrowdControl](https://github.com/coolcrowd/object-service).
 
 ## Installation
 
+### Native
+
 ```bash
 # Install gulp as global binary
 sudo npm install -g gulp
@@ -21,6 +23,18 @@ npm install
 gulp production
 
 # Configure your web server to serve ./build
+```
+
+### Using Docker
+
+```bash
+# Clone git repository and change directory
+git clone https://github.com/coolcrowd/control-ui && cd control-ui
+
+docker build -t control-ui .
+docker run -ti -v $PWD/build:/app/build control-ui
+
+# Build is not ready in $PWD/build
 ```
 
 ## Development

@@ -5,6 +5,20 @@
 
 Web interface for [CrowdControl](https://github.com/coolcrowd/object-service).
 
+## Configuration
+
+If you want to modify the config, use a local config to override the main config.
+
+```
+# ./src/js/config.local.js
+let config = {
+    apiRoot: "https://api.pse.kelunik.com/",
+    authentication: true
+};
+
+export default config;
+```
+
 ## Installation
 
 ### Native

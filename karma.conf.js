@@ -84,8 +84,12 @@ module.exports = function (config) {
 
     if (process.env.TRAVIS) {
         configuration.browsers = ["Chrome_CI"];
-        configuration.reporters = ['dots', 'coverage'];
+        configuration.reporters = ['dots', 'coverage', 'coveralls'];
         configuration.logLevel = config.LOG_DEBUG;
+        configuration.coverageReporter = {
+            type: "lcov",
+            dir: "coverage/"
+        }
     }
 
     config.set(configuration);

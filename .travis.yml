@@ -7,12 +7,15 @@ cache:
   directories:
     - node_modules
 
+install:
+  - npm install -g gulp
+  - npm install karma-coveralls --save-dev
+
 # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-  - npm install -g gulp
 
 script: gulp karma

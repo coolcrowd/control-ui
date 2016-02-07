@@ -74,14 +74,14 @@ class TemplateWizard extends Wizard {
             constraints: {
                 type: "longtext",
                 label: "Constraints",
-                help: "Constraints that should be matched by all creative answers.",
+                help: "Constraints that should be matched by all creative answers. List one per line.",
                 encoder: (text) => encodeTextCollection(text, "\n"),
                 decoder: (items) => items.map((item) => item.name).join("\n")
             },
             tags: {
                 type: "text",
                 label: "Tags",
-                help: "Tags! TODO…", // TODO
+                help: "Tags helps workers to find this experiment. Separate multiple values with commas.",
                 encoder: (text) => encodeTextCollection(text, ","),
                 decoder: (items) => items.map((item) => item.name).join(", ")
             }

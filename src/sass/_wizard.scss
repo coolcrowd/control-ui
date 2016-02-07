@@ -20,38 +20,6 @@
   border: 1px solid rgba(0,0,0,.15);
 }
 
-.wizard .help {
-  margin: 10px 0;
-  background: #dbf3ff;
-  padding: 10px;
-  border: 1px solid rgba(0,0,0,.05);
-  border-bottom: 2px solid rgba(0,0,0,.1);
-  color: #6e695a;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.wizard .help p {
-  margin: 5px 0;
-}
-
-.wizard .help p:first-of-type {
-  margin-top: 0;
-}
-
-.wizard .help p:last-of-type {
-  margin-bottom: 0;
-}
-
-.wizard .help ul {
-  margin: 5px 0;
-  padding: 0 0 0 20px;
-}
-
-.wizard .help li {
-  margin: 5px 0;
-}
-
 .wizard .placeholders {
   margin: 10px 25px;
   padding: 0;
@@ -73,7 +41,8 @@
 
 .input-help {
   margin: 4px 0 10px 0;
-  color: #444;
+  color: #666;
+  font-size: 90%;
 }
 
 .wizard input[type="number"] {
@@ -88,8 +57,6 @@
 
 .input-unit {
   font-weight: bold;
-  text-transform: uppercase;
-  font-size: 80%;
   display: inline-block;
   margin: 3px 15px;
 }

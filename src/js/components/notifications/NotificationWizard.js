@@ -23,12 +23,12 @@ class NotificationWizard extends Wizard {
             description: {
                 type: "longtext",
                 label: "Description",
-                help: "Describe what this notification is about. It will be included in the sent mail."
+                help: "Describe what this notification is about. It will be included in the sent mail. You can include the placeholder {{tokens}} to get detailed information in your notification, see SQL Query for more information."
             },
             query: {
                 type: "longtext",
-                label: "SQL query",
-                help: "Once this query returns a non-empty result, a notification will be sent out.",
+                label: "SQL Query",
+                help: "Once this query returns a non-empty result, a notification will be sent out. If your query returns one or more records with exactly the two fields id : int and token : string the value of token can be included in the description.",
                 validation: {
                     validator: this._validateQuery.bind(this),
                     renderer: this._renderQueryValidation.bind(this)

@@ -1,4 +1,7 @@
-# Control UI [![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
+# Control UI
+
+[![Build Status](https://travis-ci.org/coolcrowd/control-ui.svg?branch=master)](https://travis-ci.org/coolcrowd/control-ui)
+[![Coverage Status](https://coveralls.io/repos/github/coolcrowd/control-ui/badge.svg?branch=master)](https://coveralls.io/github/coolcrowd/control-ui?branch=master)
 
 Web interface for [CrowdControl](https://github.com/coolcrowd/object-service).
 

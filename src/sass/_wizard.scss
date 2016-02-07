@@ -104,3 +104,18 @@
   display: inline-block;
   margin: 8px;
 }
+
+.radio-option {
+  padding: 4px;
+  display: block;
+}
+
+.radio-option input[type="radio"] {
+  margin: 4px 8px;
+  float: left;
+}
+
+.radio-option > span {
+  padding-left: 30px;
+  display: block;
+}

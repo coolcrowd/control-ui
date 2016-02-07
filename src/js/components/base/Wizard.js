@@ -339,20 +339,16 @@ class Wizard extends React.Component {
                           value={value}/>
             );
         } else if (input.type === "enum") {
-            formElement = input.values.map((item) => {
+            formElement = input.values.map((item, i) => {
                 return (
-                    <option value={item.value}>
-                        {item.text}
-                    </option>
+                    <label className="radio-option">
+                        <input key={name} name={name} type="radio" value={item.value}
+                               checked={i === 0 && !value || value === item.value}
+                               onChange={this._onFormChange.bind(this)}/>
+                        <span>{item.text}</span>
+                    </label>
                 );
             });
-
-            formElement = (
-                <select key={name} name={name} value={value} onChange={this._onFormChange.bind(this)}
-                        size="1">
-                    {formElement}
-                </select>
-            );
         } else if (input.type === "hidden") {
             return (
                 <input type="hidden" name={name} value={input.value}/>
@@ -360,7 +356,8 @@ class Wizard extends React.Component {
         } else if (input.type === "boolean") {
             formElement = (
                 <label>
-                    <input type="checkbox" name={name} checked={value} onChange={this._onFormChange.bind(this)} value="1"/>
+                    <input type="checkbox" name={name} checked={value} onChange={this._onFormChange.bind(this)}
+                           value="1"/>
                     {value ? (input.active || "active") : (input.inactive || "inactive")}
                 </label>
             );

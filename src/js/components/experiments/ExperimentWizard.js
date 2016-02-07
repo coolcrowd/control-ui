@@ -240,8 +240,8 @@ class ExperimentWizard extends Wizard {
 
                     base[formName + "[parameters][" + i + "][value]"] = {
                         type: "text",
-                        label: item.description,
-                        help: <span>Parameter for <b>{availableAlgorithms[key].name}</b>.</span>,
+                        label: "Parameter", // TODO Add name…
+                        help: item.description,
                         validation: {
                             validator: () => {
                                 let value = this.refs[formName + "[parameters][" + i + "][value]"].value;

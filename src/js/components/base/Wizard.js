@@ -316,6 +316,8 @@ class Wizard extends React.Component {
 
                 if (value && element in value) {
                     value = value[element];
+                } else {
+                    value = "";
                 }
             }
 

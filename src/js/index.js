@@ -6,7 +6,6 @@ import Authenticator from "./core/Authenticator";
 import BasicAuthenticator from "./core/BasicAuthenticator";
 
 import App from "./components/App";
-import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 
@@ -43,10 +42,10 @@ const renderLoggedIn = (authenticator) => {
 
     return render((
         <Router history={history} createElement={createElement}>
-            <Route path="/" component={App}>
-                <IndexRoute component={Welcome}/>
-                <Redirect from="/login" to="/"/>
+            <Redirect from="/" to="/experiments"/>
+            <Redirect from="/login" to="/"/>
 
+            <Route path="/" component={App}>
                 <Route path="experiments" component={ExperimentList}/>
                 <Route path="experiments/new" component={ExperimentWizard}/>
                 <Route path="experiments/:id" component={ExperimentDetail}/>

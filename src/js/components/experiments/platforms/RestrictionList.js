@@ -30,8 +30,8 @@ class RestrictionList extends DataComponent {
 
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
             return (
-                <li className="restriction">
-                    <span onClick={() => this.props.onNew(item)}>
+                <li className="restriction-list-item" onClick={() => this.props.onNew(item)}>
+                    <span>
                         {item.name}
                     </span>
                 </li>

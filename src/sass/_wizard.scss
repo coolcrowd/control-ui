@@ -123,3 +123,14 @@
   padding-left: 30px;
   display: block;
 }
+
+.restriction-list-item {
+  margin: 0 -20px !important;
+  display: block !important;
+  width: auto !important;
+  cursor: pointer;
+}
+
+.restriction-list-item:hover {
+  background: rgba(0,0,0,.05);
+}

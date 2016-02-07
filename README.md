@@ -34,7 +34,7 @@ git clone https://github.com/coolcrowd/control-ui && cd control-ui
 docker build -t control-ui .
 docker run -ti -v $PWD/build:/app/build control-ui
 
-# Build is not ready in $PWD/build
+# Build is now ready in $PWD/build
 ```
 
 ## Development

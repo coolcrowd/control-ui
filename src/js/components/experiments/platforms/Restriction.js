@@ -35,6 +35,7 @@ class Restriction extends React.Component {
         let answers = this.props.item.answers.map((answer) => (
             <label key={answer.id}>
                 <input type="checkbox" checked={answer.id in this.state.acceptedAnswers}
+                       disabled={!this.props.enabled}
                        onClick={() => this._toggleAnswer(answer.id)}/> {answer.answer}
             </label>
         ));

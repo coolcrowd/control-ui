@@ -17,6 +17,7 @@ class PlatformWizardItem extends React.Component {
 
     render() {
         let restrictions = this.props.restrictions.map((item) => <Restriction key={item.id} item={item}
+                                                                              enabled={!this.props.item.isInactive}
                                                                               onChange={this.props.onChange}/>);
 
         if (restrictions.length > 0) {
@@ -50,17 +51,28 @@ class PlatformWizardItem extends React.Component {
             </div>
         ) : null;
 
+        let restrictionTitle = this.props.item.hasCalibrations ? "" : "This platform doesn't support restrictions.";
+
+        if (this.props.item.isInactive) {
+            restrictionTitle = "This platform is inactive and can no longer be modified.";
+        }
+
         return (
-            <li className="platform">
+            <li className={classNames({
+                "platform": true,
+                "platform-inactive": this.props.item.isInactive
+            })}>
                 <label className="platform-name">
-                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive} onChange={this.props.onToggle}/>
+                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive}
+                           onChange={this.props.onToggle}
+                           title={this.props.item.isInactive ? "This platform is inactive and can no longer be modified." : ""}/>
                     <h4>{this.props.item.name}</h4>
                 </label>
 
                 <div className="list-actions">
                     <button type="button" className="action" onClick={this._onRestrictClick.bind(this)}
-                            disabled={!this.props.item.hasCalibrations}
-                            title={this.props.item.hasCalibrations ? "" : "This platform doesn't support restrictions."}>
+                            disabled={!this.props.item.hasCalibrations || this.props.item.isInactive}
+                            title={restrictionTitle}>
                         <i className={"fa fa-child icon"}/>
                         Restrict
                     </button>

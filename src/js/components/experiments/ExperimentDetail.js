@@ -164,8 +164,12 @@ class ExperimentDetail extends DataComponent {
     _onPublishClick() {
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
             state: "PUBLISHED"
-        }).then(() => {
-            alert("Experiment has been published.");
+        }).then((response) => {
+            if (response.data.state === "PUBLISHED") {
+                this.fetchData();
+            } else {
+                alert("Experiment could not be published.");
+            }
         }).catch(() => {
             alert("Experiment could not be published.");
         });
@@ -175,7 +179,7 @@ class ExperimentDetail extends DataComponent {
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
             state: "CREATIVE_STOPPED"
         }).then(() => {
-            alert("No more creative answers will be collected.");
+            this.fetchData();
         }).catch(() => {
             alert("Experiment could not be stopped.");
         });

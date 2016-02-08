@@ -265,7 +265,7 @@ class ExperimentWizard extends Wizard {
             type: "enum",
             label: "Task Chooser Algorithm",
             help: "How should tasks be chosen?",
-            values: this.state.algorithms.taskChooserAlgorithms.map(algorithmMapper)
+            values: this.state.algorithms.taskChooserAlgorithms.map(algorithmMapper),
         };
 
         Object.assign(base, algorithmOptions("algorithmTaskChooser", "taskChooserAlgorithms"));
@@ -480,13 +480,32 @@ class ExperimentWizard extends Wizard {
 
     fetchAlgorithms() {
         this.props.backend.request("GET", "algorithms").then((response) => {
-            this.setState({
-                algorithms: {
-                    taskChooserAlgorithms: response.data.taskChooserAlgorithms || [],
-                    ratingQualityAlgorithms: response.data.ratingQualityAlgorithms || [],
-                    answerQualityAlgorithms: response.data.answerQualityAlgorithms || []
+            let form = this.state.form;
+
+            let taskChooser = response.data.taskChooserAlgorithms;
+            let ratingQuality = response.data.ratingQualityAlgorithms;
+            let answerQuality = response.data.answerQualityAlgorithms;
+
+            Object.assign(form, {
+                "algorithmTaskChooser": {
+                    name: taskChooser.length ? taskChooser[0].name : ""
+                },
+                "algorithmQualityRating": {
+                    name: ratingQuality.length ? ratingQuality[0].name : ""
+                },
+                "algorithmQualityAnswer": {
+                    name: answerQuality.length ? answerQuality[0].name : ""
                 }
             });
+
+            this.setState({
+                algorithms: {
+                    taskChooserAlgorithms: taskChooser,
+                    ratingQualityAlgorithms: ratingQuality,
+                    answerQualityAlgorithms: answerQuality
+                },
+                form: form
+            }, () => console.log(this.state));
         }).catch(() => {
             this.setState({
                 algorithmsFailed: true

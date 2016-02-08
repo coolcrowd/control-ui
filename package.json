@@ -17,6 +17,7 @@
     "filesaver.js": "^0.2.0",
     "form-serialize": "^0.7.0",
     "history": "^1.17.0",
+    "moment": "^2.11.2",
     "parse-link-header": "^0.4.1",
     "react": "0.14.3",
     "react-addons-css-transition-group": "0.14.3",

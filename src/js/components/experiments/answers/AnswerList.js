@@ -10,6 +10,7 @@ import Loader from "../../../core/Loader";
 import JsonFormatter from "../../../formatters/JsonFormatter";
 import CsvFormatter from "../../../formatters/CsvFormatter";
 import { saveAs } from "filesaver.js";
+import Moment from "moment";
 
 /**
  * @author Niklas Keller
@@ -68,9 +69,32 @@ class AnswerList extends DataComponent {
         }
 
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
+            let ratings = item.ratings.map((rating) => {
+                return (
+                    <div>
+                        <b>Feedback</b>
+                        <p>
+                            {rating.feedback}
+                        </p>
+                    </div>
+                );
+            });
+
             return (
                 <div>
+                    <div className="answer-meta">
+                        <time datetime={Moment.unix(item.time).toISOString()}>
+                            {Moment.unix(item.time).fromNow()}
+                        </time>
 
+                        <span className="answer-quality">
+                            Quality: {item.quality}
+                        </span>
+                    </div>
+
+                    {item.content}
+
+                    {ratings}
                 </div>
             );
         }) : [];

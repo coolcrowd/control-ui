@@ -92,7 +92,7 @@ class AnswerList extends DataComponent {
             return (
                 <div className="answer">
                     <div className="answer-meta">
-                        <time datetime={moment(item.time).toISOString()}>
+                        <time dateTime={moment(item.time).toISOString()}>
                             {answerTime}
                         </time>
 

@@ -142,6 +142,19 @@ pre {
   color: #d00;
 }
 
+.answer {
+  padding: 8px;
+}
+
+.answer-meta {
+  color: #888;
+}
+
+.answer-meta > * {
+  display: inline-block;
+  margin: 8px 16px 8px 0;
+}
+
 .no-display {
   display: none !important;
 }

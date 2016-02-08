@@ -10,7 +10,7 @@ import Loader from "../../../core/Loader";
 import JsonFormatter from "../../../formatters/JsonFormatter";
 import CsvFormatter from "../../../formatters/CsvFormatter";
 import { saveAs } from "filesaver.js";
-import Moment from "moment";
+import moment from "moment";
 
 /**
  * @author Niklas Keller
@@ -80,11 +80,20 @@ class AnswerList extends DataComponent {
                 );
             });
 
+            let answerTime = moment(item.time);
+            let now = moment();
+
+            if (now.diff(answerTime, 'days') >= 7) {
+                answerTime = answerTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
+            } else {
+                answerTime = answerTime.fromNow();
+            }
+
             return (
-                <div>
+                <div className="answer">
                     <div className="answer-meta">
-                        <time datetime={Moment.unix(item.time).toISOString()}>
-                            {Moment.unix(item.time).fromNow()}
+                        <time datetime={moment(item.time).toISOString()}>
+                            {answerTime}
                         </time>
 
                         <span className="answer-quality">

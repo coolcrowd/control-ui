@@ -91,7 +91,7 @@ class Login extends React.Component {
 
                 window.location = "/";
             } else {
-                alert("Internal error while authenticating…");
+                alert("Internal error while authenticating… Probably a configuration issue.");
 
                 this.setState({
                     loading: false,

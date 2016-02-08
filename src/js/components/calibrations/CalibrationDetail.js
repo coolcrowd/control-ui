@@ -32,7 +32,11 @@ class CalibrationDetail extends DataComponent {
                     <DataError />
                 );
             } else {
-                let answers = this.state.loaded ? this.state.data.answers.map((answer) => <li><b>{answer.answer}</b></li>) : [];
+                let answers = this.state.loaded ? this.state.data.answers.map((answer) => {
+                    return (
+                        <li><b>{answer.answer}</b></li>
+                    );
+                }) : [];
 
                 content = (
                     <div>
@@ -40,7 +44,10 @@ class CalibrationDetail extends DataComponent {
                             <ResourceAction icon="trash" method="DELETE" uri={"calibrations/" + this.props.params.id}
                                             onClick={() => window.confirm("Do you really want to delete this calibration?")}
                                             onSuccess={() => history.replaceState(null, "/calibrations")}
-                                            onError={() => window.alert("Deletion failed.")}
+                                            onError={(e) => {
+                                                let error = "data" in e ? e.data.detail : "Unknown error.";
+                                                window.alert("Deletion failed. " + error);
+                                            }}
                                             backend={this.props.backend}>
                                 Delete
                             </ResourceAction>

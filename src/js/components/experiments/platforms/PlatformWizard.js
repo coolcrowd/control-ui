@@ -161,7 +161,8 @@ class PlatformWizard extends React.Component {
                     });
                 });
             } catch (e) {
-                alert(e);
+                let error = "data" in e ? e.data.detail : "Unknown error.";
+                window.alert(error);
 
                 return;
             }
@@ -182,7 +183,8 @@ class PlatformWizard extends React.Component {
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, experiment).then(() => {
             history.replaceState(null, "/experiments/" + this.props.params.id);
         }).catch((e) => {
-            alert(JSON.stringify(e));
+            let error = "data" in e ? e.data.detail : "Unknown error.";
+            window.alert(error);
         });
     }
 

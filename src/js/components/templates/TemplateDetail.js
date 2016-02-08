@@ -74,7 +74,10 @@ class TemplateDetail extends DataComponent {
                             <ResourceAction icon="trash" method="DELETE" uri={"templates/" + this.props.params.id}
                                             onClick={() => window.confirm("Do you really want to delete this template?")}
                                             onSuccess={() => history.replaceState(null, "/templates")}
-                                            onError={() => window.alert("Deletion failed.")}
+                                            onError={(e) => {
+                                                let error = "data" in e ? e.data.detail : "Unknown error.";
+                                                window.alert("Deletion failed. " + error);
+                                            }}
                                             backend={this.props.backend}>
                                 Delete
                             </ResourceAction>

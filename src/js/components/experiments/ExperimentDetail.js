@@ -11,6 +11,14 @@ import history from "../../history";
  * @author Niklas Keller
  */
 class ExperimentDetail extends DataComponent {
+    constructor() {
+        super();
+
+        this.state = Object.assign(this.state || {}, {
+            stateButtonLoading: false
+        });
+    }
+
     getDataUri() {
         return "experiments/" + this.props.params.id;
     }
@@ -46,7 +54,7 @@ class ExperimentDetail extends DataComponent {
                 if (this.state.data.state === "DRAFT") {
                     stateButton = (
                         <button className="action action-constructive" type="button"
-                                disabled={this.state.data.populations.length === 0}
+                                disabled={this.state.data.populations.length === 0 || this.state.stateButtonLoading}
                                 title={this.state.data.populations.length === 0 ? "Add at least one population to publish an experiment" : ""}
                                 onClick={this._onPublishClick.bind(this)}>
                             <i className="fa fa-play icon"/>
@@ -56,7 +64,8 @@ class ExperimentDetail extends DataComponent {
                 } else if (this.state.data.state === "PUBLISHED") {
                     stateButton = (
                         <button className="action action-destructive" type="button"
-                                onClick={this._onAbortClick.bind(this)}>
+                                onClick={this._onAbortClick.bind(this)}
+                                disabled={this.state.stateButtonLoading}>
                             <i className="fa fa-stop icon"/>
                             Abort
                         </button>
@@ -101,7 +110,10 @@ class ExperimentDetail extends DataComponent {
                             <ResourceAction icon="trash" method="DELETE" uri={"experiments/" + this.props.params.id}
                                             onClick={() => window.confirm("Do you really want to delete this experiment?")}
                                             onSuccess={() => history.replaceState(null, "/experiments")}
-                                            onError={() => window.alert("Deletion failed.")}
+                                            onError={(e) => {
+                                                let error = "data" in e ? e.data.detail : "Unknown error.";
+                                                window.alert("Deletion failed. " + error);
+                                            }}
                                             backend={this.props.backend}>
                                 Delete
                             </ResourceAction>
@@ -162,26 +174,52 @@ class ExperimentDetail extends DataComponent {
     }
 
     _onPublishClick() {
+        this.setState({
+            stateButtonLoading: true
+        });
+
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
             state: "PUBLISHED"
         }).then((response) => {
+            this.setState({
+                stateButtonLoading: false
+            });
+
             if (response.data.state === "PUBLISHED") {
                 this.fetchData();
             } else {
                 alert("Experiment could not be published.");
             }
-        }).catch(() => {
-            alert("Experiment could not be published.");
+        }).catch((e) => {
+            this.setState({
+                stateButtonLoading: false
+            });
+
+            let error = "data" in e ? e.data.detail : "Unknown error.";
+            alert("Experiment could not be published: " + error);
         });
     }
 
     _onAbortClick() {
+        this.setState({
+            stateButtonLoading: true
+        });
+
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
             state: "CREATIVE_STOPPED"
         }).then(() => {
+            this.setState({
+                stateButtonLoading: false
+            });
+
             this.fetchData();
-        }).catch(() => {
-            alert("Experiment could not be stopped.");
+        }).catch((e) => {
+            this.setState({
+                stateButtonLoading: false
+            });
+
+            let error = "data" in e ? e.data.detail : "Unknown error.";
+            alert("Experiment could not be stopped: " + error);
         });
     }
 }

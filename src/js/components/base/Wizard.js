@@ -210,7 +210,8 @@ class Wizard extends React.Component {
             this.props.backend.request("PUT", this.getCollectionUri(), form).then((resp) => {
                 history.replaceState(null, "/" + this.getItemUri(resp.data.id));
             }).catch((e) => {
-                alert(JSON.stringify(e));
+                let error = "data" in e ? e.data.detail : "Unknown error.";
+                window.alert(error);
             });
         } else {
             let oldItem = this.state.data;
@@ -249,7 +250,8 @@ class Wizard extends React.Component {
             this.props.backend.request("PATCH", this.getItemUri(this.props.params.id), newItem).then(() => {
                 history.replaceState(null, "/" + this.getItemUri(this.props.params.id));
             }).catch((e) => {
-                alert(JSON.stringify(e));
+                let error = "data" in e ? e.data.detail : "Unknown error.";
+                window.alert(error);
             });
         }
     }

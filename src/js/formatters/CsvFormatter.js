@@ -22,23 +22,43 @@ class CsvFormatter {
      */
     format(data) {
         let contents = "";
+        let keys = Object.keys(data[0] || {});
+
+        for (let i = 0; i < keys.length; i++) {
+            contents += this.encodeColumn(keys[i]) + this.fieldSeparator;
+        }
+
+        contents += this.recordSeparator;
 
         data.forEach((item) => {
             let line = "";
 
-            for (let key in item) {
-                // Escape all text limit occurrences by duplicating those characters
-                // Yes, javascript still doesn't have a global string replace…
-                let value = item[key].split(this.textLimit).join(this.textLimit + this.textLimit);
-
+            for (let i = 0; i < keys.length; i++) {
                 // Append value enclosed in text limits and add field separator
-                line += this.textLimit + value + this.textLimit + this.fieldSeparator;
+                line += this.encodeColumn(item[keys[i]]) + this.fieldSeparator;
             }
 
             contents += line + this.recordSeparator;
         });
 
         return contents;
+    }
+
+    encodeColumn(value) {
+        if (value instanceof Array) {
+            value = "";
+        }
+
+        if (typeof value === "number") {
+            value = value + "";
+        }
+
+        // Escape all text limit occurrences by duplicating those characters
+        // Yes, javascript still doesn't have a global string replace…
+        value = value.split(this.textLimit).join(this.textLimit + this.textLimit);
+
+        // Return value enclosed in text limits
+        return this.textLimit + value + this.textLimit;
     }
 }
 

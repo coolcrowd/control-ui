@@ -30,7 +30,7 @@ class RestrictionList extends DataComponent {
 
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
             return (
-                <li className="restriction-list-item" onClick={() => this.props.onNew(item)}>
+                <li key={item.id} className="restriction-list-item" onClick={() => this.props.onNew(item)}>
                     <span>
                         {item.name}
                     </span>
@@ -40,7 +40,7 @@ class RestrictionList extends DataComponent {
 
         if (children.length === 0) {
             children = [(
-                <li className="list-empty">
+                <li key="empty" className="list-empty">
                     <i className={"fa fa-3x fa-child"}/>
                     <br/>
                     You have no calibrations yet!<br/>

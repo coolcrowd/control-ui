@@ -396,20 +396,34 @@ class ExperimentWizard extends Wizard {
                 type: "hidden",
                 value: "",
                 encoder: (json) => {
-                    console.log(json);
                     try {
                         return JSON.parse(json);
                     } catch (e) {
-                        console.error(e);
+                        return [
+                            {
+                                name: "good",
+                                value: 10
+                            },
+                            {
+                                name: "bad",
+                                value: 0
+                            }
+                        ];
                     }
                 },
                 decoder: (items) => {
-                    if (items.length) {
+                    if (items && items.length) {
                         return JSON.stringify(items);
                     } else {
                         return JSON.stringify([
-                            {name: "good", value: 10},
-                            {name: "bad", value: 0}
+                            {
+                                name: "good",
+                                value: 10
+                            },
+                            {
+                                name: "bad",
+                                value: 0
+                            }
                         ]);
                     }
                 }
@@ -427,6 +441,16 @@ class ExperimentWizard extends Wizard {
                 help: "Tags helps workers to find this experiment. Separate multiple values with commas.", // TODO
                 encoder: (text) => encodeTextCollection(text, ","),
                 decoder: (items) => items.map((item) => item.name).join(", ")
+            },
+            templateId: {
+                type: "hidden",
+                value: "",
+                encoder: (i) => {
+                    return i ? {value: i} : null;
+                },
+                decoder: (i) => {
+                    return i ? i.value : null;
+                }
             },
             workerQualityThreshold: {
                 type: "number",

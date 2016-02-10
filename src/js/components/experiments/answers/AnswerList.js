@@ -71,7 +71,7 @@ class AnswerList extends DataComponent {
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
             let ratings = item.ratings.map((rating) => {
                 return (
-                    <div>
+                    <div key={rating.id}>
                         <b>Feedback</b>
                         <p className="dont-break-out">
                             {rating.feedback}
@@ -90,7 +90,7 @@ class AnswerList extends DataComponent {
             }
 
             return (
-                <div className="answer dont-break-out">
+                <div key={item.id} className="answer dont-break-out">
                     <div className="answer-meta">
                         <time dateTime={moment(item.time * 1000).toISOString()} title={moment(item.time * 1000).format("llll")}>
                             {answerTime}
@@ -110,7 +110,7 @@ class AnswerList extends DataComponent {
 
         if (children.length === 0) {
             children = [(
-                <li className="list-empty">
+                <li key="empty" className="list-empty">
                     <i className={"fa fa-3x fa-file-text-o"}/>
                     <br/>
                     You have no creative answers yet!

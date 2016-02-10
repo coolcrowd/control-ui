@@ -80,7 +80,7 @@ class ResourceList extends DataComponent {
 
         if (children.length === 0) {
             children = [(
-                <li className="list-empty">
+                <li key="empty" className="list-empty">
                     <i className={"fa fa-3x fa-" + info.icon}/>
                     <br/>
                     You have no {info.headline.toLowerCase()} yet!<br/>

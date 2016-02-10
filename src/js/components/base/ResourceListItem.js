@@ -36,7 +36,7 @@ class ResourceListItem extends React.Component {
                                     onClick={() => window.confirm("Do you really want to delete this item?")}
                                     onSuccess={() => this.props.onDelete(this.props.item.id)}
                                     onError={(e) => {
-                                        let error = "data" in e ? e.data.detail : "Unknown error.";
+                                        let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
                                         window.alert("Could not delete this item! " + error);
                                     }}
                                     backend={this.props.backend}>

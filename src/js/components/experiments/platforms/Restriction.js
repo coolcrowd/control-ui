@@ -20,15 +20,10 @@ class Restriction extends React.Component {
             answers = this.props.item.answers || [];
         }
 
-        let acceptedAnswers = {};
 
         for (let i = 0; i < answers.length; i++) {
-            acceptedAnswers[answers[i].id] = answers[i].answer;
+            this._toggleAnswer(answers[i].id);
         }
-
-        this.setState({
-            acceptedAnswers: acceptedAnswers
-        });
     }
 
     render() {

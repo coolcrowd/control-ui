@@ -111,7 +111,7 @@ class ExperimentDetail extends DataComponent {
                                             onClick={() => window.confirm("Do you really want to delete this experiment?")}
                                             onSuccess={() => history.replaceState(null, "/experiments")}
                                             onError={(e) => {
-                                                let error = "data" in e ? e.data.detail : "Unknown error.";
+                                                let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
                                                 window.alert("Deletion failed. " + error);
                                             }}
                                             backend={this.props.backend}>
@@ -195,7 +195,7 @@ class ExperimentDetail extends DataComponent {
                 stateButtonLoading: false
             });
 
-            let error = "data" in e ? e.data.detail : "Unknown error.";
+            let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
             alert("Experiment could not be published: " + error);
         });
     }
@@ -218,7 +218,7 @@ class ExperimentDetail extends DataComponent {
                 stateButtonLoading: false
             });
 
-            let error = "data" in e ? e.data.detail : "Unknown error.";
+            let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
             alert("Experiment could not be stopped: " + error);
         });
     }

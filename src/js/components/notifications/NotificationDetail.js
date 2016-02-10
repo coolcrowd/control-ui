@@ -54,7 +54,7 @@ class NotificationDetail extends DataComponent {
                                             onClick={() => window.confirm("Do you really want to delete this notification?")}
                                             onSuccess={() => history.replaceState(null, "/notifications")}
                                             onError={(e) => {
-                                                let error = "data" in e ? e.data.detail : "Unknown error.";
+                                                let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
                                                 window.alert("Deletion failed. " + error);
                                             }}
                                             backend={this.props.backend}>

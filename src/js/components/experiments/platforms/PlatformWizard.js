@@ -153,6 +153,8 @@ class PlatformWizard extends React.Component {
                 payload[id].some((item) => {
                     if (item.acceptedAnswers.length === 0) {
                         throw "You must select at least one accepted answer.";
+                    } else if (item.acceptedAnswers.length === item.answers.length) {
+                        throw "You added a calibration but allowed all answers, that doesn't make sense. Deselect at least one item.";
                     }
 
                     population.calibrations.push({
@@ -161,7 +163,12 @@ class PlatformWizard extends React.Component {
                     });
                 });
             } catch (e) {
-                let error = "data" in e ? e.data.detail : "Unknown error.";
+                let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
+
+                if (typeof e === "string") {
+                    error = e;
+                }
+
                 window.alert(error);
 
                 return;
@@ -183,7 +190,7 @@ class PlatformWizard extends React.Component {
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, experiment).then(() => {
             history.replaceState(null, "/experiments/" + this.props.params.id);
         }).catch((e) => {
-            let error = "data" in e ? e.data.detail : "Unknown error.";
+            let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
             window.alert(error);
         });
     }

@@ -56,7 +56,7 @@ class DataComponent extends React.Component {
             this.onFetched();
         }).catch((e) => {
             this.setState({
-                data: "data" in e ? e.data : null,
+                data: typeof e === "object" && "data" in e ? e.data : null,
                 loaded: true,
                 failed: true,
                 meta: "meta" in e ? e.meta : {

@@ -214,7 +214,21 @@ class AnswerList extends DataComponent {
     _onCsvExport() {
         this._export().then((items) => {
             let formatter = new CsvFormatter();
-            let content = formatter.format(items);
+
+            // Map ratings to a flat map so we have no nested objects anymore to encode as CSV …
+            let data = items.map((item) => {
+                let ratings = {};
+
+                item.ratings.forEach((rating, i) => {
+                    ratings["rating" + i] = rating;
+                });
+
+                delete item.ratings;
+
+                return Object.assign(item, ratings);
+            });
+
+            let content = formatter.format(data);
 
             saveAs(new Blob([content], {
                 type: "text/csv; charset=utf-8"

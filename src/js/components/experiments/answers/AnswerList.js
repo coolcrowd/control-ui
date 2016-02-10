@@ -73,26 +73,26 @@ class AnswerList extends DataComponent {
                 return (
                     <div>
                         <b>Feedback</b>
-                        <p>
+                        <p className="dont-break-out">
                             {rating.feedback}
                         </p>
                     </div>
                 );
             });
 
-            let answerTime = moment(item.time);
+            let answerTime = moment(item.time * 1000);
             let now = moment();
 
             if (now.diff(answerTime, 'days') >= 7) {
-                answerTime = answerTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
+                answerTime = answerTime.format("llll");
             } else {
                 answerTime = answerTime.fromNow();
             }
 
             return (
-                <div className="answer">
+                <div className="answer dont-break-out">
                     <div className="answer-meta">
-                        <time dateTime={moment(item.time).toISOString()}>
+                        <time dateTime={moment(item.time * 1000).toISOString()} title={moment(item.time * 1000).format("llll")}>
                             {answerTime}
                         </time>
 

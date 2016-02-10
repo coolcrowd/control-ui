@@ -204,10 +204,15 @@ class AnswerList extends DataComponent {
         this._export().then((items) => {
             let formatter = new JsonFormatter(2);
             let content = formatter.format(items);
+            let filename = this._promptForFilename("json");
+
+            if (!filename) {
+                return;
+            }
 
             saveAs(new Blob([content], {
                 type: "application/json; charset=utf-8"
-            }), this._promptForFilename("json"));
+            }), filename);
         });
     }
 
@@ -229,15 +234,24 @@ class AnswerList extends DataComponent {
             });
 
             let content = formatter.format(data);
+            let filename = this._promptForFilename("csv");
+
+            if (!filename) {
+                return;
+            }
 
             saveAs(new Blob([content], {
                 type: "text/csv; charset=utf-8"
-            }), this._promptForFilename("csv"));
+            }), filename);
         });
     }
 
     _promptForFilename(extension) {
         let filename = prompt("Filename");
+
+        if (!filename) {
+            return null;
+        }
 
         if (filename.length - extension.length > 0 && filename.substr(filename.length - extension.length, extension.length) !== extension) {
             return filename + "." + extension;
@@ -264,7 +278,7 @@ class AnswerList extends DataComponent {
                     } else {
                         resolve(all);
                     }
-                });
+                }).catch((e) => reject(e));
             });
         };
 

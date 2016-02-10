@@ -55,7 +55,7 @@ class Loader extends React.Component {
             };
 
             children = [
-                React.createElement("div", {className: "loader"}, null)
+                React.createElement("div", {key: "loader", className: "loader"}, null)
             ]
         }
 

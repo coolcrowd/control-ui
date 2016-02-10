@@ -98,7 +98,7 @@ class PlatformWizard extends React.Component {
 
         if (children.length === 0) {
             children = [(
-                <li className="list-empty">
+                <li key="empty" className="list-empty">
                     <i className={"fa fa-3x fa-users"}/>
                     <br/>
                     You have no platforms yet!<br/>

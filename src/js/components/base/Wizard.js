@@ -353,7 +353,7 @@ class Wizard extends React.Component {
             });
         } else if (input.type === "hidden") {
             return (
-                <input type="hidden" name={name} value={input.value}/>
+                <input type="hidden" name={name} value={value || input.value}/>
             );
         } else if (input.type === "boolean") {
             formElement = (

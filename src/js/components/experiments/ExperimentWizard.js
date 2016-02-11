@@ -144,7 +144,7 @@ class ExperimentWizard extends Wizard {
         };
 
         if (this.state.loaded && !this.state.failed) {
-            let isTemplate = this.state.new && this.props.location.state && "template" in this.props.location.state || this.state.data && "templateId" in this.state.data;
+            let isTemplate = this.state.new && this.props.location.state && "template" in this.props.location.state || this.state.data && "templateId" in this.state.data && this.state.data.templateId;
 
             if (isTemplate) {
                 let text;
@@ -446,7 +446,7 @@ class ExperimentWizard extends Wizard {
                 type: "hidden",
                 value: "",
                 encoder: (i) => {
-                    return i ? {value: i} : null;
+                    return i ? {value: parseInt(i)} : null;
                 },
                 decoder: (i) => {
                     return i ? i.value : null;

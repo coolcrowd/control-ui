@@ -34,7 +34,7 @@ class TemplateDetail extends DataComponent {
             } else {
                 let type;
 
-                if ("answerType" in this.state.data) {
+                if ("answerType" in this.state.data && this.state.data.answerType === "IMAGE") {
                     type = (
                         <span>
                             <i className="fa fa-file-image-o icon"/>

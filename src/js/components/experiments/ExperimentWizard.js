@@ -402,7 +402,7 @@ class ExperimentWizard extends Wizard {
                         return [
                             {
                                 name: "good",
-                                value: 10
+                                value: 9
                             },
                             {
                                 name: "bad",
@@ -418,7 +418,7 @@ class ExperimentWizard extends Wizard {
                         return JSON.stringify([
                             {
                                 name: "good",
-                                value: 10
+                                value: 9
                             },
                             {
                                 name: "bad",

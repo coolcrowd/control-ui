@@ -45,12 +45,17 @@ class CsvFormatter {
     }
 
     encodeColumn(value) {
-        if (value instanceof Array) {
+        if (value instanceof Array || typeof value === "object") {
+            console.warn("Invalid CSV value.", value);
             value = "";
         }
 
         if (typeof value === "number") {
             value = value + "";
+        }
+
+        if (!value) {
+            value = "";
         }
 
         // Escape all text limit occurrences by duplicating those characters

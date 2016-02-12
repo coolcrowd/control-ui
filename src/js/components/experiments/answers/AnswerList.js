@@ -225,7 +225,13 @@ class AnswerList extends DataComponent {
                 let ratings = {};
 
                 item.ratings.forEach((rating, i) => {
-                    ratings["rating" + i] = rating;
+                    for (let key in rating) {
+                        if (key === "violatedConstraints") {
+                            rating[key] = rating[key].map((i) => i.name).join(", ");
+                        }
+
+                        ratings["rating " + key] = rating[key];
+                    }
                 });
 
                 delete item.ratings;

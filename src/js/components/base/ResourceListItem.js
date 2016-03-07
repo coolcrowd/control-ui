@@ -7,18 +7,7 @@ import ResourceAction from "./ResourceAction";
  */
 class ResourceListItem extends React.Component {
     render() {
-        let editButton = null;
-
-        if (this.props.editable) {
-            editButton = (
-                <Link className="action" to={this.props.basepath + "/" + this.props.item.id + "/edit"}>
-                    <i className="fa fa-pencil icon"/>
-                    Edit
-                </Link>
-            );
-        }
-
-        let additionalAction = this.props.renderAdditionalAction.call(this);
+        let actions = "actions" in this.props ? this.props.actions.call(this) : [];
 
         return (
             <li>
@@ -27,21 +16,7 @@ class ResourceListItem extends React.Component {
                 </Link>
 
                 <div className="list-actions">
-                    {additionalAction}
-
-                    {editButton}
-
-                    <ResourceAction icon="trash" method="delete"
-                                    uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
-                                    onClick={() => window.confirm("Do you really want to delete this item?")}
-                                    onSuccess={() => this.props.onDelete(this.props.item.id)}
-                                    onError={(e) => {
-                                        let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
-                                        window.alert("Could not delete this item! " + error);
-                                    }}
-                                    backend={this.props.backend}>
-                        Delete
-                    </ResourceAction>
+                    {actions}
                 </div>
             </li>
         );

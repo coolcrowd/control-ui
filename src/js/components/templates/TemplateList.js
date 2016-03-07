@@ -1,6 +1,8 @@
 import React from "react";
 import history from "../../history";
 import ResourceList from "./../base/ResourceList";
+import Action from "../base/Action";
+import ResourceAction from "../base/ResourceAction";
 
 /**
  * @author Niklas Keller
@@ -23,7 +25,7 @@ class TemplateList extends ResourceList {
         }
     }
 
-    renderAdditionalItemAction() {
+    renderItemActions() {
         // this method will be rebound to ResourceListItem and executes in its context
 
         let onClick = function () {
@@ -32,12 +34,27 @@ class TemplateList extends ResourceList {
             }, "/experiments/new");
         };
 
-        return (
-            <button type="button" className="action" onClick={onClick.bind(this)}>
-                <i className="fa fa-clone icon"/>
-                Use
-            </button>
-        );
+        return [
+            (
+                <Action icon="clone" onClick={onClick.bind(this)}>Use</Action>
+            ),
+            (
+                <Action icon="pencil" href={this.props.basepath + "/" + this.props.item.id + "/edit"}>Edit</Action>
+            ),
+            (
+                <ResourceAction icon="trash" method="delete"
+                                uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
+                                onClick={() => window.confirm("Do you really want to delete this item?")}
+                                onSuccess={() => this.props.onDelete(this.props.item.id)}
+                                onError={(e) => {
+                                        let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
+                                        window.alert("Could not delete this item! " + error);
+                                    }}
+                                backend={this.props.backend}>
+                    Delete
+                </ResourceAction>
+            )
+        ];
     }
 }
 

@@ -4,6 +4,8 @@ import history from "../../history";
 import Loader from "../../core/Loader";
 import DataComponent from "./../base/DataComponent";
 import ResourceListItem from "./ResourceListItem";
+import ResourceAction from "./ResourceAction";
+import Action from "./Action";
 import DataError from "./DataError";
 import Combokeys from "combokeys";
 
@@ -73,8 +75,7 @@ class ResourceList extends DataComponent {
             return (
                 <ResourceListItem key={item.id} item={item} basepath={this.props.location.pathname}
                                   onDelete={this._onDelete.bind(this)} backend={this.props.backend}
-                                  editable={"editable" in info ? info.editable : true}
-                                  renderAdditionalAction={this.renderAdditionalItemAction}/>
+                                  actions={this.renderItemActions}/>
             );
         }) : [];
 
@@ -89,16 +90,12 @@ class ResourceList extends DataComponent {
             )];
         }
 
-        let additionalAction = this.renderAdditionalAction();
+        let actions = this.renderActions();
 
         return (
             <div>
                 <div className="actions">
-                    {additionalAction}
-
-                    <button className="action action-constructive" onClick={this._onAdd.bind(this)}>
-                        <i className="fa fa-plus icon"/> Create
-                    </button>
+                    {actions}
                 </div>
 
                 <h1>{info.headline}</h1>
@@ -134,12 +131,35 @@ class ResourceList extends DataComponent {
         );
     }
 
-    renderAdditionalAction() {
-        return null;
+    renderActions() {
+        return [
+            <button className="action action-constructive" onClick={this._onAdd.bind(this)}>
+                <i className="fa fa-plus icon"/> Create
+            </button>
+        ];
     }
 
-    renderAdditionalItemAction() {
-        return null;
+    renderItemActions() {
+        // this method will be rebound to ResourceListItem and executes in its context
+
+        return [
+            (
+                <Action icon="pencil" href={this.props.basepath + "/" + this.props.item.id + "/edit"}>Edit</Action>
+            ),
+            (
+                <ResourceAction icon="trash" method="delete"
+                                uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
+                                onClick={() => window.confirm("Do you really want to delete this item?")}
+                                onSuccess={() => this.props.onDelete(this.props.item.id)}
+                                onError={(e) => {
+                                        let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
+                                        window.alert("Could not delete this item! " + error);
+                                    }}
+                                backend={this.props.backend}>
+                    Delete
+                </ResourceAction>
+            )
+        ];
     }
 
     onFetched() {

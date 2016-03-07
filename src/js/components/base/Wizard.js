@@ -131,6 +131,8 @@ class Wizard extends React.Component {
 
             // Force validation on load
             this._validateChanges(form, true);
+
+            this.onFetched();
         }).catch(() => {
             if (!this.ignoreLastFetch) {
                 this.setState({
@@ -142,6 +144,13 @@ class Wizard extends React.Component {
                 });
             }
         });
+    }
+
+    /**
+     * Executed after data has successfully been fetched. Can be used as simple hook.
+     */
+    onFetched() {
+        // May be implemented by child classes…
     }
 
     _onFormChange() {

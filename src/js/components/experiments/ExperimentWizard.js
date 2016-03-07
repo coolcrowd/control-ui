@@ -533,12 +533,21 @@ class ExperimentWizard extends Wizard {
                     answerQualityAlgorithms: answerQuality
                 },
                 form: form
-            }, () => console.log(this.state));
+            });
         }).catch(() => {
             this.setState({
                 algorithmsFailed: true
             });
         });
+    }
+
+    /**
+     * Executed after data has successfully been fetched.
+     */
+    onFetched() {
+        if (this.state.data.state !== "DRAFT") {
+            this.props.history.replaceState(null, "/experiments/" + this.state.data.id);
+        }
     }
 }
 

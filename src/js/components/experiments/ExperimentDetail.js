@@ -207,12 +207,16 @@ class ExperimentDetail extends DataComponent {
 
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, {
             state: "CREATIVE_STOPPED"
-        }).then(() => {
+        }).then((response) => {
             this.setState({
                 stateButtonLoading: false
             });
 
-            this.fetchData();
+            if (response.data.state === "CREATIVE_STOPPED") {
+                this.fetchData();
+            } else {
+                alert("Experiment could not be stopped.");
+            }
         }).catch((e) => {
             this.setState({
                 stateButtonLoading: false

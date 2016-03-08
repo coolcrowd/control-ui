@@ -18,7 +18,8 @@ class PlatformWizardItem extends React.Component {
     render() {
         let restrictions = this.props.restrictions.map((item) => <Restriction key={item.id} item={item}
                                                                               enabled={!this.props.item.isInactive}
-                                                                              onChange={this.props.onChange}/>);
+                                                                              onChange={this.props.onChange}
+                                                                              onRemove={this.props.onRemove}/>);
 
         if (restrictions.length > 0) {
             restrictions = (

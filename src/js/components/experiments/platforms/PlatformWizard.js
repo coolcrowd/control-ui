@@ -92,6 +92,7 @@ class PlatformWizard extends React.Component {
                                     restrictions={this.state.payload[item.id]}
                                     onToggle={() => this._onPlatformToggle(item.id)}
                                     onChange={(restriction) => this._onRestrictionChange(item.id, restriction)}
+                                    onRemove={(restriction) => this._onRestrictionRemove(item.id, restriction)}
                                     onNew={(restriction) => this._onRestrictionCreation(item.id, restriction)}/>
             );
         }) : [];
@@ -220,6 +221,24 @@ class PlatformWizard extends React.Component {
         for (let j = 0; j < restrictions.length; j++) {
             if (restrictions[j].id === restriction.id) {
                 restrictions[j] = restriction;
+                payload[id] = restrictions;
+
+                this.setState({
+                    payload: payload
+                });
+
+                return;
+            }
+        }
+    }
+
+    _onRestrictionRemove(id, restriction) {
+        let payload = this.state.payload;
+        let restrictions = payload[id];
+
+        for (let j = 0; j < restrictions.length; j++) {
+            if (restrictions[j].id === restriction.id) {
+                restrictions.splice(j, 1);
                 payload[id] = restrictions;
 
                 this.setState({

@@ -1,4 +1,5 @@
 import React from "react";
+import Action from "../../base/Action";
 
 /**
  * @author Niklas Keller
@@ -20,7 +21,6 @@ class Restriction extends React.Component {
             answers = this.props.item.answers || [];
         }
 
-
         for (let i = 0; i < answers.length; i++) {
             this._toggleAnswer(answers[i].id);
         }
@@ -37,6 +37,13 @@ class Restriction extends React.Component {
 
         return (
             <div className="restriction">
+                <div className="list-actions">
+                    <button className="action action-destructive" onClick={() => this.props.onRemove(this.props.item)}>
+                        <i className="fa fa-times icon"/>
+                        Remove
+                    </button>
+                </div>
+
                 <span className="restriction-name">{this.props.item.name}</span>
 
                 <div className="restriction-answers">

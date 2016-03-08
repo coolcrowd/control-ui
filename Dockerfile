@@ -29,4 +29,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Have to run it currently, because we need two programs to run …
 # TODO: This is only a workaround, it doesn't trap signals corretly for nginx to stop on SIGINT, has to wait for SIGKILL.
-CMD ["/bin/bash", "-c", "envsubst < /app/src/index.html > /app/build/index.html && nginx -g 'daemon off;'"]
+ENTRYPOINT ["/bin/bash", "-c", "envsubst < /app/src/index.html > /app/build/index.html && nginx -g 'daemon off;'"]

@@ -45,10 +45,8 @@ gulp production
 # Clone git repository and change directory
 git clone https://github.com/coolcrowd/control-ui && cd control-ui
 
-docker build -t control-ui .
-docker run -ti -v $PWD/build:/app/build control-ui
-
-# Build is now ready in $PWD/build
+docker build -t crowdcontrol/control-ui .
+docker run -d -p 80:80 crowdcontrol/control-ui
 ```
 
 ## Development

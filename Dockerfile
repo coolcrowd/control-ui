@@ -20,6 +20,8 @@ RUN npm install gulp -g
 COPY . /app/
 WORKDIR "/app"
 
+RUN mv src/js/config.docker.js src/js/config.local.js
+
 RUN npm install
 RUN gulp production
 

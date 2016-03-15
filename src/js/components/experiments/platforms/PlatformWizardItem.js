@@ -18,6 +18,7 @@ class PlatformWizardItem extends React.Component {
     render() {
         let restrictions = this.props.restrictions.map((item) => <Restriction key={item.id} item={item}
                                                                               enabled={!this.props.item.isInactive}
+                                                                              immutable={this.props.immutable}
                                                                               onChange={this.props.onChange}
                                                                               onRemove={this.props.onRemove}/>);
 
@@ -39,7 +40,7 @@ class PlatformWizardItem extends React.Component {
                 <div className="dialog">
                     <div className="dialog-title">
                         <h2>Restrictions</h2>
-                        <button type="button" className="dialog-close"
+                        <button type="button" className="dialog-close" disabled={this.props.immutable}
                                 onClick={() => this.setState({calibrationList: false})}>
                             <i className="fa fa-times"/>
                         </button>
@@ -58,21 +59,24 @@ class PlatformWizardItem extends React.Component {
             restrictionTitle = "This platform is inactive and can no longer be modified.";
         }
 
+        let platformTitle = this.props.item.isInactive ? "This platform is inactive and can no longer be modified." : "";
+        platformTitle = this.props.immutable ? "This platform can't be modified, because the experiment was already published on it." : platformTitle;
+
         return (
             <li className={classNames({
                 "platform": true,
                 "platform-inactive": this.props.item.isInactive
             })}>
                 <label className="platform-name">
-                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive}
+                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive || this.props.immutable}
                            onChange={this.props.onToggle}
-                           title={this.props.item.isInactive ? "This platform is inactive and can no longer be modified." : ""}/>
-                    <h4>{this.props.item.name}</h4>
+                           title={platformTitle}/>
+                    <h4 title={platformTitle}>{this.props.item.name}</h4>
                 </label>
 
                 <div className="list-actions">
                     <button type="button" className="action" onClick={this._onRestrictClick.bind(this)}
-                            disabled={!this.props.item.hasCalibrations || this.props.item.isInactive}
+                            disabled={!this.props.item.hasCalibrations || this.props.item.isInactive || this.props.immutable}
                             title={restrictionTitle}>
                         <i className={"fa fa-child icon"}/>
                         Restrict

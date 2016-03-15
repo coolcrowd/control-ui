@@ -17,7 +17,8 @@ class PlatformWizard extends React.Component {
             platforms: null,
             experiment: null,
             payload: [],
-            platformState: {}
+            platformState: {},
+            initialState: {}
         };
     }
 
@@ -45,7 +46,8 @@ class PlatformWizard extends React.Component {
             loaded: true,
             failed: true,
             payload: [],
-            platformState: []
+            platformState: {},
+            initialState: {}
         };
 
         this.props.backend.request("GET", "experiments/" + this.props.params.id).then((response) => {
@@ -65,7 +67,8 @@ class PlatformWizard extends React.Component {
                         loaded: true,
                         failed: false,
                         payload: this._buildPayload(platforms.items, experiment.populations || []),
-                        platformState: this._buildPlatformState(platforms.items, experiment.populations || [])
+                        platformState: this._buildPlatformState(platforms.items, experiment.populations || []),
+                        initialState: this._buildPlatformState(platforms.items, experiment.populations || [])
                     });
                 }).catch(() => {
                     if (!this.ignoreLastFetch) {
@@ -89,6 +92,7 @@ class PlatformWizard extends React.Component {
             return (
                 <PlatformWizardItem key={item.id} item={item} backend={this.props.backend}
                                     enabled={this.state.platformState[item.id]}
+                                    immutable={this.state.experiment.state !== "DRAFT" && this.state.initialState[item.id]}
                                     restrictions={this.state.payload[item.id]}
                                     onToggle={() => this._onPlatformToggle(item.id)}
                                     onChange={(restriction) => this._onRestrictionChange(item.id, restriction)}

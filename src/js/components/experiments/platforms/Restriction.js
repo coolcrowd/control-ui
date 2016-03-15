@@ -30,7 +30,7 @@ class Restriction extends React.Component {
         let answers = this.props.item.answers.map((answer) => (
             <label key={answer.id}>
                 <input type="checkbox" checked={answer.id in this.state.acceptedAnswers}
-                       disabled={!this.props.enabled}
+                       disabled={!this.props.enabled || this.props.immutable}
                        onClick={() => this._toggleAnswer(answer.id)}/> {answer.answer}
             </label>
         ));
@@ -38,7 +38,7 @@ class Restriction extends React.Component {
         return (
             <div className="restriction">
                 <div className="list-actions">
-                    <button className="action action-destructive" onClick={() => this.props.onRemove(this.props.item)}>
+                    <button className="action action-destructive" onClick={() => this.props.onRemove(this.props.item)} disabled={this.props.immutable}>
                         <i className="fa fa-times icon"/>
                         Remove
                     </button>

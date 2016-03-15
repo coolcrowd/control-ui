@@ -510,17 +510,25 @@ class ExperimentWizard extends Wizard {
             let ratingQuality = response.data.ratingQualityAlgorithms;
             let answerQuality = response.data.answerQualityAlgorithms;
 
-            Object.assign(form["algorithmTaskChooser"], {
-                name: taskChooser.length ? taskChooser[0].name : ""
-            });
+            if (form) {
+                if (!form["algorithmTaskChooser"]) {
+                    form["algorithmTaskChooser"] = {
+                        name: taskChooser.length ? taskChooser[0].name : ""
+                    };
+                }
 
-            Object.assign(form["algorithmQualityRating"], {
-                name: ratingQuality.length ? ratingQuality[0].name : ""
-            });
+                if (!form["algorithmQualityRating"]) {
+                    form["algorithmQualityRating"] = {
+                        name: ratingQuality.length ? ratingQuality[0].name : ""
+                    };
+                }
 
-            Object.assign(form["algorithmQualityAnswer"], {
-                name: answerQuality.length ? answerQuality[0].name : ""
-            });
+                if (!form["algorithmQualityAnswer"]) {
+                    form["algorithmQualityAnswer"] = {
+                        name: answerQuality.length ? answerQuality[0].name : ""
+                    };
+                }
+            }
 
             this.setState({
                 algorithms: {

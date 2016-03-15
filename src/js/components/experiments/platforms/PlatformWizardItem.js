@@ -25,7 +25,8 @@ class PlatformWizardItem extends React.Component {
         if (restrictions.length > 0) {
             restrictions = (
                 <div className="restrictions">
-                    <h4>Restricted to:</h4>
+                    <h4>Restrictions</h4>
+                    <div className="input-help">Selected properties will have to match before a worker can submit tasks to this experiment.</div>
 
                     {restrictions}
                 </div>

@@ -510,20 +510,16 @@ class ExperimentWizard extends Wizard {
             let ratingQuality = response.data.ratingQualityAlgorithms;
             let answerQuality = response.data.answerQualityAlgorithms;
 
-            delete form["algorithmTaskChooser[name]"];
-            delete form["algorithmQualityRating[name]"];
-            delete form["algorithmQualityAnswer[name]"];
+            Object.assign(form["algorithmTaskChooser"], {
+                name: taskChooser.length ? taskChooser[0].name : ""
+            });
 
-            Object.assign(form, {
-                "algorithmTaskChooser": {
-                    name: taskChooser.length ? taskChooser[0].name : ""
-                },
-                "algorithmQualityRating": {
-                    name: ratingQuality.length ? ratingQuality[0].name : ""
-                },
-                "algorithmQualityAnswer": {
-                    name: answerQuality.length ? answerQuality[0].name : ""
-                }
+            Object.assign(form["algorithmQualityRating"], {
+                name: ratingQuality.length ? ratingQuality[0].name : ""
+            });
+
+            Object.assign(form["algorithmQualityAnswer"], {
+                name: answerQuality.length ? answerQuality[0].name : ""
             });
 
             this.setState({

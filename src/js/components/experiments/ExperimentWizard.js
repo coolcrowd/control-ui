@@ -369,7 +369,7 @@ class ExperimentWizard extends Wizard {
                 type: "number",
                 label: "Minimum Quality",
                 help: "How good must a task answer be to pay for it?",
-                default: 0,
+                default: 4,
                 decoder: (i) => i.value,
                 encoder: (i) => {
                     return {value: parseInt(i)};

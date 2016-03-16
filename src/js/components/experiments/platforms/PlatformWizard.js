@@ -18,7 +18,8 @@ class PlatformWizard extends React.Component {
             experiment: null,
             payload: [],
             platformState: {},
-            initialState: {}
+            initialState: {},
+            platformTasks: {}
         };
     }
 
@@ -47,7 +48,8 @@ class PlatformWizard extends React.Component {
             failed: true,
             payload: [],
             platformState: {},
-            initialState: {}
+            initialState: {},
+            platformTasks: {}
         };
 
         this.props.backend.request("GET", "experiments/" + this.props.params.id).then((response) => {
@@ -68,7 +70,8 @@ class PlatformWizard extends React.Component {
                         failed: false,
                         payload: this._buildPayload(platforms.items, experiment.populations || []),
                         platformState: this._buildPlatformState(platforms.items, experiment.populations || []),
-                        initialState: this._buildPlatformState(platforms.items, experiment.populations || [])
+                        initialState: this._buildPlatformState(platforms.items, experiment.populations || []),
+                        platformTasks: this._buildPlatformTasks(platforms.items, experiment.populations || [])
                     });
                 }).catch(() => {
                     if (!this.ignoreLastFetch) {
@@ -94,7 +97,9 @@ class PlatformWizard extends React.Component {
                                     enabled={this.state.platformState[item.id]}
                                     immutable={this.state.experiment.state !== "DRAFT" && this.state.initialState[item.id]}
                                     restrictions={this.state.payload[item.id]}
+                                    task={this.state.platformTasks[item.id]}
                                     onToggle={() => this._onPlatformToggle(item.id)}
+                                    onTaskChange={(value) => this._onPlatformTaskChange(item.id, value)}
                                     onChange={(restriction) => this._onRestrictionChange(item.id, restriction)}
                                     onRemove={(restriction) => this._onRestrictionRemove(item.id, restriction)}
                                     onNew={(restriction) => this._onRestrictionCreation(item.id, restriction)}/>
@@ -151,7 +156,8 @@ class PlatformWizard extends React.Component {
 
             let population = {
                 platformId: id,
-                calibrations: []
+                calibrations: [],
+                task: this.state.platformTasks[id]
             };
 
             try {
@@ -264,6 +270,18 @@ class PlatformWizard extends React.Component {
         });
     }
 
+    _onPlatformTaskChange(id, value) {
+        console.log(id, value);
+
+        let tasks = this.state.platformTasks;
+
+        tasks[id] = value;
+
+        this.setState({
+            platformTasks: tasks
+        });
+    }
+
     _buildPlatformState(platforms, populations) {
         let result = {};
 
@@ -287,6 +305,20 @@ class PlatformWizard extends React.Component {
 
         for (let i = 0; i < populations.length; i++) {
             result[populations[i].platformId] = populations[i].calibrations || [];
+        }
+
+        return result;
+    }
+
+    _buildPlatformTasks(platforms, populations) {
+        let result = {};
+
+        for (let i = 0; i < platforms.length; i++) {
+            result[platforms[i].id] = "BOTH";
+        }
+
+        for (let i = 0; i < populations.length; i++) {
+            result[populations[i].platformId] = populations[i].task || "BOTH";
         }
 
         return result;

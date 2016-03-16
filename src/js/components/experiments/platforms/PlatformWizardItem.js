@@ -26,7 +26,9 @@ class PlatformWizardItem extends React.Component {
             restrictions = (
                 <div className="restrictions">
                     <h4>Restrictions</h4>
-                    <div className="input-help">Selected properties will have to match before a worker can submit tasks to this experiment.</div>
+                    <div className="input-help">Selected properties will have to match before a worker can submit tasks
+                        to this experiment.
+                    </div>
 
                     {restrictions}
                 </div>
@@ -69,13 +71,27 @@ class PlatformWizardItem extends React.Component {
                 "platform-inactive": this.props.item.isInactive
             })}>
                 <label className="platform-name">
-                    <input type="checkbox" checked={this.props.enabled} disabled={this.props.item.isInactive || this.props.immutable}
+                    <input type="checkbox" checked={this.props.enabled}
+                           disabled={this.props.item.isInactive || this.props.immutable}
                            onChange={this.props.onToggle}
                            title={platformTitle}/>
                     <h4 title={platformTitle}>{this.props.item.name}</h4>
                 </label>
 
                 <div className="list-actions">
+                    <label className="platform-task">
+                        <span className="platform-task-label">
+                            Tasks:
+                        </span>
+
+                        <select className="platform-task-input" value={this.props.task || "BOTH"}
+                                onChange={(e) => this.props.onTaskChange(e.target.value)}>
+                            <option value="BOTH">Answers & Ratings</option>
+                            <option value="ANSWER">Answers</option>
+                            <option value="RATING">Ratings</option>
+                        </select>
+                    </label>
+
                     <button type="button" className="action" onClick={this._onRestrictClick.bind(this)}
                             disabled={!this.props.item.hasCalibrations || this.props.item.isInactive || this.props.immutable}
                             title={restrictionTitle}>

@@ -12,6 +12,7 @@ class PlatformWizard extends React.Component {
         super();
 
         this.state = {
+            saving: false,
             loaded: false,
             failed: false,
             platforms: null,
@@ -136,7 +137,7 @@ class PlatformWizard extends React.Component {
 
                     <div className="actions actions-right actions-bottom">
                         <button type="button" className="action action-constructive"
-                                onClick={this._onSubmit.bind(this)}>
+                                onClick={this._onSubmit.bind(this)} disabled={this.state.saving}>
                             <i className="fa fa-save icon"/> Save
                         </button>
                     </div>
@@ -146,6 +147,8 @@ class PlatformWizard extends React.Component {
     }
 
     _onSubmit() {
+        this.setState({saving: true});
+
         let payload = this.state.payload;
         let populations = [];
 
@@ -199,8 +202,10 @@ class PlatformWizard extends React.Component {
         };
 
         this.props.backend.request("PATCH", "experiments/" + this.props.params.id, experiment).then(() => {
+            this.setState({saving: false});
             history.replaceState(null, "/experiments/" + this.props.params.id);
         }).catch((e) => {
+            this.setState({saving: false});
             let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
             window.alert(error);
         });

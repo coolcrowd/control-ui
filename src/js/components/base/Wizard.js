@@ -15,6 +15,7 @@ class Wizard extends React.Component {
 
         this.state = Object.assign(this.state || {}, {
             new: false,
+            saving: false,
             loaded: false,
             failed: false,
             data: null,
@@ -213,12 +214,16 @@ class Wizard extends React.Component {
         let form = Object.assign({}, this.state.form);
         let spec = this.getForm();
 
+        this.setState({saving: true});
+
         if (this.state.new) {
             Wizard.encodeForm(form, spec);
 
             this.props.backend.request("PUT", this.getCollectionUri(), form).then((resp) => {
+                this.setState({saving: false});
                 history.replaceState(null, "/" + this.getItemUri(resp.data.id));
             }).catch((e) => {
+                this.setState({saving: false});
                 let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
                 window.alert(error);
             });
@@ -257,8 +262,10 @@ class Wizard extends React.Component {
             }
 
             this.props.backend.request("PATCH", this.getItemUri(this.props.params.id), newItem).then(() => {
+                this.setState({saving: false});
                 history.replaceState(null, "/" + this.getItemUri(this.props.params.id));
             }).catch((e) => {
+                this.setState({saving: false});
                 let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
                 window.alert(error);
             });
@@ -295,7 +302,7 @@ class Wizard extends React.Component {
                 {content}
 
                 <div className="actions actions-right actions-bottom">
-                    <button type="button" className="action action-constructive" onClick={this._onSubmit.bind(this)}>
+                    <button type="button" className="action action-constructive" onClick={this._onSubmit.bind(this)} disabled={this.state.saving}>
                         <i className="fa fa-save icon"/> Save
                     </button>
                 </div>

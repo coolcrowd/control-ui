@@ -169,6 +169,10 @@ class ResourceList extends DataComponent {
         if (bounds.top < 0) {
             window.scrollTo(0, node.offsetTop - 50);
         }
+
+        if (this.state.data.items.length === 0 && this.getQueryString() !== "from=0&asc=true") {
+            this.props.history.replaceState(null, this.getCollectionUri());
+        }
     }
 
     _onNext() {
@@ -202,6 +206,10 @@ class ResourceList extends DataComponent {
 
         let data = this.state.data;
         data.items = items;
+
+        if (items.length === 0) {
+            this.props.history.replaceState(null, this.getCollectionUri());
+        }
 
         this.setState({
             data: data

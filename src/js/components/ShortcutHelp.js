@@ -16,6 +16,7 @@ class ShortcutHelp extends React.Component {
                     <Shortcut keys="g e" title="Experiments"/>
                     <Shortcut keys="g t" title="Templates"/>
                     <Shortcut keys="g n" title="Notifications"/>
+                    <Shortcut keys="g c" title="Calibrations"/>
                     </tbody>
                 </table>
 
@@ -35,6 +36,7 @@ class ShortcutHelp extends React.Component {
                     <tbody>
                     <Shortcut keys="esc" title="Abort"/>
                     <Shortcut keys="ctrl+enter" title="Save"/>
+                    <Shortcut keys="ctrl+s" title="Save"/>
                     </tbody>
                 </table>
 

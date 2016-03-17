@@ -14,17 +14,20 @@ class App extends React.Component {
 
         this.combokeys = new Combokeys(document.body);
         this.state = {
-            shortcutHelp: false
+            shortcutHelp: false,
+            screen: false
         };
     }
 
     componentDidMount() {
-        this.combokeys.bind("?", () => this.setState({shortcutHelp: true}));
-        this.combokeys.bind("esc", () => this.setState({shortcutHelp: false}));
+        this.combokeys.bind("?", () => this.setState({shortcutHelp: true, screen: false}));
+        this.combokeys.bind("esc", () => this.setState({shortcutHelp: false, screen: false}));
         this.combokeys.bind("g h", () => this.props.history.replaceState(null, "/"));
         this.combokeys.bind("g e", () => this.props.history.replaceState(null, "/experiments"));
         this.combokeys.bind("g t", () => this.props.history.replaceState(null, "/templates"));
         this.combokeys.bind("g n", () => this.props.history.replaceState(null, "/notifications"));
+        this.combokeys.bind("g c", () => this.props.history.replaceState(null, "/calibrations"));
+        this.combokeys.bind("up up down down left right left right b a", () => this.setState({shortcutHelp: false, screen: true}));
     }
 
     componentWillUnmount() {
@@ -37,6 +40,48 @@ class App extends React.Component {
                 <i className="fa fa-power-off icon"/>
             </button>
         ) : null;
+
+        let titles = (
+            <div className="titles-overlay">
+                <div className="titles-logo">
+                    <img src="/img/logo.png" width="400" height="96" alt="CrowdControl" title="CrowdControl"/>
+                </div>
+
+                <div className="titles">
+                    <div className="titles-content">
+                        <p className="center">
+                            A long time ago in a galaxy far, far away …
+                        </p>
+
+                        <p className="center">
+                            … six team members created a software called CrowdControl.
+                        </p>
+
+                        <p>
+                            It's a beautiful piece of software designed to publish experiments to crowdworking platforms
+                            like Amazon Mechanical Turk and PyBossa.
+                        </p>
+
+                        <p>
+                            There are templates, calibrations and keyboard shortcuts built into the software. It's also
+                            possible to receive notifications which can be defined with the full power of SQL.
+                        </p>
+
+                        <br />
+
+                        <p className="center">
+                            To error is human, to fuck up takes root privileges.
+                            <br /><br />
+                            (unknown)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        if (!this.state.screen) {
+            titles = null;
+        }
 
         return (
             <div>
@@ -99,6 +144,8 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                {titles}
 
                 <div className="max-width">
                     <div className="content">

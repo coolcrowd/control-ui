@@ -61,6 +61,12 @@
   margin: 3px 15px;
 }
 
+.platform::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .platform-inactive {
   color: #888;
 }
@@ -133,4 +139,32 @@
 
 .restriction-list-item:hover {
   background: rgba(0,0,0,.05);
+}
+
+.platform-task {
+  margin-right: 8px;
+}
+
+.platform-task-label {
+  font-weight: bold;
+}
+
+.platform-task-input {
+  margin: 0 8px;
+}
+
+@media (max-width: 600px) {
+  .platform > .list-actions {
+    float: none;
+    margin: -15px 0 15px 0;
+  }
+
+  .restrictions {
+    margin-left: 0;
+  }
+
+  .restriction {
+    padding: 0;
+    margin: 5px 0;
+  }
 }

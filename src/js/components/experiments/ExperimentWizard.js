@@ -148,7 +148,8 @@ class ExperimentWizard extends Wizard {
         };
 
         if (this.state.loaded && !this.state.failed) {
-            let isTemplate = this.state.new && this.props.location.state && "template" in this.props.location.state || this.state.data && "templateId" in this.state.data && this.state.data.templateId;
+            let isTemplate = this.state.new && this.props.location.state && "template" in this.props.location.state
+                || this.state.data && "templateId" in this.state.data && this.state.data.templateId;
 
             if (isTemplate) {
                 let text;
@@ -162,7 +163,7 @@ class ExperimentWizard extends Wizard {
                         template = {
                             content: this.props.location.state.experiment.description,
                             answerType: this.props.location.state.experiment.answerType,
-                            id: this.props.location.state.experiment.templateId
+                            id: this.props.location.state.experiment.templateId.value
                         }
                     } else {
                         throw "Invalid state!";
@@ -182,9 +183,10 @@ class ExperimentWizard extends Wizard {
                         templateId: {
                             type: "hidden",
                             value: template.id,
-                            decoder: (i) => i.value,
                             encoder: (i) => {
-                                return {value: parseInt(i)};
+                                return {
+                                    value: parseInt(i)
+                                };
                             }
                         }
                     });
@@ -446,16 +448,6 @@ class ExperimentWizard extends Wizard {
                 encoder: (text) => encodeTextCollection(text, ","),
                 decoder: (items) => items.map((item) => item.name).join(", ")
             },
-            templateId: {
-                type: "hidden",
-                value: "",
-                encoder: (i) => {
-                    return i ? {value: parseInt(i)} : null;
-                },
-                decoder: (i) => {
-                    return i ? i.value : null;
-                }
-            },
             workerQualityThreshold: {
                 type: "number",
                 label: "Worker Quality Threshold",
@@ -484,6 +476,19 @@ class ExperimentWizard extends Wizard {
                 }
             }
         });
+
+        if (!("templateId" in base)) {
+            base.templateId = {
+                type: "hidden",
+                value: "",
+                encoder: (i) => {
+                    return i ? {value: parseInt(i)} : null;
+                },
+                decoder: (i) => {
+                    return i ? i.value : "";
+                }
+            };
+        }
 
         return base;
     }

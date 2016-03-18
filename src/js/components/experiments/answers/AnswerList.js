@@ -86,7 +86,21 @@ class AnswerList extends DataComponent {
                             {feedback}
                         </ul>
                     </div>
-                )
+                );
+            }
+
+            let systemResponse = null;
+
+            if (item.systemresponse) {
+                systemResponse = (
+                    <div className="answer-system-response">
+                        <b>System Response</b>
+
+                        <div className="answer-system-response-content">
+                            {item.systemresponse}
+                        </div>
+                    </div>
+                );
             }
 
             let answerTime = moment(item.time * 1000);
@@ -116,6 +130,8 @@ class AnswerList extends DataComponent {
                     </div>
 
                     {feedback}
+
+                    {systemResponse}
                 </div>
             );
         }) : [];

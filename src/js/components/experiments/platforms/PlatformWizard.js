@@ -213,6 +213,7 @@ class PlatformWizard extends React.Component {
                 }
 
                 window.alert(error);
+                this.setState({saving: false});
 
                 return;
             }
@@ -222,6 +223,7 @@ class PlatformWizard extends React.Component {
 
         if (populations.length === 0) {
             alert("A experiment must be published on at least one platform.");
+            this.setState({saving: false});
 
             return;
         }

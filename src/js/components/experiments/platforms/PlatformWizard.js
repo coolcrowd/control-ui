@@ -96,8 +96,8 @@ class PlatformWizard extends React.Component {
             return (
                 <PlatformWizardItem key={item.id} item={item} backend={this.props.backend}
                                     enabled={this.state.platformState[item.id]}
-                                    immutable={this._isPlatformImmutable(item.id)}
-                                    enableTaskChooser={this.state.experiment.state !== "STOPPED" && this.state.experiment.state !== "CREATIVE_STOPPED"}
+                                    immutable={item.isInactive || this._isPlatformImmutable(item.id)}
+                                    enableTaskChooser={!item.isInactive && this.state.experiment.state !== "STOPPED" && this.state.experiment.state !== "CREATIVE_STOPPED"}
                                     restrictions={this.state.payload[item.id]}
                                     task={this.state.platformTasks[item.id]}
                                     onToggle={() => this._onPlatformToggle(item.id)}

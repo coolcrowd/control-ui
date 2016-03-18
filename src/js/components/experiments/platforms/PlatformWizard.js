@@ -313,8 +313,6 @@ class PlatformWizard extends React.Component {
     }
 
     _onPlatformTaskChange(id, value) {
-        console.log(id, value);
-
         let tasks = this.state.platformTasks;
 
         tasks[id] = value;

@@ -49,8 +49,6 @@ class ExperimentList extends ResourceList {
             }, "/experiments/new");
         };
 
-        console.log(this);
-
         return [
             (
                 <Action icon="clone" onClick={onClick.bind(this)}>Clone</Action>

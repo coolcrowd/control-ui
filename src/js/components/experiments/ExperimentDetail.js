@@ -42,6 +42,12 @@ class ExperimentDetail extends DataComponent {
                     <DataError />
                 );
             } else {
+                let state = (
+                    <div className="experiment-state-notice">
+                        This experiment is currently in <span className={"experiment-state experiment-state-" + this.state.data.state.toLowerCase().replace(/_/g, "-")}>{this.state.data.state.replace(/_/g, " ")}</span> state.
+                    </div>
+                );
+
                 let editButton = (
                     <Action icon="pencil" href={this.props.location.pathname + "/edit"}
                             disabled={this.state.data.state !== "DRAFT"}
@@ -94,7 +100,7 @@ class ExperimentDetail extends DataComponent {
 
                 if (this.state.data.state !== "DRAFT") {
                     answerLink = (
-                        <div className="actions actions-right">
+                        <div className="actions actions-right" style={{clear: "right"}}>
                             <Link to={this.props.location.pathname + "/answers"} className="action action-large">
                                 <i className="fa fa-eye icon"/>
                                 View Answers
@@ -130,9 +136,11 @@ class ExperimentDetail extends DataComponent {
                             {deleteButton}
                         </div>
 
+                        {answerLink}
+
                         <h1>Experiment: {this.state.data.title}</h1>
 
-                        {answerLink}
+                        {state}
 
                         <label className="input-label">Parameters</label>
                         <table className="input-table-info">

@@ -49,3 +49,38 @@ h1 {
     display: none;
   }
 }
+
+.experiment-state-notice {
+  margin: 10px 0;
+}
+
+.experiment-state {
+  display: inline-block;
+  margin: 0 3px;
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.experiment-state-draft {
+  background-color: #08e;
+  color: white;
+}
+
+.experiment-state-published {
+  background-color: #00ac4d;
+  color: white;
+}
+
+.experiment-state-creative-stopped {
+  background-color: #ab3900;
+  color: white;
+}
+
+.experiment-state-stopped {
+  background-color: #ccc;
+  color: #333;
+}
+

@@ -144,6 +144,7 @@ pre {
 
 .answer {
   padding: 8px;
+  border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .answer-meta {
@@ -153,6 +154,19 @@ pre {
 .answer-meta > * {
   display: inline-block;
   margin: 8px 16px 8px 0;
+}
+
+.answer-content {
+  padding: 8px 0;
+}
+
+.answer-feedback {
+  margin: 8px 0;
+}
+
+.answer-feedback ul {
+  margin: 8px 0;
+  padding: 0 0 0 25px;
 }
 
 .dont-break-out {

@@ -69,16 +69,25 @@ class AnswerList extends DataComponent {
         }
 
         let children = this.state.loaded ? (this.state.data.items || []).map((item) => {
-            let ratings = item.ratings.map((rating) => {
+            let feedback = item.ratings.filter((rating) => rating.feedback).map((rating) => {
                 return (
-                    <div key={rating.id}>
-                        <b>Feedback</b>
-                        <p className="dont-break-out">
-                            {rating.feedback}
-                        </p>
-                    </div>
+                    <li key={rating.id} className="dont-break-out">
+                        {rating.feedback}
+                    </li>
                 );
             });
+
+            if (feedback.length) {
+                feedback = (
+                    <div className="answer-feedback">
+                        <b>Feedback</b>
+
+                        <ul>
+                            {feedback}
+                        </ul>
+                    </div>
+                )
+            }
 
             let answerTime = moment(item.time * 1000);
             let now = moment();
@@ -90,9 +99,10 @@ class AnswerList extends DataComponent {
             }
 
             return (
-                <div key={item.id} className="answer dont-break-out">
+                <div key={item.id} className="answer">
                     <div className="answer-meta">
-                        <time dateTime={moment(item.time * 1000).toISOString()} title={moment(item.time * 1000).format("llll")}>
+                        <time dateTime={moment(item.time * 1000).toISOString()}
+                              title={moment(item.time * 1000).format("llll")}>
                             {answerTime}
                         </time>
 
@@ -101,9 +111,11 @@ class AnswerList extends DataComponent {
                         </span>
                     </div>
 
-                    {item.content}
+                    <div className="answer-content dont-break-out">
+                        {item.content}
+                    </div>
 
-                    {ratings}
+                    {feedback}
                 </div>
             );
         }) : [];

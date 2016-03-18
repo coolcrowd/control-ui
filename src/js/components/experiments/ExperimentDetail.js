@@ -4,6 +4,7 @@ import Loader from "../../core/Loader";
 import DataComponent from "../base/DataComponent";
 import DataError from "../base/DataError";
 import ResourceAction from "../base/ResourceAction";
+import Action from "../base/Action";
 import Template from "../../core/Template";
 import history from "../../history";
 
@@ -41,12 +42,31 @@ class ExperimentDetail extends DataComponent {
                     <DataError />
                 );
             } else {
-                let editButton = this.state.data.state === "DRAFT" ? (
-                    <Link to={this.props.location.pathname + "/edit"} className="action">
-                        <i className="fa fa-pencil icon"/>
+                let editButton = (
+                    <Action icon="pencil" href={this.props.location.pathname + "/edit"}
+                            disabled={this.state.data.state !== "DRAFT"}
+                            title="Experiments can only be edited when in draft state!">
                         Edit
-                    </Link>
-                ) : null;
+                    </Action>
+                );
+
+                let deleteButton = this.state.data.state === "DRAFT" || this.state.data.state === "STOPPED" ? (
+                    <ResourceAction icon="trash" method="DELETE" uri={"experiments/" + this.props.params.id}
+                                    onClick={() => window.confirm("Do you really want to delete this experiment?")}
+                                    onSuccess={() => history.replaceState(null, "/experiments")}
+                                    onError={(e) => {
+                                                let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
+                                                window.alert("Deletion failed. " + error);
+                                            }}
+                                    backend={this.props.backend}>
+                        Delete
+                    </ResourceAction>
+                ) : (
+                    <Action icon="trash" href="/" disabled={true}
+                            title="Experiments can only be deleted when in draft state or completely stopped!">
+                        Delete
+                    </Action>
+                );
 
                 let stateButton = null;
                 let answerLink = null;
@@ -107,16 +127,7 @@ class ExperimentDetail extends DataComponent {
 
                             {editButton}
 
-                            <ResourceAction icon="trash" method="DELETE" uri={"experiments/" + this.props.params.id}
-                                            onClick={() => window.confirm("Do you really want to delete this experiment?")}
-                                            onSuccess={() => history.replaceState(null, "/experiments")}
-                                            onError={(e) => {
-                                                let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
-                                                window.alert("Deletion failed. " + error);
-                                            }}
-                                            backend={this.props.backend}>
-                                Delete
-                            </ResourceAction>
+                            {deleteButton}
                         </div>
 
                         <h1>Experiment: {this.state.data.title}</h1>

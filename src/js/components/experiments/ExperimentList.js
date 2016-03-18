@@ -74,8 +74,7 @@ class ExperimentList extends ResourceList {
                     Delete
                 </ResourceAction>
             ) : (
-                <Action icon="trash" href={this.props.basepath + "/" + this.props.item.id + "/edit"}
-                        disabled={true}
+                <Action icon="trash" href={this.props.basepath + "/" + this.props.item.id} disabled={true}
                         title="Experiments can only be deleted when in draft state or completely stopped!">
                     Delete
                 </Action>

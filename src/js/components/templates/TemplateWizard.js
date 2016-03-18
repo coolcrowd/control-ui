@@ -49,7 +49,11 @@ class TemplateWizard extends Wizard {
             content: {
                 type: "longtext",
                 label: "Content",
-                help: "Description of the creative task. You can use placeholders with {{name:description}}.",
+                help: (
+                    <span>
+                        Description of the creative task. You can use HTML to format your description. Use <code>{"{!http://example.com/image.png http://example.com/license.txt}"}</code> as shortcut to include images, the license URL is optional. You can use placeholders with <code>{"{{name:description}}"}</code>. For each placeholder, there will be a separate input field when creating an experiment based on this template.
+                    </span>
+                ),
                 validation: {
                     validator: this._onContentChange.bind(this),
                     renderer: this._renderContent.bind(this)

@@ -116,7 +116,11 @@ class ExperimentWizard extends Wizard {
             description: {
                 type: "longtext",
                 label: "Description",
-                help: "Description of the creative task."
+                help: (
+                    <span>
+                        Description of the creative task. You can use HTML to format your description. Use <code>{"{!http://example.com/image.png http://example.com/license.txt}"}</code> as shortcut to include images, the license URL is optional.
+                    </span>
+                )
             },
             answerType: {
                 type: "enum",

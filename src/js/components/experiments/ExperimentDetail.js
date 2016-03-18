@@ -182,7 +182,7 @@ class ExperimentDetail extends DataComponent {
                         </table>
 
                         <label className="input-label">Description</label>
-                        <pre>{description}</pre>
+                        <div className="experiment-description dont-break-out" dangerouslySetInnerHTML={{__html: description}}></div>
 
                         <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
                         {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}

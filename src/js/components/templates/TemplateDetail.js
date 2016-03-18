@@ -32,24 +32,6 @@ class TemplateDetail extends DataComponent {
                     <DataError />
                 );
             } else {
-                let type;
-
-                if ("answerType" in this.state.data && this.state.data.answerType === "IMAGE") {
-                    type = (
-                        <span>
-                            <i className="fa fa-file-image-o icon"/>
-                            Image
-                        </span>
-                    );
-                } else {
-                    type = (
-                        <span>
-                            <i className="fa fa-file-text-o icon"/>
-                            Text
-                        </span>
-                    );
-                }
-
                 let constraints = this.state.data.constraints.map((constraint) => (
                     <li key={constraint.name}>{constraint.name}</li>
                 ));
@@ -86,10 +68,10 @@ class TemplateDetail extends DataComponent {
                         <h1>Template: {this.state.data.name}</h1>
 
                         <label className="input-label">Content</label>
-                        <pre>{this.state.data.content}</pre>
+                        <div className="experiment-description dont-break-out" dangerouslySetInnerHTML={{__html: this.state.data.content}}></div>
 
                         <label className="input-label">Answer Type</label>
-                        <div>{type}</div>
+                        <div><b>{this.state.data.answerType}</b></div>
 
                         <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
                         {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}

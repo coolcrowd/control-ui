@@ -3,6 +3,16 @@
   font-family: "Lato", sans-serif;
 }
 
+a {
+  color: #07d;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 body {
   margin: 0;
   background: #fafafa;
@@ -120,6 +130,22 @@ pre {
   border-radius: 2px;
   padding: 15px;
   white-space: pre-wrap;
+}
+
+.experiment-description {
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 2px;
+  padding: 15px;
+}
+
+.experiment-description p:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.experiment-description p:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .key {

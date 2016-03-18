@@ -259,7 +259,7 @@ class AnswerList extends DataComponent {
             return null;
         }
 
-        if (filename.length - extension.length >= 0 && filename.substr(filename.length - extension.length, extension.length) !== extension) {
+        if (filename.length - extension.length < 0 || filename.substr(filename.length - extension.length, extension.length) !== extension) {
             return filename + "." + extension;
         }
 

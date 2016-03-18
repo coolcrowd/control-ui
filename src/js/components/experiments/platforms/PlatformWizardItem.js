@@ -62,6 +62,10 @@ class PlatformWizardItem extends React.Component {
             restrictionTitle = "This platform is inactive and can no longer be modified.";
         }
 
+        if (this.props.immutable) {
+            restrictionTitle = "This platform can't be modified, because the experiment was already published on it.";
+        }
+
         let platformTitle = this.props.item.isInactive ? "This platform is inactive and can no longer be modified." : "";
         platformTitle = this.props.immutable ? "This platform can't be modified, because the experiment was already published on it." : platformTitle;
 
@@ -85,7 +89,7 @@ class PlatformWizardItem extends React.Component {
                         </span>
 
                         <select className="platform-task-input" value={this.props.task || "BOTH"}
-                                onChange={(e) => this.props.onTaskChange(e.target.value)}>
+                                onChange={(e) => this.props.onTaskChange(e.target.value)} disabled={!this.props.enableTaskChooser}>
                             <option value="BOTH">Answers & Ratings</option>
                             <option value="ANSWER">Answers</option>
                             <option value="RATING">Ratings</option>

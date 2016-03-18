@@ -153,6 +153,12 @@
   margin: 0 8px;
 }
 
+.population-notice {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #d04e32;
+}
+
 @media (max-width: 600px) {
   .platform > .list-actions {
     float: none;

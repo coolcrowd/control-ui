@@ -96,7 +96,8 @@ class PlatformWizard extends React.Component {
             return (
                 <PlatformWizardItem key={item.id} item={item} backend={this.props.backend}
                                     enabled={this.state.platformState[item.id]}
-                                    immutable={this.state.experiment.state !== "DRAFT" && this.state.initialState[item.id]}
+                                    immutable={this._isPlatformImmutable(item.id)}
+                                    enableTaskChooser={this.state.experiment.state !== "STOPPED" && this.state.experiment.state !== "CREATIVE_STOPPED"}
                                     restrictions={this.state.payload[item.id]}
                                     task={this.state.platformTasks[item.id]}
                                     onToggle={() => this._onPlatformToggle(item.id)}
@@ -120,6 +121,37 @@ class PlatformWizard extends React.Component {
 
         let experimentTitle = this.state.loaded ? this.state.experiment.title : "";
 
+        let stopNotice = null;
+
+        if (this.state.loaded && !this.state.failed) {
+            if (this.state.experiment.state === "STOPPED") {
+                stopNotice = (
+                    <div className="population-notice">
+                        You can't modify the populations anymore, because the experiment has already been stopped.
+                    </div>
+                );
+            } else if (this.state.experiment.state === "CREATIVE_STOPPED") {
+                stopNotice = (
+                    <div className="population-notice">
+                        You can't modify the populations anymore, because the experiment has been aborted.
+                    </div>
+                );
+            }
+        }
+
+        let saveButton = (
+            <div className="actions actions-right actions-bottom">
+                <button type="button" className="action action-constructive"
+                        onClick={this._onSubmit.bind(this)} disabled={this.state.saving}>
+                    <i className="fa fa-save icon"/> Save
+                </button>
+            </div>
+        );
+
+        if (this.state.experiment && (this.state.experiment.state === "STOPPED" || this.state.experiment.state === "CREATIVE_STOPPED")) {
+            saveButton = null;
+        }
+
         return (
             <div>
                 <h1>Platforms for &ldquo;{experimentTitle}&rdquo;</h1>
@@ -128,6 +160,8 @@ class PlatformWizard extends React.Component {
                     Experiments can be published on one or multiple platforms.
                 </p>
 
+                {stopNotice}
+
                 <br/>
 
                 <Loader loaded={this.state.loaded} className="loader">
@@ -135,12 +169,7 @@ class PlatformWizard extends React.Component {
                         {children}
                     </ul>
 
-                    <div className="actions actions-right actions-bottom">
-                        <button type="button" className="action action-constructive"
-                                onClick={this._onSubmit.bind(this)} disabled={this.state.saving}>
-                            <i className="fa fa-save icon"/> Save
-                        </button>
-                    </div>
+                    {saveButton}
                 </Loader>
             </div>
         );
@@ -327,6 +356,18 @@ class PlatformWizard extends React.Component {
         }
 
         return result;
+    }
+
+    _isPlatformImmutable(id) {
+        if (this.state.experiment.state === "DRAFT") {
+            return false;
+        }
+
+        if (this.state.experiment.state === "PUBLISHED") {
+            return this.state.initialState[id];
+        }
+
+        return true;
     }
 }
 

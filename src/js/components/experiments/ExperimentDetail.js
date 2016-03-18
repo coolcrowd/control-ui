@@ -44,9 +44,18 @@ class ExperimentDetail extends DataComponent {
             } else {
                 let state = (
                     <div className="experiment-state-notice">
-                        This experiment is currently in <span className={"experiment-state experiment-state-" + this.state.data.state.toLowerCase().replace(/_/g, "-")}>{this.state.data.state.replace(/_/g, " ")}</span> state.
+                        This experiment's state is currently <span className={"experiment-state experiment-state-" + this.state.data.state.toLowerCase().replace(/_/g, "-")}>{this.state.data.state.replace(/_/g, " ")}</span>
                     </div>
                 );
+
+                if (this.state.data.state === "INVALID") {
+                    state = [
+                        state,
+                        <div className="experiment-state-notice">
+                            The software can't recover, because the platforms are in an inconsistent state which can't be recovered.
+                        </div>
+                    ];
+                }
 
                 let editButton = (
                     <Action icon="pencil" href={this.props.location.pathname + "/edit"}

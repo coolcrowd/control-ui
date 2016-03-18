@@ -136,6 +136,12 @@ class PlatformWizard extends React.Component {
                         You can't modify the populations anymore, because the experiment has been aborted.
                     </div>
                 );
+            } else if (this.state.experiment.state === "INVALID") {
+                stopNotice = (
+                    <div className="population-notice">
+                        You can't modify the populations anymore, because the experiment is in a critical failed state.
+                    </div>
+                );
             }
         }
 

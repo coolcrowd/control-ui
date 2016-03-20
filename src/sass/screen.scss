@@ -240,6 +240,18 @@ pre {
   text-decoration: underline !important;
 }
 
+@media (max-width: 600px) {
+  .answer-content-image {
+    display: block;
+    width: calc(100% - 20px);
+    float: none;
+  }
+
+  .answer-meta-image {
+    margin: 10px 10px 15px 10px;
+  }
+}
+
 .dont-break-out {
   overflow-wrap: break-word;
   word-wrap: break-word;

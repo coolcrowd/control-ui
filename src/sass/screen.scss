@@ -188,11 +188,16 @@ pre {
 
 .answer-meta {
   color: #888;
+  line-height: 16px;
 }
 
 .answer-meta > * {
   display: inline-block;
   margin: 8px 16px 8px 0;
+}
+
+.answer-duplicate {
+  opacity: .5;
 }
 
 .answer-content {
@@ -238,6 +243,33 @@ pre {
 
 .answer-meta-image-url a:hover {
   text-decoration: underline !important;
+}
+
+.answer-quality {
+  display: inline-block;
+  margin: 0 3px;
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 11px;
+  background-color: #eee;
+  text-transform: uppercase;
+}
+
+.answer-quality-good {
+  color: #00ac4d;
+  background-color: #84c695;
+}
+
+.answer-quality-bad {
+  color: #ab3900;
+  background-color: #e2ac93;
+}
+
+.answer-quality-duplicate {
+  color: #333;
+  background-color: #eee;
 }
 
 @media (max-width: 600px) {

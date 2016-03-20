@@ -11,6 +11,7 @@ import JsonFormatter from "../../../formatters/JsonFormatter";
 import CsvFormatter from "../../../formatters/CsvFormatter";
 import { saveAs } from "filesaver.js";
 import moment from "moment";
+import classNames from "classnames";
 
 /**
  * @author Niklas Keller
@@ -145,6 +146,26 @@ class AnswerList extends DataComponent {
                 answerTime = answerTime.fromNow();
             }
 
+            let quality = item.ratings.length > 0 ? (
+                <span className={"answer-quality " + (item.quality >= this.state.experiment.paymentQualityThreshold
+                        ? "answer-quality-good"
+                        : "answer-quality-bad")}>
+                    {item.quality >= this.state.experiment.paymentQualityThreshold ? "Good" : "Bad"}
+                </span>
+            ) : (
+                <span className="answer-quality answer-quality-none">
+                     No Ratings
+                </span>
+            );
+
+            if (item.duplicate) {
+                quality = (
+                    <span className="answer-quality answer-quality-duplicate">
+                        DUPLICATE
+                    </span>
+                );
+            }
+
             let meta = (
                 <div className="answer-meta">
                     <time dateTime={moment(item.time * 1000).toISOString()}
@@ -152,9 +173,7 @@ class AnswerList extends DataComponent {
                         {answerTime}
                     </time>
 
-                        <span className="answer-quality">
-                            Quality: {item.quality}
-                        </span>
+                    {quality}
                 </div>
             );
 
@@ -162,7 +181,8 @@ class AnswerList extends DataComponent {
                 meta,
                 <div className="answer-content dont-break-out">
                     item.content
-                </div>,
+                </div>
+                ,
                 feedback,
                 systemResponse
             ];
@@ -186,7 +206,10 @@ class AnswerList extends DataComponent {
             }
 
             return (
-                <div key={item.id} className="answer">
+                <div key={item.id} className={classNames({
+                            "answer": true,
+                            "answer-duplicate": item.duplicate
+                        })}>
                     {content}
                 </div>
             );

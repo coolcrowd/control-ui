@@ -61,6 +61,39 @@ class AnswerList extends DataComponent {
         return "experiments/" + this.props.params.id + "/answers";
     }
 
+    /**
+     * Fetches data from {@link #getDataUri()} and sets {@code state.data} and {@code state.meta} accordingly.
+     */
+    fetchData() {
+        let onError = (e) => {
+            this.setState({
+                data: typeof e === "object" && "data" in e ? e.data : null,
+                loaded: true,
+                failed: true,
+                meta: "meta" in e ? e.meta : {
+                    status: null,
+                    links: {}
+                }
+            });
+        };
+
+        this.props.backend.request("GET", this.getDataUri()).then((answerResponse) => {
+            if (!this.ignoreLastFetch) {
+                this.props.backend.request("GET", "experiments/" + this.props.params.id).then((response) => {
+                    this.setState({
+                        data: answerResponse.data,
+                        loaded: true,
+                        failed: false,
+                        meta: answerResponse.meta,
+                        experiment: response.data
+                    });
+
+                    this.onFetched();
+                }).catch(onError);
+            }
+        }).catch(onError);
+    }
+
     render() {
         if (this.state.loaded && this.state.failed) {
             return (
@@ -94,7 +127,7 @@ class AnswerList extends DataComponent {
             if (item.systemresponse) {
                 systemResponse = (
                     <div className="answer-system-response">
-                        <b>System Response</b>
+                        <b>Response to the worker</b>
 
                         <div className="answer-system-response-content">
                             {item.systemresponse}
@@ -112,26 +145,49 @@ class AnswerList extends DataComponent {
                 answerTime = answerTime.fromNow();
             }
 
-            return (
-                <div key={item.id} className="answer">
-                    <div className="answer-meta">
-                        <time dateTime={moment(item.time * 1000).toISOString()}
-                              title={moment(item.time * 1000).format("llll")}>
-                            {answerTime}
-                        </time>
+            let meta = (
+                <div className="answer-meta">
+                    <time dateTime={moment(item.time * 1000).toISOString()}
+                          title={moment(item.time * 1000).format("llll")}>
+                        {answerTime}
+                    </time>
 
                         <span className="answer-quality">
                             Quality: {item.quality}
                         </span>
+                </div>
+            );
+
+            let content = [
+                meta,
+                <div className="answer-content dont-break-out">
+                    item.content
+                </div>,
+                feedback,
+                systemResponse
+            ];
+
+            if (this.state.experiment.answerType === "IMAGE") {
+                content = [
+                    <a className="answer-content-image dont-break-out" href={item.content} target="_blank">
+                        <img src={item.content} alt={item.content} title={item.content}/>
+                    </a>,
+                    <div className="answer-meta-image">
+                        {meta}
+                        <div className="answer-meta-image-url">
+                            <a href={item.content} target="_blank">
+                                {item.content}
+                            </a>
+                        </div>
+                        {feedback}
+                        {systemResponse}
                     </div>
+                ];
+            }
 
-                    <div className="answer-content dont-break-out">
-                        {item.content}
-                    </div>
-
-                    {feedback}
-
-                    {systemResponse}
+            return (
+                <div key={item.id} className="answer">
+                    {content}
                 </div>
             );
         }) : [];

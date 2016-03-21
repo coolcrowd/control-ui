@@ -51,7 +51,8 @@ class ExperimentDetail extends DataComponent {
             } else {
                 let state = (
                     <div className="experiment-state-notice">
-                        This experiment's state is currently <span className={"experiment-state experiment-state-" + this.state.data.state.toLowerCase().replace(/_/g, "-")}>{this.state.data.state.replace(/_/g, " ")}</span>
+                        This experiment's state is currently <span
+                        className={"experiment-state experiment-state-" + this.state.data.state.toLowerCase().replace(/_/g, "-")}>{this.state.data.state.replace(/_/g, " ")}</span>
                     </div>
                 );
 
@@ -59,7 +60,8 @@ class ExperimentDetail extends DataComponent {
                     state = [
                         state,
                         <div className="experiment-state-notice">
-                            The software can't recover, because the platforms are in an inconsistent state which can't be recovered.
+                            The software can't recover, because the platforms are in an inconsistent state which can't
+                            be recovered.
                         </div>
                     ];
                 }
@@ -74,7 +76,7 @@ class ExperimentDetail extends DataComponent {
 
                         platforms.push(
                             <li key={populations[i].platformId} className="experiment-detail-platform">
-                                <a href={platform.url} target="_blank">{platform.name}</a>
+                                <a href={this.replaceExperimentUrl(platform.url)} target="_blank">{platform.name}</a>
                             </li>
                         );
                     }
@@ -219,7 +221,8 @@ class ExperimentDetail extends DataComponent {
                         </table>
 
                         <label className="input-label">Description</label>
-                        <div className="experiment-description dont-break-out" dangerouslySetInnerHTML={{__html: description}}></div>
+                        <div className="experiment-description dont-break-out"
+                             dangerouslySetInnerHTML={{__html: description}}></div>
 
                         <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
                         {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}
@@ -310,6 +313,56 @@ class ExperimentDetail extends DataComponent {
                 platforms: null
             });
         });
+    }
+
+    replaceExperimentUrl(url) {
+        let data = this.flattenExperiment();
+
+        for (let key in data) {
+            data[key] = encodeURIComponent(data[key]);
+        }
+
+        let placeholders = Template.parse(url);
+
+        let placeholderData = {};
+
+        for (let key in placeholders) {
+            placeholderData[key] = data[key];
+        }
+
+        return Template.apply(url, placeholderData);
+    }
+
+    flattenExperiment() {
+        // http://stackoverflow.com/a/19101235/2373138
+        let flatten = function (data) {
+            let result = {};
+
+            function recurse(cur, prop) {
+                let isEmpty;
+
+                if (Object(cur) !== cur) {
+                    result[prop] = typeof result[prop] === "string" ? (result[prop] + ", " + cur) : cur;
+                } else if (Array.isArray(cur)) {
+                    for (var i = 0, l = cur.length; i < l; i++) {
+                        recurse(cur[i], prop);
+                    }
+
+                    if (l == 0) {
+                        result[prop] = "";
+                    }
+                } else {
+                    for (var p in cur) {
+                        recurse(cur[p], prop ? prop + "." + p : p);
+                    }
+                }
+            }
+
+            recurse(data, "");
+            return result;
+        };
+
+        return flatten(this.state.data);
     }
 }
 

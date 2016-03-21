@@ -147,10 +147,10 @@ class AnswerList extends DataComponent {
             }
 
             let quality = item.ratings.length > 0 ? (
-                <span className={"answer-quality " + (item.quality >= this.state.experiment.paymentQualityThreshold
+                <span className={"answer-quality " + (item.quality >= this.state.experiment.paymentQualityThreshold.value
                         ? "answer-quality-good"
                         : "answer-quality-bad")}>
-                    {item.quality >= this.state.experiment.paymentQualityThreshold ? "Good" : "Bad"}
+                    {item.quality >= this.state.experiment.paymentQualityThreshold.value ? "Good" : "Bad"}
                 </span>
             ) : (
                 <span className="answer-quality answer-quality-none">

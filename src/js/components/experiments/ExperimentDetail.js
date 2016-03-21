@@ -16,12 +16,19 @@ class ExperimentDetail extends DataComponent {
         super();
 
         this.state = Object.assign(this.state || {}, {
-            stateButtonLoading: false
+            stateButtonLoading: false,
+            platformsFailed: false,
+            platforms: null
         });
     }
 
     getDataUri() {
         return "experiments/" + this.props.params.id;
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.fetchPlatforms();
     }
 
     componentWillReceiveProps(next) {
@@ -37,7 +44,7 @@ class ExperimentDetail extends DataComponent {
         let content = null;
 
         if (this.state.loaded) {
-            if (this.state.failed) {
+            if (this.state.failed || this.state.platformsFailed) {
                 content = (
                     <DataError />
                 );
@@ -55,6 +62,34 @@ class ExperimentDetail extends DataComponent {
                             The software can't recover, because the platforms are in an inconsistent state which can't be recovered.
                         </div>
                     ];
+                }
+
+                let platforms = [];
+
+                if (this.state.platforms && (this.state.data.state === "PUBLISHED" || this.state.data.state === "CREATIVE_STOPPED")) {
+                    let populations = this.state.data.populations;
+
+                    for (let i = 0; i < populations.length; i++) {
+                        let platform = this.state.platforms[populations[i].platformId];
+
+                        platforms.push(
+                            <li key={populations[i].platformId} className="experiment-detail-platform">
+                                <a href={platform.url} target="_blank">{platform.name}</a>
+                            </li>
+                        );
+                    }
+
+                    if (platforms.length > 0) {
+                        platforms = (
+                            <div className="experiment-detail-platforms">
+                                <label className="input-label">Published Platforms</label>
+
+                                <ul>
+                                    {platforms}
+                                </ul>
+                            </div>
+                        );
+                    }
                 }
 
                 let editButton = (
@@ -150,6 +185,8 @@ class ExperimentDetail extends DataComponent {
                         <h1>Experiment: {this.state.data.title}</h1>
 
                         {state}
+
+                        {platforms}
 
                         <label className="input-label">Parameters</label>
                         <table className="input-table-info">
@@ -252,6 +289,26 @@ class ExperimentDetail extends DataComponent {
 
             let error = typeof e === "object" && "data" in e ? e.data.detail : "Unknown error.";
             alert("Experiment could not be stopped: " + error);
+        });
+    }
+
+    fetchPlatforms() {
+        this.props.backend.request("GET", "platforms").then((response) => {
+            let platforms = {};
+
+            for (let i = 0; i < response.data.items.length; i++) {
+                platforms[response.data.items[i].id] = response.data.items[i];
+            }
+
+            this.setState({
+                platformsFailed: false,
+                platforms: platforms
+            });
+        }).catch(() => {
+            this.setState({
+                platformsFailed: true,
+                platforms: null
+            });
         });
     }
 }

@@ -54,7 +54,7 @@ h1 {
   margin: 10px 0;
 }
 
-.experiment-state {
+.experiment-state, .experiment-list-state {
   display: inline-block;
   margin: 0 3px;
   padding: 3px 6px;
@@ -64,27 +64,34 @@ h1 {
   font-size: 12px;
 }
 
-.experiment-state-draft {
+.experiment-list-state {
+  width: 20px;
+  line-height: 16px;
+  text-align: center;
+  transform: translateY(-2px);
+}
+
+.experiment-state-draft, .experiment-list-state-draft {
   background-color: #08e;
   color: white;
 }
 
-.experiment-state-published {
+.experiment-state-published, .experiment-list-state-published {
   background-color: #00ac4d;
   color: white;
 }
 
-.experiment-state-creative-stopped {
+.experiment-state-creative-stopped, .experiment-list-state-creative-stopped {
   background-color: #ab3900;
   color: white;
 }
 
-.experiment-state-stopped {
+.experiment-state-stopped, .experiment-list-state-stopped {
   background-color: #ccc;
   color: #333;
 }
 
-.experiment-state-invalid {
+.experiment-state-invalid, .experiment-list-state-invalid {
   background-color: #f00;
   color: white;
 }

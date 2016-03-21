@@ -4,6 +4,7 @@ import history from "../../history";
 import ResourceList from "./../base/ResourceList";
 import Action from "../base/Action";
 import ResourceAction from "../base/ResourceAction";
+import State from "./State";
 
 /**
  * @author Niklas Keller
@@ -51,16 +52,19 @@ class ExperimentList extends ResourceList {
 
         return [
             (
-                <Action icon="clone" onClick={onClick.bind(this)}>Clone</Action>
+                <State key="state" prefix="experiment-list" state={this.props.item.state}/>
             ),
             (
-                <Action icon="pencil" href={this.props.basepath + "/" + this.props.item.id + "/edit"}
+                <Action key="clone" icon="clone" onClick={onClick.bind(this)}>Clone</Action>
+            ),
+            (
+                <Action key="edit" icon="pencil" href={this.props.basepath + "/" + this.props.item.id + "/edit"}
                         disabled={this.props.item.state !== "DRAFT"}>
                     Edit
                 </Action>
             ),
             this.props.item.state === "DRAFT" || this.props.item.state === "STOPPED" ? (
-                <ResourceAction icon="trash" method="delete"
+                <ResourceAction key="delete" icon="trash" method="delete"
                                 uri={this.props.basepath.substring(1) + "/" + this.props.item.id}
                                 onClick={() => window.confirm("Do you really want to delete this item?")}
                                 onSuccess={() => this.props.onDelete(this.props.item.id)}
@@ -72,7 +76,7 @@ class ExperimentList extends ResourceList {
                     Delete
                 </ResourceAction>
             ) : (
-                <Action icon="trash" href={this.props.basepath + "/" + this.props.item.id} disabled={true}
+                <Action key="delete" icon="trash" href={this.props.basepath + "/" + this.props.item.id} disabled={true}
                         title="Experiments can only be deleted when in draft state or completely stopped!">
                     Delete
                 </Action>

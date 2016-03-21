@@ -224,11 +224,27 @@ class ExperimentDetail extends DataComponent {
                         <div className="experiment-description dont-break-out"
                              dangerouslySetInnerHTML={{__html: description}}></div>
 
-                        <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
-                        {constraints.length ? <ul>{constraints}</ul> : <i>none</i>}
+                        {constraints.length ? (
+                            <div>
+                                <label className="input-label"><i className="fa fa-chain icon"/> Constraints</label>
+                                <ul>{constraints}</ul>
+                            </div>
+                        ) : (
+                            <div>
+                                <label className="input-label"><i className="fa fa-chain icon"/> No Constraints</label>
+                            </div>
+                        )}
 
-                        <label className="input-label"><i className="fa fa-tags icon"/> Tags</label>
-                        {tags.length ? <ul>{tags}</ul> : <i>none</i>}
+                        {tags.length ? (
+                            <div>
+                                <label className="input-label"><i className="fa fa-tags icon"/> Tags</label>
+                                <ul>{tags}</ul>
+                            </div>
+                        ) : (
+                            <div>
+                                <label className="input-label"><i className="fa fa-tags icon"/> No Tags</label>
+                            </div>
+                        )}
                     </div>
                 );
             }

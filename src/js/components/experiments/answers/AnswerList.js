@@ -180,7 +180,7 @@ class AnswerList extends DataComponent {
             let content = [
                 meta,
                 <div className="answer-content dont-break-out">
-                    item.content
+                    {item.content}
                 </div>
                 ,
                 feedback,

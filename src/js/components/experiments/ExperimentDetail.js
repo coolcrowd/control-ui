@@ -343,7 +343,8 @@ class ExperimentDetail extends DataComponent {
         let placeholderData = {};
 
         for (let key in placeholders) {
-            placeholderData[key] = data[key];
+            console.warn(key + " is not defined. Available keys: " + Object.keys(data).join(", "));
+            placeholderData[key] = typeof data[key] === "undefined" ? "" : data[key];
         }
 
         return Template.apply(url, placeholderData);
@@ -355,8 +356,6 @@ class ExperimentDetail extends DataComponent {
             let result = {};
 
             function recurse(cur, prop) {
-                let isEmpty;
-
                 if (Object(cur) !== cur) {
                     result[prop] = typeof result[prop] === "string" ? (result[prop] + ", " + cur) : cur;
                 } else if (Array.isArray(cur)) {

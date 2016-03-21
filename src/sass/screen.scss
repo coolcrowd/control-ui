@@ -247,7 +247,7 @@ pre {
 
 .answer-quality {
   display: inline-block;
-  margin: 0 3px;
+  margin: 8px;
   padding: 3px 6px;
   border-bottom: 1px solid rgba(0,0,0,.2);
   border-radius: 3px;
@@ -255,6 +255,7 @@ pre {
   font-size: 11px;
   background-color: #eee;
   text-transform: uppercase;
+  float: right;
 }
 
 .answer-quality-good {

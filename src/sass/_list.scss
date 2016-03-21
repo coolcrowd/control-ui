@@ -11,9 +11,11 @@
   padding: 0 15px;
   display: table-row;
   width: 100%;
-  box-sizing: border-box;
   border-bottom: 1px solid #ddd; /* solid color because of border-collapse */
 }
+
+.list > li > a { line-height: 30px; padding: 10px 15px 10px 0; display: inline-block; }
+.list > li > .list-actions { white-space: nowrap; }
 
 .list-large > li {
   display: block;
@@ -77,6 +79,8 @@
 }
 
 @media (max-width: 600px) {
+  .list > li > a { padding: 10px 0; }
+
   .list {
     display: block;
   }

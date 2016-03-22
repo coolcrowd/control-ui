@@ -12,12 +12,12 @@
 }
 
 a {
-  color: #07d;
+  color: #004e92;
   font-weight: bold;
   text-decoration: none;
 }
 
-a:hover {
+a:hover:not(.action) {
   text-decoration: underline;
 }
 

@@ -28,7 +28,7 @@ class NotificationWizard extends Wizard {
             query: {
                 type: "longtext",
                 label: "SQL Query",
-                help: "Once this query returns a non-empty result, a notification will be sent out. If your query returns one or more records with exactly the two fields id : int and token : string the value of token can be included in the description.",
+                help: "Once this query returns a non-empty result, a notification will be sent out. After that, a notification will be sent out every time the result set changes. If your query returns one or more records with exactly the two fields id : int and token : string the value of token can be included in the description.",
                 validation: {
                     validator: this._validateQuery.bind(this),
                     renderer: this._renderQueryValidation.bind(this)

@@ -208,13 +208,13 @@ class ExperimentDetail extends DataComponent {
                             <tr>
                                 <td>Ratings / Worker</td>
                                 <td><b>{this.state.data.ratingsPerWorker.value}</b></td>
-                                <td>Payment / Answer</td>
+                                <td>Payment / Good Answer</td>
                                 <td><b>{this.state.data.paymentAnswer.value} ¢</b> (USD)</td>
                             </tr>
                             <tr>
                                 <td>Ratings / Answer</td>
                                 <td><b>{this.state.data.ratingsPerAnswer.value}</b></td>
-                                <td>Payment / Rating</td>
+                                <td>Payment / Good Rating</td>
                                 <td><b>{this.state.data.paymentRating.value} ¢</b> (USD)</td>
                             </tr>
                             </tbody>

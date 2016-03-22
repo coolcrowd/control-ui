@@ -342,7 +342,7 @@ class ExperimentWizard extends Wizard {
             paymentBase: {
                 type: "number",
                 label: "Base Payment",
-                help: "Basic payment a worker gets for completing a task.",
+                help: "Basic payment a worker gets for completing a task, regardless of good answers / ratings.",
                 unit: "¢ (USD)",
                 decoder: (i) => i.value,
                 encoder: (i) => {
@@ -352,7 +352,7 @@ class ExperimentWizard extends Wizard {
             paymentAnswer: {
                 type: "number",
                 label: "Answer Payment",
-                help: "Payment for each creative answer.",
+                help: "Payment for each good creative answer (bonus).",
                 unit: "¢ (USD)",
                 default: 10,
                 decoder: (i) => i.value,
@@ -363,7 +363,7 @@ class ExperimentWizard extends Wizard {
             paymentRating: {
                 type: "number",
                 label: "Rating Payment",
-                help: "Payment for each rating.",
+                help: "Payment for each good rating (bonus).",
                 unit: "¢ (USD)",
                 default: 10,
                 decoder: (i) => i.value,

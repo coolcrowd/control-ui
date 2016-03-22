@@ -69,7 +69,7 @@ class NotificationWizard extends Wizard {
                 label: "Send Once",
                 help: "Delete this notification if it has been sent once?",
                 active: "send once and delete afterwards",
-                inactive: "send whenever the result changes",
+                inactive: "send once and delete afterwards",
                 encoder: (i) => {
                     return {
                         value: !!i

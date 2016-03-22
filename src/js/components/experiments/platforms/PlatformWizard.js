@@ -3,6 +3,7 @@ import Loader from "../../../core/Loader";
 import DataError from "../../base/DataError";
 import PlatformWizardItem from "./PlatformWizardItem";
 import history from "../../../history";
+import { Link } from "react-router";
 
 /**
  * @author Niklas Keller
@@ -119,8 +120,6 @@ class PlatformWizard extends React.Component {
             )];
         }
 
-        let experimentTitle = this.state.loaded ? this.state.experiment.title : "";
-
         let stopNotice = null;
 
         if (this.state.loaded && !this.state.failed) {
@@ -160,7 +159,7 @@ class PlatformWizard extends React.Component {
 
         return (
             <div>
-                <h1>Platforms for &ldquo;{experimentTitle}&rdquo;</h1>
+                <h1>Platforms for &ldquo;{this.state.loaded ? (<Link to={"/experiments/" + this.state.experiment.id}>{this.state.experiment.title}</Link>) : " … "}&rdquo;</h1>
 
                 <p className="info">
                     Experiments can be published on one or multiple platforms.

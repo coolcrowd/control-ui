@@ -241,7 +241,7 @@ class AnswerList extends DataComponent {
                     </button>
                 </div>
 
-                <h1>Creative answers</h1>
+                <h1>Answers for &ldquo;{this.state.loaded ? (<Link to={"/experiments/" + this.state.experiment.id}>{this.state.experiment.title}</Link>) : " … "}&rdquo;</h1>
 
                 <Loader loaded={this.state.loaded} className="loader">
                     <ul className="list" ref="list">

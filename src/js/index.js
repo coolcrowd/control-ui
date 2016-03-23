@@ -1,6 +1,3 @@
-// Require polyfill, because IE doesn't support Object.assign yet.
-require("./polyfill/Object.assign");
-
 // Startup file …
 import React from "react";
 import { render } from "react-dom";

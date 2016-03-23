@@ -86,7 +86,7 @@ const renderLogin = () => render((
 ), container);
 
 if (config.authentication) {
-    const credentials = localStorage.getItem("credentials");
+    const credentials = localStorage.getItem("crowdcontrol:credentials");
 
     if (credentials) {
         let data = JSON.parse(credentials);

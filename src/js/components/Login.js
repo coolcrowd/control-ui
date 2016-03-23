@@ -84,7 +84,7 @@ class Login extends React.Component {
 
                 ReactDOM.findDOMNode(this.refs.password).focus();
             } else if (xhr.status === 200 || xhr.status === 204 || xhr.status === 404) {
-                window.localStorage.setItem("credentials", JSON.stringify({
+                window.localStorage.setItem("crowdcontrol:credentials", JSON.stringify({
                     username: username,
                     password: password
                 }));

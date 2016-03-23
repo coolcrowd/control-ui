@@ -157,7 +157,7 @@ class App extends React.Component {
     }
 
     _onLogout() {
-        localStorage.removeItem("credentials");
+        localStorage.removeItem("crowdcontrol:credentials");
         window.location = "/login";
     }
 

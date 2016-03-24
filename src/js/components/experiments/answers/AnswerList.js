@@ -123,6 +123,40 @@ class AnswerList extends DataComponent {
                 );
             }
 
+            let violatedConstraints = item.ratings.filter((rating) => rating.violatedConstraints.length > 0).map((rating) => {
+                let constraints = [];
+
+                for (let i = 0; i < rating.violatedConstraints.length; i++) {
+                    constraints.push(rating.violatedConstraints[i].name);
+                }
+
+                return constraints;
+            });
+
+            let violatedConstraintsCount = {};
+
+            for (let i = 0; i < violatedConstraints.length; i++) {
+                for (let j = 0; j < violatedConstraints[i].length; j++) {
+                    violatedConstraintsCount[violatedConstraints[i][j]] = (violatedConstraintsCount[violatedConstraints[i][j]] || 0) + 1;
+                }
+            }
+
+            violatedConstraints = Object.keys(violatedConstraintsCount).map((key) => {
+                return (
+                    <li key={key}>{key}{violatedConstraintsCount[key] > 1 ? (" ("  + violatedConstraintsCount[key] + "x)") : ""}</li>
+                );
+            });
+
+            violatedConstraints = violatedConstraints.length > 0 ? (
+                <div>
+                    <b>Violated constraints</b>
+
+                    <ul>
+                        {violatedConstraints}
+                    </ul>
+                </div>
+            ) : null;
+
             let systemResponse = null;
 
             if (item.systemresponse) {
@@ -181,8 +215,8 @@ class AnswerList extends DataComponent {
                 meta,
                 <div className="answer-content dont-break-out">
                     {item.content}
-                </div>
-                ,
+                </div>,
+                violatedConstraints,
                 feedback,
                 systemResponse
             ];
@@ -199,6 +233,7 @@ class AnswerList extends DataComponent {
                                 {item.content}
                             </a>
                         </div>
+                        {violatedConstraints}
                         {feedback}
                         {systemResponse}
                     </div>
